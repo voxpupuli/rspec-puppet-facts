@@ -3,7 +3,7 @@
 # Install latest version of facter 
 gem install bundler
 bundle install --path vendor/bundler
-operatingsystem=$(bundle exec facter operatingsystem)
+operatingsystem=$(bundle exec facter operatingsystem | tr '[:upper:]' '[:lower:]')
 operatingsystemmajrelease=$(bundle exec facter operatingsystemmajrelease)
 architecture=$(bundle exec facter architecture)
 
