@@ -54,4 +54,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "fedora-19-x86_64" do |host|
+    host.vm.box = "chef/fedora-19"
+    host.vm.provision "shell", inline: "yum -y install ruby"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
 end
