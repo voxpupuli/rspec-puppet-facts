@@ -89,7 +89,7 @@ describe 'openldap::server' do
     context "on #{os}" do
       let(:facts) do
         facts.merge({
-          :foo => 'bar,
+          :foo => 'bar',
         })
       end
       
