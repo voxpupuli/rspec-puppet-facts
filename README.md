@@ -107,3 +107,9 @@ There is `Vagrantfile` to automagically populate `facts` directory by spawning a
 $ vagrant up
 $ vagrant destroy
 ```
+
+Create i386 facts from x86_64's ones
+
+```
+for file in facts/*/*-x86_64.facts; do cat $file | sed -e 's/x86_64/i386/' -e 's/amd64/i386/' > $(echo $file | sed 's/x86_64/i386/'); done
+```
