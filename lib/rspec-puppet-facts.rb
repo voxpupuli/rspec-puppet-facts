@@ -6,12 +6,10 @@ module RspecPuppetFacts
   def on_supported_os(supported_os = RspecPuppetFacts.meta_supported_os)
     h = {}
     supported_os.map do |os_sup|
-      puts "Processing #{os_sup}"
       facts = {}
       # TODO: use SemVer here
       facter_minor_version = Facter.version[0..2]
       file = File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os_sup}.facts"))
-      puts "file = #{file}"
       File.read(file).each_line do |line|
         key, value = line.split(' => ')
         facts[key.to_sym] = value.chomp unless value.nil?
