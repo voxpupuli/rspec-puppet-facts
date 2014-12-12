@@ -78,3 +78,8 @@ describe 'openldap::server' do
   end
 end
 ```
+
+Add new facts
+-------------
+
+There is `Vagrantfile` to automagically populate `facts` directory by spawning a new VM and launches a provisioning scripts.
