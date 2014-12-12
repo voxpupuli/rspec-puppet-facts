@@ -1,0 +1,87 @@
+architecture => i386
+bios_release_date => 12/01/2006
+bios_vendor => innotek GmbH
+bios_version => VirtualBox
+blockdevice_sda_model => VBOX HARDDISK
+blockdevice_sda_size => 21474836480
+blockdevice_sda_vendor => ATA
+blockdevices => sda
+boardmanufacturer => Oracle Corporation
+boardproductname => VirtualBox
+boardserialnumber => 0
+domain => camptocamp.com
+facterversion => 2.1.0
+filesystems => ext2,ext3,ext4,vfat
+fqdn => localhost.camptocamp.com
+gem_version => ~> 2.1.0
+hardwareisa => i386
+hardwaremodel => i386
+hostname => localhost
+id => root
+interfaces => eth0,lo
+ipaddress => 10.0.2.15
+ipaddress_eth0 => 10.0.2.15
+ipaddress_lo => 127.0.0.1
+is_virtual => true
+kernel => Linux
+kernelmajversion => 3.13
+kernelrelease => 3.13.0-24-generic
+kernelversion => 3.13.0
+lsbdistcodename => trusty
+lsbdistdescription => Ubuntu 14.04 LTS
+lsbdistid => Ubuntu
+lsbdistrelease => 14.04
+lsbmajdistrelease => 14
+macaddress => 08:00:27:d9:ef:9a
+macaddress_eth0 => 08:00:27:d9:ef:9a
+manufacturer => innotek GmbH
+memoryfree => 421.11 MB
+memoryfree_mb => 421.11
+memorysize => 490.07 MB
+memorysize_mb => 490.07
+mtu_eth0 => 1500
+mtu_lo => 65536
+netmask => 255.255.255.0
+netmask_eth0 => 255.255.255.0
+netmask_lo => 255.0.0.0
+network_eth0 => 10.0.2.0
+network_lo => 127.0.0.0
+operatingsystem => Ubuntu
+operatingsystemrelease => 14.04
+osfamily => Debian
+partitions => {"sda1"=>{"uuid"=>"6f990ed8-a6ea-40a4-ae50-e6f4688d24aa", "size"=>"497664", "mount"=>"/boot", "filesystem"=>"ext2"}, "sda2"=>{"size"=>"2"}, "sda5"=>{"size"=>"41439232", "filesystem"=>"LVM2_member"}}
+path => /home/vagrant/vendor/bundler/ruby/1.9.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/gems/1.8/bin/
+physicalprocessorcount => 1
+processor0 => Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+processorcount => 1
+productname => VirtualBox
+ps => ps -ef
+rubysitedir => /usr/local/lib/site_ruby/1.9.1
+rubyversion => 1.9.3
+selinux => false
+serialnumber => 0
+sshdsakey => AAAAB3NzaC1kc3MAAACBALFptHN+L721PVywyMQQnLrQUlzVaPI2NEwGrG+Ryp09X7CdvzqQDv86ciAFLjX857VS4CeQz5+ZTLMurhg7y3leRqUJQNvgmIf5cJ532N5dCBlizE//uyi8RDZB9kuU7KNFkATTVB8RLySztnvRwdlUq2FAbCmzvy2p5jJesSszAAAAFQDFCVus+srYxAzd6TMRhuaVgd4grwAAAIBJQuILffek4A1aYKSkAfzcci93xG+Mx2PU5aXYAp1H7sAnEHbnc4tBrMnsVi96pa7n7G1NdhnGnQNMdxuVNMHLu3oFfIP6PZTubLJ0SpR9Lrm/ZgXy1DXOgenUKkgB63SBcsmxvfn0BLh2h6ybbQYn5pJVqwBgGcKK333W3MqSbQAAAIBYmaZBJsFsKWLtLkNZcOTkg8Ys96dfX30eFxNVtZuuBWZOUHnzh8DkDLT1ohS4IStsE9p9PBzGHKd6hDN8KnhrIGs+dXORoWO5zuxMhULe5BpT2k8BdQltrslQjK1eB4JbnTDYzHjT4guwDDjOFgJjq3FJmHogL4wZxOimJPqmJw==
+sshecdsakey => AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMeYJYKYKUhj/5lQYEnGuDACe0SvMsW9uyEtoKWQPJdIhA/t+SCt7C6fitYF1uuzwWGigfuHJMXm7H3sKw2FDPE=
+sshed25519key => AAAAC3NzaC1lZDI1NTE5AAAAIPnF2cIeBPz5c5VWM8/ohSv6UXsl315ji33r6meWKzjm
+sshfp_dsa => SSHFP 2 1 e633e488b5832c0a2f8e8f6bff202cfd0b2f7d49
+SSHFP 2 2 51f094a4dcfeb97527b4f5fd30eee90064271dad8a6060aa4518d8e5acd19981
+sshfp_ecdsa => SSHFP 3 1 88e498e213876c1b17a85787b9078b3aef0db457
+SSHFP 3 2 207f03c308d25d2133a10289774799dac4d59d4e0091f1813a91e0fa3b990448
+sshfp_ed25519 => SSHFP 4 1 c98e347c3b9306af58c6be37f5c15517be983c4a
+SSHFP 4 2 0d418efb856e08a61b8a55ac03ba962f9de411a2ffa7785718ed8e2775b572f6
+sshfp_rsa => SSHFP 1 1 22644176402c19b282c82eaeb69c969cbc87121b
+SSHFP 1 2 7d745ebdddf3130f9da75c439f5c7eb64f941f72f23672cde294738a4a8cc78a
+sshrsakey => AAAAB3NzaC1yc2EAAAADAQABAAABAQDBuEx+Bnr59qmRnh1KGNr0LpY/7Me1kUzM/+pTCjUoDbNs3chvykyTrbSbXlhnc/YH5qUnO3khm6Tkv26bgTHOyTyGBg8QAYAgNIRMjzYXqxhpmAR4lxj7ERf32Ki5M8c2lGu4q4R4EYVw6pHhOypEfenb4YaH07nbYz4On2xByNwAA/amDNam1Iky5HhWwTUVZAIvbCUvBQR8PvV4fCdY2MsqJAtpbDTuKC9EFoVeV70yHR/RG935JF3TU+ZaoIsc9eqPLiMqiVjgP3ai17AL5BPzCz9j4r6I2gI/rEDSl+jx/6s8nXtFUoR5lzLYGyZs9rYkfxMVmuJhXau+8zTt
+swapfree => 512.00 MB
+swapfree_mb => 512.00
+swapsize => 512.00 MB
+swapsize_mb => 512.00
+timezone => PST
+type => Other
+uniqueid => 007f0100
+uptime => 0:04 hours
+uptime_days => 0
+uptime_hours => 0
+uptime_seconds => 257
+uuid => 63BC2EB2-B414-4BCF-8B76-4A9E13DF458B
+virtual => virtualbox
