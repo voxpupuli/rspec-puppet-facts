@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "centos-6-x86_64" do |host|
     host.vm.box = "centos-65-x64-virtualbox-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box"
-    host.vm.provision "shell", inline: "yum -y install rubygems"
+    host.vm.provision "shell", inline: "sudo yum -y install rubygems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
