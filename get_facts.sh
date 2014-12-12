@@ -4,7 +4,7 @@
 export PATH=$PATH:/var/lib/gems/1.8/bin/
 
 # Install latest version of facter 
-gem install bundler
+gem install bundler --no-ri --no-rdoc
 bundle install --path vendor/bundler
 operatingsystem=$(bundle exec facter operatingsystem | tr '[:upper:]' '[:lower:]')
 operatingsystemmajrelease=$(bundle exec facter operatingsystemmajrelease)
