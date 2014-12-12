@@ -63,7 +63,7 @@ module RspecPuppetFacts
         rel = meta_to_facts(release)
         [
           "#{os}-#{rel}-i386",
-          "#{os}-#{rel}-x86_64"
+          "#{os}-#{rel}-amd64"
         ]
       end
     end.flatten
