@@ -113,3 +113,8 @@ Create i386 facts from x86_64's ones
 ```
 for file in facts/*/*-x86_64.facts; do cat $file | sed -e 's/x86_64/i386/' -e 's/amd64/i386/' > $(echo $file | sed 's/x86_64/i386/'); done
 ```
+Create RedHat facts from CentOS's ones
+
+```
+for file in facts/*/centos-*.facts; do cat $file | sed -e 's/CentOS/RedHat/' > $(echo $file | sed 's/centos/redhat/'); done
+```
