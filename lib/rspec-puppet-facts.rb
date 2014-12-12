@@ -35,10 +35,6 @@ module RspecPuppetFacts
       'Scientific'  => 'scientific',
       'Debian'      => 'debian',
       'Fedora'      => 'fedora',
-      '14.04'       => '1404',
-      '12.04'       => '1204',
-      '10.04'       => '1004',
-      '11 SP1'      => '11',
     }
     ans = meta_to_facts[input]
     if ans
