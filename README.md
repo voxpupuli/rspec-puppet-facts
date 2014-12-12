@@ -67,7 +67,7 @@ require 'spec_helper'
 
 describe 'openldap::server' do
 
-  on_supported_os(['debian-7-amd64', 'redhat-6-amd64']).each do |os, facts|
+  on_supported_os(['debian-7-x86_64', 'redhat-6-x86_64']).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts
