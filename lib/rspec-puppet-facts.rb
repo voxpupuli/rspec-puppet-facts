@@ -34,6 +34,7 @@ module RspecPuppetFacts
       'SLES'        => 'sles',
       'Scientific'  => 'scientific',
       'Debian'      => 'debian',
+      'Fedora'      => 'fedora',
       '14.04'       => '1404',
       '12.04'       => '1204',
       '10.04'       => '1004',
