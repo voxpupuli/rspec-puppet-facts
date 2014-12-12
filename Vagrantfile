@@ -5,6 +5,13 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "debian-6-x86_64" do |host|
+    host.vm.box = "debian-607-x64-virtualbox-nocm"
+    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/debian-607-x64-vbox4210-nocm.box"
+    host.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get install -y rubygems"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "debian-7-x86_64" do |host|
     host.vm.box = "debian-73-x64-virtualbox-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/debian-73-x64-virtualbox-nocm.box"
