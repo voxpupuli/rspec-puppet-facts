@@ -18,6 +18,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "ubuntu-12.04-x86_64" do |host|
+    host.vm.box = "ubuntu-server-12042-x64-vbox4210-nocm"
+    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y rubygems"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "ubuntu-14.04-x86_64" do |host|
     host.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
     host.vm.box_url = "https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-nocm"
