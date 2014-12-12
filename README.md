@@ -79,6 +79,25 @@ describe 'openldap::server' do
 end
 ```
 
+Add additional facts:
+```ruby
+require 'spec_helper'
+
+describe 'openldap::server' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge({
+          :foo => 'bar,
+        })
+      end
+      
+      ...
+    end
+  end
+end
+```
 Add new facts
 -------------
 
