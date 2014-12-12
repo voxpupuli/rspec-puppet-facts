@@ -18,6 +18,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "ubuntu-14.04-x86_64" do |host|
+    host.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
+    host.vm.box_url = "https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-nocm"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "centos-5-x86_64" do |host|
     host.vm.box = "centos-510-x64-virtualbox-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-510-x64-virtualbox-nocm.box"
