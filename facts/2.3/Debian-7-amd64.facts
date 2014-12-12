@@ -1,0 +1,91 @@
+architecture => amd64
+bios_release_date => 12/01/2006
+bios_vendor => innotek GmbH
+bios_version => VirtualBox
+blockdevice_sda_model => VBOX HARDDISK
+blockdevice_sda_size => 10632560640
+blockdevice_sda_vendor => ATA
+blockdevices => sda
+boardmanufacturer => Oracle Corporation
+boardproductname => VirtualBox
+boardserialnumber => 0
+domain => vm
+facterversion => 2.3.0
+filesystems => ext2,ext3
+fqdn => vagrant.vm
+gem_version => ~> 2.3.0
+gid => root
+hardwareisa => unknown
+hardwaremodel => x86_64
+hostname => vagrant
+id => root
+interfaces => eth0,lo
+ipaddress => 10.0.2.15
+ipaddress_eth0 => 10.0.2.15
+ipaddress_lo => 127.0.0.1
+is_virtual => true
+kernel => Linux
+kernelmajversion => 3.2
+kernelrelease => 3.2.0-4-amd64
+kernelversion => 3.2.0
+lsbdistcodename => wheezy
+lsbdistdescription => Debian GNU/Linux 7.3 (wheezy)
+lsbdistid => Debian
+lsbdistrelease => 7.3
+lsbmajdistrelease => 7
+lsbminordistrelease => 3
+macaddress => 08:00:27:9f:51:b7
+macaddress_eth0 => 08:00:27:9f:51:b7
+manufacturer => innotek GmbH
+memoryfree => 445.55 MB
+memoryfree_mb => 445.55
+memorysize => 496.97 MB
+memorysize_mb => 496.97
+mtu_eth0 => 1500
+mtu_lo => 16436
+netmask => 255.255.255.0
+netmask_eth0 => 255.255.255.0
+netmask_lo => 255.0.0.0
+network_eth0 => 10.0.2.0
+network_lo => 127.0.0.0
+operatingsystem => Debian
+operatingsystemmajrelease => 7
+operatingsystemrelease => 7.3
+os => {"name"=>"Debian", "family"=>"Debian", "release"=>{"major"=>"7", "minor"=>"3", "full"=>"7.3"}, "lsb"=>{"distcodename"=>"wheezy", "distid"=>"Debian", "distdescription"=>"Debian GNU/Linux 7.3 (wheezy)", "distrelease"=>"7.3", "majdistrelease"=>"7", "minordistrelease"=>"3"}}
+osfamily => Debian
+partitions => {"sda1"=>{"uuid"=>"5190519e-d0ea-4f21-8911-9572c5f59e31", "size"=>"497664", "mount"=>"/boot", "filesystem"=>"ext2"}, "sda2"=>{"size"=>"2"}, "sda5"=>{"size"=>"20262912", "filesystem"=>"LVM2_member"}}
+path => /home/vagrant/vendor/bundler/ruby/1.9.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+physicalprocessorcount => 1
+processor0 => Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+processorcount => 1
+processors => {"models"=>["Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"], "count"=>1, "physicalcount"=>1}
+productname => VirtualBox
+ps => ps -ef
+rubyplatform => x86_64-linux
+rubysitedir => /usr/local/lib/site_ruby/1.9.1
+rubyversion => 1.9.3
+selinux => false
+serialnumber => 0
+sshdsakey => AAAAB3NzaC1kc3MAAACBAPu/hSWjhQcBczqfeq4+EqmBW2x9pLBv1aSlGDsNyO+0Bx8HBfK+Gb0P7F98Gu/DCP5eOf6RCFpwCmb7HhxO+QMulak+57z2cQTnqawmZiuxp2CjUPcatkrDYo/WHkITP+pMK7sKDOuIcKZPGFRbRhslYJC9gQKt0ud0mwNgUhkRAAAAFQCF3Mcp9GGtyTCEI7HQHf7y3Pbx2wAAAIEAz3YW4dq9plCpGcj9hdFhZvaIn97/MuWHBsXuBu0CgSgrKQevjL74/HYfSU5inCvbCXnvHAHG4CFV83ZKzd5IYeBCM9taXPMkD9L4gCa9XldBDeuNoBuugiYQ+DDj0FEmfLZN07gFBXD7lc9ObwHaX7tsFt1DHytRfhHrxrhcbdQAAACASpAnF4x6Lt2RjLH33vWi+diHQfgNQNkGmNTjTC54amxejUOGucDmJEV9Kf/TZ+LlNcLgzlOzb5ZTTwUUmfu+HwGODO3WDCqYErQed409YtpP8dyQGqtw8HqoKHinKuBc3w7jibpRAJX6D3B1/+t3DME7atPhHNdfZioHVMcCwd0=
+sshecdsakey => AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDg+3hgAsMGOY4i4JqnXfFq7n4rCp2PXian9+rlskACnis+Dr5ZHKVg/iG58YP3WGXMzc14mykzJtQAFtJqkXzs=
+sshfp_dsa => SSHFP 2 1 536db67024693ac76b75ffbf2c26100c6259011f
+SSHFP 2 2 dde3475dd0841870f66176ac6874e9294bfef52c9d1d1684cfa9b797627a657a
+sshfp_ecdsa => SSHFP 3 1 bbc136f890024789cd3709dbec2528993efceda2
+SSHFP 3 2 d7d1e0cbeb3e0b2212518405326913a9db8c5535cbad008269915b455f5f6978
+sshfp_rsa => SSHFP 1 1 2301b9fae493b50ad1ab46924cd2e589bfffb9a2
+SSHFP 1 2 08c2f15513f6c9df453dc111dcfb31a8cdd48e432759dca0f243236a082ade68
+sshrsakey => AAAAB3NzaC1yc2EAAAADAQABAAABAQDRA5jwFnLiZznZsHtWBJ/CHp8KTkiaVihIYIY3sY2YqmCoj3VLte/JCbYtd4rBQXj4ywbuCI8RSW4+TYtrYJJ8jNWR3aw1kqSP4fY5Va5siRQzozBC2HWeKrCB496e8XsfOa1e0jT1esw8ons18tGQmlfPpnsO6INQFhMwemcX21ermS+hmyRxZToaltwAIqxbvcLiAqPemf8DBEgTobw1xomxs0mjvSJBA4nfMEOdHTOO26QSvx0WmHZl6ZDhWVS6B0G9pOMd0Iyzvh1p4Vs0Dbre1ddYE/asB6FpFZSQiYgcOuKEbqwC4I4AXlG1GBqWyncZkdmY3gSbzno4zdVb
+swapfree => 456.00 MB
+swapfree_mb => 456.00
+swapsize => 456.00 MB
+swapsize_mb => 456.00
+system_uptime => {"seconds"=>103, "hours"=>0, "days"=>0, "uptime"=>"0:01 hours"}
+timezone => PST
+type => Other
+uniqueid => 007f0101
+uptime => 0:01 hours
+uptime_days => 0
+uptime_hours => 0
+uptime_seconds => 103
+uuid => 3E464A6A-CA73-4FC5-939B-B3DE4773A19B
+virtual => virtualbox
