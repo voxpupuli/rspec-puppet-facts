@@ -10,7 +10,7 @@ module RspecPuppetFacts
       facts = {}
       # TODO: use SemVer here
       facter_minor_version = Facter.version[0..2]
-      file = File.expand_path(File.join(File.dirname(__FILE__), "../#{facter_minor_version}/facts/#{os_sup}.facts"))
+      file = File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os_sup}.facts"))
       puts "file = #{file}"
       File.read(file).each_line do |line|
         key, value = line.split(' => ')
