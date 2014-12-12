@@ -12,6 +12,29 @@ Add this in your Gemfile:
 gem 'rspec-puppet-facts', :require => false
 ```
 
+Add some `facter` version to test in your .travis.yml
+
+```yaml
+...
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.8.7
+    env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
+  - rvm: 1.8.7
+    env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.7.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0" FACTER_GEM_VERSION="~> 2.1.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0" FACTER_GEM_VERSION="~> 2.2.0"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  allow_failures:
+    - rvm: 1.8.7
+      env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
+...
+```
+
 Add this is your spec/spec_helper.rb:
 
 ```ruby
