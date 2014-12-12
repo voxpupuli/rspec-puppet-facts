@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Fix for squeeze
-export PATH=$PATH:/var/lib/gems/1.8/bin/
+# Fix for squeeze and el7
+export PATH=$PATH:/var/lib/gems/1.8/bin/:/usr/local/bin
 
 # Install latest version of facter 
 gem install bundler --no-ri --no-rdoc
