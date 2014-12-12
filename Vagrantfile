@@ -47,4 +47,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "centos-7-x86_64" do |host|
+    host.vm.box = "puppetlabs/centos-7.0-64-nocm"
+    host.vm.box_url = "https://vagrantcloud.com/puppetlabs/centos-7.0-64-nocm"
+    host.vm.provision "shell", inline: "yum -y install ruby"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
 end
