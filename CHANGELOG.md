@@ -1,3 +1,6 @@
+##2014-12-12 - Release 0.1.3
+- Add facts for Fedora 19
+
 ##2014-12-12 - Release 0.1.2
 - Add facts for Scientific Linux
 
