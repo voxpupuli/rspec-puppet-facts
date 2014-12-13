@@ -3,6 +3,111 @@ rspec-puppet-facts
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/).
 
+Simplify your unit tests by looping on every supported Operating System and populating facts.
+
+Before
+------
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  context "on debian-7-x86_64" do
+    let(:facts) do
+      {
+        :osfamily                  => 'Debian',
+        :operatingsystem           => 'Debian',
+        :operatingsystemmajrelease => '7',
+        ...
+      }
+      
+      it { should compile.with_all_deps }
+      ...
+    end
+  end
+
+  context "on redhat-6-x86_64" do
+    let(:facts) do
+      {
+        :osfamily                  => 'RedHat',
+        :operatingsystem           => 'RedHat',
+        :operatingsystemmajrelease => '6',
+        ...
+      }
+      
+      it { should compile.with_all_deps }
+      ...
+    end
+  end
+  
+  ...
+end
+```
+
+After
+-----
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+      
+      it { should compile.with_all_deps }
+      ...
+    end
+  end
+end
+```
+
+By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems, but you can specify for each context which ones you want to use:
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  on_supported_os(['debian-7-x86_64', 'redhat-6-x86_64']).each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+      
+      it { should compile.with_all_deps }
+      ...
+    end
+  end
+end
+```
+
+Append some facts:
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts.merge({
+          :foo => 'bar',
+        })
+      end
+      
+      it { should compile.with_all_deps }
+      ...
+    end
+  end
+end
+```
+
 Usage
 -----
 
@@ -42,62 +147,6 @@ require 'rspec-puppet-facts'
 include RspecPuppetFacts
 ```
 
-Then in your unit tests:
-
-```ruby
-require 'spec_helper'
-
-describe 'openldap::server' do
-
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      let(:facts) do
-        facts
-      end
-      
-      ...
-    end
-  end
-end
-```
-By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems, but you can specify for each context which ones you want to use:
-
-```ruby
-require 'spec_helper'
-
-describe 'openldap::server' do
-
-  on_supported_os(['debian-7-x86_64', 'redhat-6-x86_64']).each do |os, facts|
-    context "on #{os}" do
-      let(:facts) do
-        facts
-      end
-      
-      ...
-    end
-  end
-end
-```
-
-Add additional facts:
-```ruby
-require 'spec_helper'
-
-describe 'openldap::server' do
-
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      let(:facts) do
-        facts.merge({
-          :foo => 'bar',
-        })
-      end
-      
-      ...
-    end
-  end
-end
-```
 Add new facts
 -------------
 
