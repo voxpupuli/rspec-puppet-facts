@@ -1,0 +1,82 @@
+architecture => x86_64
+bios_release_date => 12/01/2006
+bios_vendor => innotek GmbH
+bios_version => VirtualBox
+blockdevice_sda_model => VBOX HARDDISK
+blockdevice_sda_size => 21474836480
+blockdevice_sda_vendor => ATA
+blockdevices => sda
+boardmanufacturer => Oracle Corporation
+boardproductname => VirtualBox
+boardserialnumber => 0
+dhcp_servers => {"system"=>"10.0.2.2", "enp0s3"=>"10.0.2.2"}
+domain => camptocamp.com
+facterversion => 2.2.0
+filesystems => xfs
+fqdn => localhost.camptocamp.com
+gem_version => ~> 2.2.0
+gid => root
+hardwareisa => x86_64
+hardwaremodel => x86_64
+hostname => localhost
+id => root
+interfaces => enp0s3,lo
+ipaddress => 10.0.2.15
+ipaddress_enp0s3 => 10.0.2.15
+ipaddress_lo => 127.0.0.1
+is_virtual => true
+kernel => Linux
+kernelmajversion => 3.10
+kernelrelease => 3.10.0-123.el7.x86_64
+kernelversion => 3.10.0
+macaddress => 08:00:27:fd:47:eb
+macaddress_enp0s3 => 08:00:27:fd:47:eb
+manufacturer => innotek GmbH
+memoryfree => 349.43 MB
+memoryfree_mb => 349.43
+memorysize => 490.41 MB
+memorysize_mb => 490.41
+mtu_enp0s3 => 1500
+mtu_lo => 65536
+netmask => 255.255.255.0
+netmask_enp0s3 => 255.255.255.0
+netmask_lo => 255.0.0.0
+network_enp0s3 => 10.0.2.0
+network_lo => 127.0.0.0
+operatingsystem => OracleLinux
+operatingsystemmajrelease => 7
+operatingsystemrelease => 7.0.1406
+os => {"name"=>"OracleLinux", "family"=>"RedHat", "release"=>{"major"=>"7", "minor"=>"0", "full"=>"7.0.1406"}}
+osfamily => RedHat
+partitions => {"sda1"=>{"uuid"=>"cb4a7e2a-22cc-4b61-a14b-03e04399cfc2", "size"=>"1024000", "mount"=>"/boot", "filesystem"=>"xfs"}, "sda2"=>{"size"=>"40916992", "filesystem"=>"LVM2_member"}}
+path => /home/vagrant/vendor/bundler/ruby/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/var/lib/gems/1.8/bin/:/usr/local/bin
+physicalprocessorcount => 1
+processor0 => Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+processorcount => 1
+processors => {"models"=>["Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"], "count"=>1, "physicalcount"=>1}
+productname => VirtualBox
+ps => ps -ef
+rubysitedir => /usr/local/share/ruby/site_ruby/
+rubyversion => 2.0.0
+selinux => false
+serialnumber => 0
+sshecdsakey => AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP8Vudu2jo1JapnDmfTNYEwxUpvjiqNnHQolBa2DpPw3eIM4cdcaJIzGR6hmvngrznN0FxflH+xxpN/mAJfsOBE=
+sshfp_ecdsa => SSHFP 3 1 edcd3e205ad84c39fa64278506ed1d877b7be4b9
+SSHFP 3 2 4080e28e3625d4a6c5e82e336062bc672c2dd996e67dfdd53c673e2a7928d7f9
+sshfp_rsa => SSHFP 1 1 24e6f938ed14ce78817cf170ce43a585deb59bf0
+SSHFP 1 2 88c17ffc8565a341a3b3fe103ecfb0a5abf71928edfa0834a4384039d5e59008
+sshrsakey => AAAAB3NzaC1yc2EAAAADAQABAAABAQCt6UbZ2wSzrAiNKkmG8UwqFutf7dnGIJn/DybdxO/vY7vXqlMep3wQ7gEYVkmttQu9N+PG5wanCXHzHk2cixOu1aoE/rb4PpuFt0td71smokqD5cQ0bFTJtTGJaxkE5o8XSfEcuRkAfmnFx+Cofsu8bZBONTWBfFAxA7adufsS1UFWQbFLRuju8VgTALwNGwkCN/s7QJ/FQh9Q/jxy74sGATljWf1/T5s33CKVFR8hAi9Xt3Dc+tX88/q8NSRNpMuTiaT8wwMJzbgFlkgZHpTTHQtOOq/MLTOA95CMxEaxmdKLTlBOd1aAsWWZjQpw5zIIGCNfBwLv49bhabbc0keH
+swapfree => 1.03 GB
+swapfree_mb => 1056.00
+swapsize => 1.03 GB
+swapsize_mb => 1056.00
+system_uptime => {"seconds"=>339, "hours"=>0, "days"=>0, "uptime"=>"0:05 hours"}
+timezone => UTC
+type => Other
+uniqueid => 007f0100
+uptime => 0:05 hours
+uptime_days => 0
+uptime_hours => 0
+uptime_seconds => 339
+uuid => C9C5FDC4-1926-4244-A427-FC285D756B5E
+virtual => virtualbox
