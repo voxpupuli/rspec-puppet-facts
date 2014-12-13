@@ -117,7 +117,14 @@ Add this in your Gemfile:
 gem 'rspec-puppet-facts', :require => false
 ```
 
-Add some `facter` version to test in your .travis.yml
+Add this is your spec/spec_helper.rb:
+
+```ruby
+require 'rspec-puppet-facts'
+include RspecPuppetFacts
+```
+
+Finaly, Add some `facter` version to test in your .travis.yml
 
 ```yaml
 ...
@@ -138,13 +145,6 @@ matrix:
     - rvm: 1.8.7
       env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
 ...
-```
-
-Add this is your spec/spec_helper.rb:
-
-```ruby
-require 'rspec-puppet-facts'
-include RspecPuppetFacts
 ```
 
 Add new facts
