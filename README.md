@@ -61,19 +61,28 @@ describe 'myclass' do
       
       it { should compile.with_all_deps }
       ...
+      case facts[:osfamily]
+      when 'Debian'
+        ...
+      when 'RedHat'
+        ...
+      end
     end
   end
 end
 ```
 
-By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems, but you can specify for each context which ones you want to use:
+By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems and tests only with `x86_64`, but you can specify for each context which ones you want to use:
 
 ```ruby
 require 'spec_helper'
 
 describe 'myclass' do
 
-  on_supported_os(['debian-7-x86_64', 'redhat-6-x86_64']).each do |os, facts|
+  on_supported_os({
+    :hardwaremodels => ['i386', 'x86_64'],
+    :supported_os   => ['debian-7', 'redhat-6']
+  }).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts
