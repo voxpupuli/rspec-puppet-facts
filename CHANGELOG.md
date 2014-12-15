@@ -1,3 +1,7 @@
+##2014-12-15 - Release 0.2.0
+- Add opts hash parameter
+- Tests only with x86_64 by default
+
 ##2014-12-12 - Release 0.1.4
 - Fix for Ubuntu
 
