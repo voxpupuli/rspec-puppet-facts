@@ -18,6 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "debian-8-x86_64" do |host|
+    host.vm.box = "debian-8-x64-virtualbox"
+    host.vm.box_url = "https://box.fogmail.org/basebox-0.2.0.box"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "ubuntu-12.04-x86_64" do |host|
     host.vm.box = "ubuntu-server-12042-x64-vbox4210-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
