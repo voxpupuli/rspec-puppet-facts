@@ -18,6 +18,9 @@ module RspecPuppetFacts
           # TODO: use SemVer here
           facter_minor_version = Facter.version[0..2]
           file = File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os}.facts"))
+          if ! File.file?(file)
+            fail StandardError, "Can't find facts for '#{os}' for facter #{facter_minor_version}"
+          end
           File.read(file).each_line do |line|
             key, value = line.split(' => ')
             facts[key.to_sym] = value.chomp unless value.nil?
