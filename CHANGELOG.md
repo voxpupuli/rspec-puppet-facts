@@ -1,3 +1,6 @@
+##2014-12-19 - Release 0.2.1
+- Add facts for Debian 8
+
 ##2014-12-15 - Release 0.2.0
 - Add opts hash parameter
 - Tests only with x86_64 by default
