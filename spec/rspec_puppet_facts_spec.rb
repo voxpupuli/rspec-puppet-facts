@@ -14,6 +14,26 @@ describe 'RspecPuppetFacts' do
       end
 
       context 'With a metadata.json' do
+        fixture = File.read('spec/fixtures/metadata.json')
+        File.stubs('file?')
+        File.stubs('read')
+        File.expects('file?').with('metadata.json').returns true
+        File.expects('read').with('metadata.json').returns fixture
+        it 'should return a hash' do
+          expect( on_supported_os().class ).to eq Hash
+        end
+        it 'should have 5 elements' do
+          expect(subject.size).to eq 5
+        end
+        it 'should return supported OS' do
+          expect(subject.keys.sort).to eq [
+            'debian-6-x86_64',
+            'debian-7-x86_64',
+            'redhat-5-x86_64',
+            'redhat-6-x86_64',
+            'redhat-7-x86_64',
+          ]
+        end
       end
     end
 
