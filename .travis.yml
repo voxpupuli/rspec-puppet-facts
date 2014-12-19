@@ -4,6 +4,7 @@ sudo: false
 cache:
   directories:
     - vendor/bundle
+bundler_args: --path vendor/bundle
 script:
   - bundle exec rake spec
 matrix:
