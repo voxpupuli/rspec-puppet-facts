@@ -156,8 +156,32 @@ matrix:
 ...
 ```
 
-Add new facts
--------------
+Operating Systems supported
+---------------------------
+
+             | 1.6 | 1.7 | 2.0 | 2.1 | 2.2 | 2.3
+-------------|-----|-----|-----|-----|-----|-----
+CentOS 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+CentOS 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+CentOS 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Debian 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Debian 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Debian 8     |  N  |  N  |  Y  |  Y  |  Y  |  Y
+Fedora 19    |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Oracle 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Oracle 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Oracle 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+RedHat 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+RedHat 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+RedHat 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Scientific 5 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Scientific 6 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Scientific 7 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Ubuntu 12.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Ubuntu 14.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+
+Add new Operating System support
+--------------------------------
 
 There is `Vagrantfile` to automagically populate `facts` directory by spawning a new VM and launches a provisioning scripts.
 
