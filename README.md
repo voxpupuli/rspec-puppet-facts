@@ -1,6 +1,8 @@
 rspec-puppet-facts
 ==================
 
+[![Build Status](https://travis-ci.org/mcanevet/rspec-puppet-facts.png?branch=master)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
+
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/).
 
 Simplify your unit tests by looping on every supported Operating System and populating facts.
