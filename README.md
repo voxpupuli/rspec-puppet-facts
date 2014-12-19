@@ -83,7 +83,22 @@ describe 'myclass' do
 
   on_supported_os({
     :hardwaremodels => ['i386', 'x86_64'],
-    :supported_os   => ['debian-7', 'redhat-6']
+    :supported_os   => [
+      {
+        "operatingsystem" => "Debian",
+        "operatingsystemrelease" => [
+          "6",
+          "7"
+        ]
+      },
+      {
+        "operatingsystem" => "RedHat",
+        "operatingsystemrelease" => [
+          "5",
+          "6"
+        ]
+      }
+    ],
   }).each do |os, facts|
     context "on #{os}" do
       let(:facts) do
