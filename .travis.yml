@@ -7,12 +7,19 @@ cache:
 bundler_args: --path vendor/bundle
 script:
   - bundle exec rake spec
+rvm:
+  - 1.8.7
+  - 1.9.3
+  - 2.0.0
+  - 2.1.5
+env:
+  - FACTER_GEM_VERSION="~> 1.6.0"
+  - FACTER_GEM_VERSION="~> 1.7.0"
+  - FACTER_GEM_VERSION="~> 2.0.0"
+  - FACTER_GEM_VERSION="~> 2.1.0"
+  - FACTER_GEM_VERSION="~> 2.2.0"
+  - FACTER_GEM_VERSION="~> 2.3.0"
 matrix:
   fast_finish: true
-  include:
-    - rvm: 1.8.7
-    - rvm: 1.9.3
-    - rvm: 2.0.0
-    - rvm: 2.1.5
 notifications:
   email: false
