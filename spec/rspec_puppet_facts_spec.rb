@@ -14,7 +14,7 @@ describe 'RspecPuppetFacts' do
     end
 
     context 'When specifying supported_os' do
-      let(:os_sup) do
+      subject {
         on_supported_os(
           {
             :supported_os => [
@@ -35,9 +35,12 @@ describe 'RspecPuppetFacts' do
             ]
           }
         )
-      end
+      }
       it 'should return a hash' do
-        expect(os_sup.class).to eq Hash
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 4 elements' do
+        expect(subject.size).to eq 4
       end
     end
   end
