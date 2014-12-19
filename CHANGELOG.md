@@ -1,3 +1,7 @@
+##2014-12-19 - Release 0.2.2
+- Fix some bugs
+- Add unit tests
+
 ##2014-12-19 - Release 0.2.1
 - Add facts for Debian 8
 
