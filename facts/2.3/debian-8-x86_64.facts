@@ -1,0 +1,99 @@
+architecture => amd64
+augeasversion => 1.2.0
+bios_release_date => 12/01/2006
+bios_vendor => innotek GmbH
+bios_version => VirtualBox
+blockdevice_sda_model => VBOX HARDDISK
+blockdevice_sda_size => 8589934592
+blockdevice_sda_vendor => ATA
+blockdevice_sr0_model => CD-ROM
+blockdevice_sr0_size => 1073741312
+blockdevice_sr0_vendor => VBOX
+blockdevices => sda,sr0
+boardmanufacturer => Oracle Corporation
+boardproductname => VirtualBox
+boardserialnumber => 0
+domain => vagrantup.com
+facterversion => 2.3.0
+filesystems => ext2,ext3,ext4
+fqdn => jessie64.vagrantup.com
+gem_version => ~> 2.3.0
+gid => root
+hardwareisa => unknown
+hardwaremodel => x86_64
+hostname => jessie64
+id => root
+interfaces => eth0,lo
+ipaddress => 10.0.2.15
+ipaddress_eth0 => 10.0.2.15
+ipaddress_lo => 127.0.0.1
+is_virtual => true
+kernel => Linux
+kernelmajversion => 3.16
+kernelrelease => 3.16.0-4-amd64
+kernelversion => 3.16.0
+lsbdistcodename => jessie
+lsbdistdescription => Debian GNU/Linux 8.0 (jessie)
+lsbdistid => Debian
+lsbdistrelease => 8.0
+lsbmajdistrelease => 8
+lsbminordistrelease => 0
+macaddress => 08:00:27:00:82:93
+macaddress_eth0 => 08:00:27:00:82:93
+manufacturer => innotek GmbH
+memoryfree => 880.11 MB
+memoryfree_mb => 880.11
+memorysize => 1000.46 MB
+memorysize_mb => 1000.46
+mtu_eth0 => 1500
+mtu_lo => 65536
+netmask => 255.255.255.0
+netmask_eth0 => 255.255.255.0
+netmask_lo => 255.0.0.0
+network_eth0 => 10.0.2.0
+network_lo => 127.0.0.0
+operatingsystem => Debian
+operatingsystemmajrelease => 8
+operatingsystemrelease => 8.0
+os => {"name"=>"Debian", "family"=>"Debian", "release"=>{"major"=>"8", "minor"=>"0", "full"=>"8.0"}, "lsb"=>{"distcodename"=>"jessie", "distid"=>"Debian", "distdescription"=>"Debian GNU/Linux 8.0 (jessie)", "distrelease"=>"8.0", "majdistrelease"=>"8", "minordistrelease"=>"0"}}
+osfamily => Debian
+partitions => {"sda1"=>{"uuid"=>"b0b3bf69-bc1b-43a1-9de4-7bb670adb7c1", "size"=>"15986688", "mount"=>"/", "filesystem"=>"ext4"}, "sda2"=>{"size"=>"2", "filesystem"=>"dos"}, "sda5"=>{"uuid"=>"0372d2f8-3283-4440-9a4c-e14e0ad97da6", "size"=>"784384", "filesystem"=>"swap"}}
+path => /home/vagrant/vendor/bundler/ruby/2.1.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/gems/1.8/bin/
+physicalprocessorcount => 1
+processor0 => Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+processorcount => 1
+processors => {"models"=>["Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"], "count"=>1, "physicalcount"=>1}
+productname => VirtualBox
+ps => ps -ef
+puppetversion => 3.7.2
+rubyplatform => x86_64-linux-gnu
+rubysitedir => /usr/local/lib/site_ruby/2.1.0
+rubyversion => 2.1.5
+selinux => false
+serialnumber => 0
+sshdsakey => AAAAB3NzaC1kc3MAAACBALxhs9+tjUwSv4KHSAndMYCaTBbZbj/qeOfOYMw7J9nGAD1yqyfpqPzW1lrpfPs0kXtp+/SHFWkdEM0+uGdmnswd7EWoIxeOiLnv1KFw4ZEveJvsOa4lMyIAqGH8GBem5HFsxbwjVOQFDgbiV1ZE/sT9XvmZrZNPQaiy98QTKCQfAAAAFQChk0zpQm5b4zUcpUWKQOouubFfiwAAAIEArmyascaZMcvlYQyty3200eqjWgThG5jlEKe+g9XnnudITOJVhlNeQDDwnxWZru7q0qxFb08uMyWQ2r1ZPTT0FyV1n9D1hjIi+XQRWFfRM8W7sypPjPwFQm1HiCGRmrLBjjxBFFbYOUiCAQlaT8aL80P3wtAnN9kdk8cs3t21eZcAAACBALwRQjCTSCYDotI8c3LoCPWE22/RqpgtTleGd1uUdNalms6zJi09BeRrNrvZgciE/v9lR7xh9hUJKDhoDqEUW+dWSovCpYHC+7JxIhujYynHiiM44RKW5enezQw8E+mkxTMsigdSyZYbc0RzsgwK4eYG1JYDhJAl+HgcUdN0UaaW
+sshecdsakey => AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNGKxIGbAEUF/9+UvY7djEeT4Tc37ewlzwrakXSj5gw/uJriCjjkwnmu0DQysS0nUXPL6kp+esD38+aHp4AhehQ=
+sshed25519key => AAAAC3NzaC1lZDI1NTE5AAAAIMNrBOSr14rO6LALL3j1gbGhvy3+iTdcYqkQTuzxYDmH
+sshfp_dsa => SSHFP 2 1 8dfedbe13dbf0834436327cf4e7008ea94088183
+SSHFP 2 2 73349cbd7ced60ce7d1ce92f76a34d7e65ac6ce42ff7a7f8fecd8b4fc304afb8
+sshfp_ecdsa => SSHFP 3 1 ae35faac84dac1412793ac77544e3034c640a898
+SSHFP 3 2 21bb30ddb3d3f1cd9cd0373c1ffbae13413628f6dda6d697fe03c863f4ed4a23
+sshfp_ed25519 => SSHFP 4 1 a46286cf845ec6f34f63d2b9b0dc704eb8f85a72
+SSHFP 4 2 378fbbb8abcda4bcbec23ee1934ae4e4ad29c11e241aba24c8e32aa397967c01
+sshfp_rsa => SSHFP 1 1 bfdbc8bf879643ddf02d90fdd3d4521e6dee499f
+SSHFP 1 2 a0f3896271acfd4ba6499d32fbb7c54780fa084e5555eb1a0b2474f791eac594
+sshrsakey => AAAAB3NzaC1yc2EAAAADAQABAAABAQC/TBsHOpDcPJ25kHh/LATYVVNcB89aU5vo4aPTAJLI/S/GpcciXGfCCFjv7WPDjHW1C4ItbbkaxjQQDPOkCOPu0BzkGmiZsN11JNMRxT6xJcnbn4vojKGtQWm3iJA2G6uXf/8B4CJzsuN+FpkdW5VHnF3Da8mIYpktBXnFFNzKCwX5JdntHSoD1TgLhcGN3PVyOd9MM0uu+JeWnCYDn7e7AgNXuyivqws/uateyLaflgtRatsPlfdE/6bv18hJLSLZI2Bdlva1kUO02ztTe+eIZnL4n4pxc6dhI/B4Xsxas1M95PpbcIAsbOXZRGkjG8fSplvBGSQoCFmLNPKf34bp
+swapfree => 383.00 MB
+swapfree_mb => 383.00
+swapsize => 383.00 MB
+swapsize_mb => 383.00
+system_uptime => {"seconds"=>117, "hours"=>0, "days"=>0, "uptime"=>"0:01 hours"}
+timezone => CET
+type => Other
+uniqueid => 007f0101
+uptime => 0:01 hours
+uptime_days => 0
+uptime_hours => 0
+uptime_seconds => 117
+uuid => B3CF714D-0CDF-4841-BB08-219941F7A8C3
+virtual => virtualbox
