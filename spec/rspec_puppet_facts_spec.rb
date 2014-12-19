@@ -47,7 +47,7 @@ describe 'RspecPuppetFacts' do
         expect(subject.size).to eq 4
       end
       it 'should return supported OS' do
-        expect(subject.keys).to eq [
+        expect(subject.keys.sort).to eq [
           'debian-6-x86_64',
           'debian-7-x86_64',
           'redhat-5-x86_64',
