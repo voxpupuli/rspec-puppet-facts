@@ -3,12 +3,10 @@ require 'json'
 
 module RspecPuppetFacts
 
-  def on_supported_os(
-    opts = {
-      :hardwaremodels => ['x86_64'],
-      :supported_os   => RspecPuppetFacts.meta_supported_os,
-    }
-  )
+  def on_supported_os( opts = {} )
+    opts[:hardwaremodels] ||= ['x86_64']
+    opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
+
     h = {}
 
     opts[:supported_os].map do |os_sup|
