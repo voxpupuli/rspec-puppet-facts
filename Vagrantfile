@@ -24,6 +24,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "ubuntu-10.04-x86_64" do |host|
+    host.vm.box = "ubuntu-server-10044-x64-vbox4210-nocm"
+    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-10044-x64-vbox4210-nocm.box"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby-dev rubygems libopenssl-ruby"
+    host.vm.provision "shell", inline: "gem install rubygems-update && /var/lib/gems/1.8/bin/update_rubygems"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "ubuntu-12.04-x86_64" do |host|
     host.vm.box = "ubuntu-server-12042-x64-vbox4210-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
