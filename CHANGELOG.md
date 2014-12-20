@@ -1,3 +1,8 @@
+##2014-12-20 - Release 0.2.4
+- Add facts for SLES 11
+- Add facts for Ubuntu 10.04
+- Fix for SLES 11 SP1
+
 ##2014-12-20 - Release 0.2.3
 - Add facts for ArchLinux
 
