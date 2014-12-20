@@ -76,6 +76,34 @@ describe 'RspecPuppetFacts' do
       end
     end
 
+    context 'When operatingsystemrelease has space' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "SLES",
+                "operatingsystemrelease" => [
+                  "11 SP1"
+                ]
+              }
+            ]
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 elements' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'sles-11-x86_64',
+        ]
+      end
+    end
+
     context 'When specifying wrong supported_os' do
       subject {
         on_supported_os(
