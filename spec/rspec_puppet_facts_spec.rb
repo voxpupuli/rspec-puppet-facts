@@ -9,7 +9,7 @@ describe 'RspecPuppetFacts' do
 
       context 'Without metadata.json' do
         it 'should fail' do
-          expect { subject }.to raise_error(StandardError)
+          expect { subject }.to raise_error(StandardError, /Can't find metadata.json/)
         end
       end
 
