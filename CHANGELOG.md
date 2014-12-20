@@ -1,3 +1,6 @@
+##2014-12-20 - Release 0.2.3
+- Add facts for ArchLinux
+
 ##2014-12-19 - Release 0.2.2
 - Fix some bugs
 - Add unit tests
