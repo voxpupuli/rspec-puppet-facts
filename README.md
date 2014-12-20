@@ -178,6 +178,7 @@ Operating Systems and facter versions supported
 
              | 1.6 | 1.7 | 2.0 | 2.1 | 2.2 | 2.3
 -------------|-----|-----|-----|-----|-----|-----
+ArchLinux    |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 CentOS 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 CentOS 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 CentOS 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y

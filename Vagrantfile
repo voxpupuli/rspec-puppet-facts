@@ -66,6 +66,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
+  config.vm.define "sles-11sp1-x86_64" do |host|
+    host.vm.box = "sles11-sp1-x86_64"
+    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/sles-11sp1-x64-vbox4210-nocm.box"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
+  config.vm.define "sles-11sp3-x86_64" do |host|
+    host.vm.box = "suse/sles11sp3"
+    host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
+    host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.8.7 && rvm use --create 1.8.7"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+  end
   config.vm.define "archlinux-x86_64" do |host|
     host.vm.box = "terrywang/archlinux"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
