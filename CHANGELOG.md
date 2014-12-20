@@ -1,3 +1,6 @@
+##2014-12-20 - Release 0.2.5
+- Don't fail if facts not found
+
 ##2014-12-20 - Release 0.2.4
 - Add facts for SLES 11
 - Add facts for Ubuntu 10.04
