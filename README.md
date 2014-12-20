@@ -195,6 +195,8 @@ RedHat 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 Scientific 5 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 Scientific 6 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 Scientific 7 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+SLES 11      |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+Ubuntu 10.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 Ubuntu 12.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 Ubuntu 14.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
 
