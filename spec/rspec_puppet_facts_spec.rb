@@ -121,9 +121,8 @@ describe 'RspecPuppetFacts' do
         )
       }
 
-      it 'should fail' do
-        pending "How to catch warn?"
-        expect(subject).should_receive(:warn).with(/Can't find facts for 'debian-4-x86_64'/)
+      it 'should output warning message' do
+        expect { subject }.to output(/Can't find facts for 'debian-4-x86_64'/).to_stderr
       end
     end
   end
