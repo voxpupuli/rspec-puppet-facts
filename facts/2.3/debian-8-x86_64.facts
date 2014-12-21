@@ -1,5 +1,4 @@
 architecture => amd64
-augeasversion => 1.2.0
 bios_release_date => 12/01/2006
 bios_vendor => innotek GmbH
 bios_version => VirtualBox
@@ -41,8 +40,8 @@ lsbminordistrelease => 0
 macaddress => 08:00:27:00:82:93
 macaddress_eth0 => 08:00:27:00:82:93
 manufacturer => innotek GmbH
-memoryfree => 880.11 MB
-memoryfree_mb => 880.11
+memoryfree => 860.44 MB
+memoryfree_mb => 860.44
 memorysize => 1000.46 MB
 memorysize_mb => 1000.46
 mtu_eth0 => 1500
@@ -58,17 +57,16 @@ operatingsystemrelease => 8.0
 os => {"name"=>"Debian", "family"=>"Debian", "release"=>{"major"=>"8", "minor"=>"0", "full"=>"8.0"}, "lsb"=>{"distcodename"=>"jessie", "distid"=>"Debian", "distdescription"=>"Debian GNU/Linux 8.0 (jessie)", "distrelease"=>"8.0", "majdistrelease"=>"8", "minordistrelease"=>"0"}}
 osfamily => Debian
 partitions => {"sda1"=>{"uuid"=>"b0b3bf69-bc1b-43a1-9de4-7bb670adb7c1", "size"=>"15986688", "mount"=>"/", "filesystem"=>"ext4"}, "sda2"=>{"size"=>"2", "filesystem"=>"dos"}, "sda5"=>{"uuid"=>"0372d2f8-3283-4440-9a4c-e14e0ad97da6", "size"=>"784384", "filesystem"=>"swap"}}
-path => /home/vagrant/vendor/bundler/ruby/2.1.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/gems/1.8/bin/
+path => /home/vagrant/vendor/bundler/ruby/1.9.1/bin:/usr/local/rvm/gems/ruby-1.9.3-p551/bin:/usr/local/rvm/gems/ruby-1.9.3-p551@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin
 physicalprocessorcount => 1
-processor0 => Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz
+processor0 => Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz
 processorcount => 1
-processors => {"models"=>["Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"], "count"=>1, "physicalcount"=>1}
+processors => {"models"=>["Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"], "count"=>1, "physicalcount"=>1}
 productname => VirtualBox
 ps => ps -ef
-puppetversion => 3.7.2
-rubyplatform => x86_64-linux-gnu
-rubysitedir => /usr/local/lib/site_ruby/2.1.0
-rubyversion => 2.1.5
+rubyplatform => x86_64-linux
+rubysitedir => /usr/local/rvm/rubies/ruby-1.9.3-p551/lib/ruby/site_ruby/1.9.1
+rubyversion => 1.9.3
 selinux => false
 serialnumber => 0
 sshdsakey => AAAAB3NzaC1kc3MAAACBALxhs9+tjUwSv4KHSAndMYCaTBbZbj/qeOfOYMw7J9nGAD1yqyfpqPzW1lrpfPs0kXtp+/SHFWkdEM0+uGdmnswd7EWoIxeOiLnv1KFw4ZEveJvsOa4lMyIAqGH8GBem5HFsxbwjVOQFDgbiV1ZE/sT9XvmZrZNPQaiy98QTKCQfAAAAFQChk0zpQm5b4zUcpUWKQOouubFfiwAAAIEArmyascaZMcvlYQyty3200eqjWgThG5jlEKe+g9XnnudITOJVhlNeQDDwnxWZru7q0qxFb08uMyWQ2r1ZPTT0FyV1n9D1hjIi+XQRWFfRM8W7sypPjPwFQm1HiCGRmrLBjjxBFFbYOUiCAQlaT8aL80P3wtAnN9kdk8cs3t21eZcAAACBALwRQjCTSCYDotI8c3LoCPWE22/RqpgtTleGd1uUdNalms6zJi09BeRrNrvZgciE/v9lR7xh9hUJKDhoDqEUW+dWSovCpYHC+7JxIhujYynHiiM44RKW5enezQw8E+mkxTMsigdSyZYbc0RzsgwK4eYG1JYDhJAl+HgcUdN0UaaW
@@ -87,13 +85,13 @@ swapfree => 383.00 MB
 swapfree_mb => 383.00
 swapsize => 383.00 MB
 swapsize_mb => 383.00
-system_uptime => {"seconds"=>117, "hours"=>0, "days"=>0, "uptime"=>"0:01 hours"}
+system_uptime => {"seconds"=>1687, "hours"=>0, "days"=>0, "uptime"=>"0:28 hours"}
 timezone => CET
 type => Other
 uniqueid => 007f0101
-uptime => 0:01 hours
+uptime => 0:28 hours
 uptime_days => 0
 uptime_hours => 0
-uptime_seconds => 117
-uuid => B3CF714D-0CDF-4841-BB08-219941F7A8C3
+uptime_seconds => 1687
+uuid => 0CB8C498-82BB-4C72-8E5E-966904D1E75C
 virtual => virtualbox
