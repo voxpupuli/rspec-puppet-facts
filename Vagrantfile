@@ -21,6 +21,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "debian-8-x86_64" do |host|
     host.vm.box = "debian-8-x64-virtualbox"
     host.vm.box_url = "https://box.fogmail.org/basebox-0.2.0.box"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y curl"
+    host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
+    host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.9.3 && rvm use --create 1.9.3"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
   end
