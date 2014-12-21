@@ -172,33 +172,38 @@ matrix:
       env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
 ...
 ```
+Facter versions supported
+-------------------------
+* 1.6
+* 1.7
+* 2.0
+* 2.1
+* 2.2
+* 2.3
 
-Operating Systems and facter versions supported
+Operating Systems supported
 -----------------------------------------------
-
-             | 1.6 | 1.7 | 2.0 | 2.1 | 2.2 | 2.3
--------------|-----|-----|-----|-----|-----|-----
-ArchLinux    |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-CentOS 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-CentOS 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-CentOS 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Debian 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Debian 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Debian 8     |  N  |  N  |  Y  |  Y  |  Y  |  Y
-Fedora 19    |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Oracle 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Oracle 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Oracle 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-RedHat 5     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-RedHat 6     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-RedHat 7     |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Scientific 5 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Scientific 6 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Scientific 7 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-SLES 11      |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Ubuntu 10.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Ubuntu 12.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
-Ubuntu 14.04 |  Y  |  Y  |  Y  |  Y  |  Y  |  Y
+* ArchLinux
+* CentOS 5
+* CentOS 6
+* CentOS 7
+* Debian 6
+* Debian 7
+* Debian 8
+* Fedora 19
+* Oracle 5
+* Oracle 6
+* Oracle 7
+* RedHat 5
+* RedHat 6
+* RedHat 7
+* Scientific 5
+* Scientific 6
+* Scientific 7
+* SLES 11
+* Ubuntu 10.04
+* Ubuntu 12.04
+* Ubuntu 14.04
 
 Add new Operating System support
 --------------------------------
