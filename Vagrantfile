@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.box = "centos-510-x64-virtualbox-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-510-x64-virtualbox-nocm.box"
     host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
-    host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.8.7 && rvm use --create 1.8.7"
+    host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.9.3 && rvm use --create 1.9.3"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "shutdown -h now"
