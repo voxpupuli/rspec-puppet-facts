@@ -1,3 +1,6 @@
+##2015-01-02 - Release 0.3.0
+- Use json output for facter
+
 ##2014-12-20 - Release 0.2.5
 - Don't fail if facts not found
 
