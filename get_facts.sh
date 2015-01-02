@@ -5,7 +5,7 @@ export PATH=$PATH:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bi
 
 # Install latest version of facter 
 gem install bundler --no-ri --no-rdoc
-bundle install --path vendor/bundler
+bundle install --path vendor/bundler --without development test
 operatingsystem=$(bundle exec facter operatingsystem | tr '[:upper:]' '[:lower:]')
 operatingsystemmajrelease=$(bundle exec facter operatingsystemmajrelease)
 hardwaremodel=$(bundle exec facter hardwaremodel)
