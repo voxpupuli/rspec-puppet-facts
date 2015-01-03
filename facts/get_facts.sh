@@ -3,7 +3,7 @@
 # Fix for squeeze, el7 and arch
 export PATH=$PATH:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bin
 
-# Install latest version of facter 
+# Install latest version of facter
 gem install bundler --no-ri --no-rdoc
 bundle install --path vendor/bundler
 operatingsystem=$(bundle exec facter operatingsystem | tr '[:upper:]' '[:lower:]')
