@@ -1,6 +1,7 @@
 {
   "gem_version": "~> 2.3.0",
   "filesystems": "ext2,ext3,ext4",
+  "domain": "example.com",
   "selinux": false,
   "hardwareisa": "x86_64",
   "kernel": "Linux",
@@ -30,7 +31,7 @@
   },
   "timezone": "UTC",
   "rubyplatform": "x86_64-linux",
-  "uptime": "0:04 hours",
+  "uptime": "0:03 hours",
   "kernelrelease": "3.9.5-301.fc19.x86_64",
   "hardwaremodel": "x86_64",
   "ipaddress": "10.0.2.15",
@@ -38,7 +39,7 @@
   "operatingsystemrelease": "19",
   "architecture": "x86_64",
   "operatingsystem": "Fedora",
-  "hostname": "localhost",
+  "hostname": "foo",
   "blockdevice_sda_size": 42949672960,
   "blockdevice_sda_vendor": "ATA",
   "blockdevice_sda_model": "VBOX HARDDISK",
@@ -53,14 +54,14 @@
   "kernelversion": "3.9.5",
   "rubyversion": "2.0.0",
   "memorysize": "491.76 MB",
-  "memoryfree": "378.80 MB",
+  "memoryfree": "379.37 MB",
   "swapsize": "1.03 GB",
   "swapfree": "1.03 GB",
   "swapsize_mb": "1056.00",
-  "swapfree_mb": "1055.75",
+  "swapfree_mb": "1055.77",
   "memorysize_mb": "491.76",
-  "memoryfree_mb": "378.80",
-  "fqdn": "localhost",
+  "memoryfree_mb": "379.37",
+  "fqdn": "foo.example.com",
   "gid": "root",
   "sshdsakey": "AAAAB3NzaC1kc3MAAACBAMDiFm/60TRaEIwhdgSEsyHB0CfUM5i6v58X2rvepbsYiPRRtEAA8EujXJaz0Gn3ssj8TQhYsYqZInyq/xz6Mkq8HGl3+eKnSKGx8hvzUZKSPr+JWowsJphl6HdV55dsvtF/gmf7jcEgX3oNiogIcEP1+3nvLQes8U15HBUuOcpNAAAAFQD/MdqGfo0iNpKb6kNMuan9FOe0NwAAAIEAokoE36quBrL6BDC0Zg1amubh+LIUCCkMLg45kdXbFRa8phvBTZGnBjKTJJThMWJvQSdgDKDiOXOqN8yXswlEfkdQ4Wu2IZx/wPyVPkp2AG9P17ICHQHKH/6rxxjZREiG2c9zkuQFuKje1bJs8FQMpvu2kBH0T6sSJwFp7Eo6pSQAAACAb8aDoTkLFtBqIFvXDbkakB1qszbS+b2NJVX3CZ0Z6QzaYDa6XF064gHvCfzf+38Wc/8oDEAQgKxn5GVRtMFYprhYh2DRK4EGbZ7vEgp1FvwUuXHPYJ3k5feiTnQDziXoTe7EQAb7GQlVqugnWBAQOl4Ug3u7z5GBkhhC/oD7uiw=",
   "sshfp_dsa": "SSHFP 2 1 c968ca815d3222f0c85cb051ba976b33d6446540\nSSHFP 2 2 cb80e6769732416249c4f38cfe838fe2c596ea76dae5095db503a75cf39f3ac3",
@@ -69,7 +70,7 @@
   "id": "root",
   "kernelmajversion": "3.9",
   "macaddress": "08:00:27:4f:f2:bf",
-  "uptime_seconds": 267,
+  "uptime_seconds": 238,
   "rubysitedir": "/usr/local/share/ruby/site_ruby/",
   "facterversion": "2.3.0",
   "partitions": {
@@ -98,9 +99,9 @@
   "physicalprocessorcount": 1,
   "uniqueid": "007f0100",
   "system_uptime": {
-    "seconds": 267,
+    "seconds": 238,
     "hours": 0,
     "days": 0,
-    "uptime": "0:04 hours"
+    "uptime": "0:03 hours"
   }
 }
