@@ -1,3 +1,7 @@
+##2015-01-03 - Release 0.3.1
+- Set fqdn to foo.example.com
+- Add json as runtime dependency
+
 ##2015-01-02 - Release 0.3.0
 - Use json output for facter
 
