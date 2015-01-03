@@ -211,6 +211,7 @@ Add new Operating System support
 There is `Vagrantfile` to automagically populate `facts` directory by spawning a new VM and launches a provisioning scripts.
 
 ```
+$ cd facts
 $ vagrant up
 $ vagrant destroy
 ```
