@@ -16,6 +16,5 @@ Gem::Specification.new do |s|
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
-  # Runtime dependencies, but also probably dependencies of requiring projects
-  #s.add_runtime_dependency 'rspec'
+  s.add_dependency 'json'
 end
