@@ -2,6 +2,8 @@ rspec-puppet-facts
 ==================
 
 [![Build Status](https://travis-ci.org/mcanevet/rspec-puppet-facts.png?branch=master)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
+[![Code Climate](https://codeclimate.com/github/mcanevet/rspec-puppet-facts/badges/gpa.svg)](https://codeclimate.com/github/mcanevet/rspec-puppet-facts)
+[![Gem Version](https://badge.fury.io/rb/rspec-puppet-facts.svg)](http://badge.fury.io/rb/rspec-puppet-facts)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/).
 
