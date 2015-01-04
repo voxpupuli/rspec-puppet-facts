@@ -20,7 +20,7 @@ module RspecPuppetFacts
           if ! File.file?(file)
             warn "Can't find facts for '#{os}' for facter #{facter_minor_version}, skipping..."
           else
-            h[os] = JSON.load(IO.read(file))
+            h[os] = JSON.parse(IO.read(file), :symbolize_names => true)
           end
         end
       end
