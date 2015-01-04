@@ -1,3 +1,6 @@
+##2015-01-04 - Release 0.3.2
+* Symbolize hash keys
+
 ##2015-01-03 - Release 0.3.1
 - Set fqdn to foo.example.com
 - Add json as runtime dependency
