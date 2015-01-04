@@ -1,10 +1,7 @@
 ---
 language: ruby
 sudo: false
-cache:
-  directories:
-    - vendor/bundle
-bundler_args: --path vendor/bundle
+cache: bundler
 script:
   - bundle exec rake spec
 rvm:
