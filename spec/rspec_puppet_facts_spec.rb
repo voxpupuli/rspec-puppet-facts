@@ -11,6 +11,19 @@ describe 'RspecPuppetFacts' do
         it { expect { subject }.to raise_error(StandardError, /Can't find metadata.json/) }
       end
 
+      context 'With a broken metadata.json' do
+
+        context 'Whith missing operatingsystem_support section' do
+          before :all do
+            fixture = File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support')
+            File.expects(:file?).with('metadata.json').returns true
+            File.expects(:read).with('metadata.json').returns fixture
+          end
+
+          it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
+        end
+      end
+
       context 'With a metadata.json' do
         before :all do
           fixture = File.read('spec/fixtures/metadata.json')
