@@ -14,7 +14,8 @@ describe 'RspecPuppetFacts' do
       context 'With a metadata.json' do
         before :all do
           fixture = File.read('spec/fixtures/metadata.json')
-          RspecPuppetFacts.expects(:get_metadata).returns JSON.parse(fixture)
+          File.expects(:file?).with('metadata.json').returns true
+          File.expects(:read).with('metadata.json').returns fixture
         end
 
         it 'should return a hash' do

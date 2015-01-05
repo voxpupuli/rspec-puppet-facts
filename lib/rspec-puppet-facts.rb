@@ -17,7 +17,8 @@ module RspecPuppetFacts
           # TODO: use SemVer here
           facter_minor_version = Facter.version[0..2]
           file = File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os}.facts"))
-          if ! File.file?(file)
+          # Use File.exists? instead of File.file? here so that we can stub File.file?
+          if ! File.exists?(file)
             warn "Can't find facts for '#{os}' for facter #{facter_minor_version}, skipping..."
           else
             h[os] = JSON.parse(IO.read(file), :symbolize_names => true)
