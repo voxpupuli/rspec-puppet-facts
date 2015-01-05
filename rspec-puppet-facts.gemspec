@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls', '~> 0.7'
   s.add_development_dependency 'rake', '~> 10.4'
   s.add_development_dependency 'rspec', '~> 3.1'
+  s.add_development_dependency 'mocha'
   s.add_runtime_dependency 'json', '~> 1.8'
   s.add_runtime_dependency 'facter'
 end
