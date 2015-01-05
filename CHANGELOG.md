@@ -1,3 +1,7 @@
+##2015-01-05 - Release 0.3.3
+- Add facts for OpenSuse 12
+- Add facts for OpenSuse 13
+
 ##2015-01-04 - Release 0.3.2
 * Symbolize hash keys
 
