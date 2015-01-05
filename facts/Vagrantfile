@@ -113,9 +113,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
+  config.vm.define "opensuse-12-x86_64" do |host|
+    host.vm.hostname = "foo.example.com"
+    host.vm.box = "alexeym/opensuse-12.3"
+    host.vm.provision "shell", inline: "zypper install -y rubygems ruby-devel make gcc"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
   config.vm.define "opensuse-13-x86_64" do |host|
     host.vm.hostname = "foo.example.com"
     host.vm.box = "chef/opensuse-13.1"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
+  config.vm.define "amazon-linux64-2014.03" do |host|
+    host.vm.hostname = "foo.example.com"
+    host.vm.box = "amazon-linux64-2014.03"
+    host.vm.box_url = "http://images.geekandi.com/amazon-linux/vagrant-amazon-linux64-2014.03-public-virtualbox.box"
+    host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
+    host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.9.3 && rvm use --create 1.9.3"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
