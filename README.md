@@ -194,6 +194,7 @@ Operating Systems supported
 * Debian 7
 * Debian 8
 * Fedora 19
+* OpenSuse 13
 * Oracle 5
 * Oracle 6
 * Oracle 7
