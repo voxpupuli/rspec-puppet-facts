@@ -49,10 +49,6 @@ module RspecPuppetFacts
     if ! File.file?('metadata.json')
       fail StandardError, "Can't find metadata.json... dunno why"
     end
-    metadata = JSON.parse(File.read('metadata.json'))
-    if metadata.nil?
-      fail StandardError, "Metadata is empty"
-    end
-    metadata
+    JSON.parse(File.read('metadata.json'))
   end
 end

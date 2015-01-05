@@ -11,40 +11,43 @@ describe 'RspecPuppetFacts' do
         it { expect { subject }.to raise_error(StandardError, /Can't find metadata.json/) }
       end
 
-      context 'With a broken metadata.json' do
+      context 'With a metadata.json' do
 
-        context 'Whith missing operatingsystem_support section' do
+        context 'With a broken metadata.json' do
+
+          context 'With missing operatingsystem_support section' do
+            before :all do
+              fixture = File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support')
+              File.expects(:file?).with('metadata.json').returns true
+              File.expects(:read).with('metadata.json').returns fixture
+            end
+
+            it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
+          end
+        end
+
+        context 'With a valid metadata.json' do
           before :all do
-            fixture = File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support')
+            fixture = File.read('spec/fixtures/metadata.json')
             File.expects(:file?).with('metadata.json').returns true
             File.expects(:read).with('metadata.json').returns fixture
           end
 
-          it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
-        end
-      end
-
-      context 'With a metadata.json' do
-        before :all do
-          fixture = File.read('spec/fixtures/metadata.json')
-          File.expects(:file?).with('metadata.json').returns true
-          File.expects(:read).with('metadata.json').returns fixture
-        end
-
-        it 'should return a hash' do
-          expect( on_supported_os().class ).to eq Hash
-        end
-        it 'should have 5 elements' do
-          expect(subject.size).to eq 5
-        end
-        it 'should return supported OS' do
-          expect(subject.keys.sort).to eq [
-            'debian-6-x86_64',
-            'debian-7-x86_64',
-            'redhat-5-x86_64',
-            'redhat-6-x86_64',
-            'redhat-7-x86_64',
-          ]
+          it 'should return a hash' do
+            expect( on_supported_os().class ).to eq Hash
+          end
+          it 'should have 5 elements' do
+            expect(subject.size).to eq 5
+          end
+          it 'should return supported OS' do
+            expect(subject.keys.sort).to eq [
+              'debian-6-x86_64',
+              'debian-7-x86_64',
+              'redhat-5-x86_64',
+              'redhat-6-x86_64',
+              'redhat-7-x86_64',
+            ]
+          end
         end
       end
     end
