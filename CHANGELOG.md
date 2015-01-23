@@ -1,3 +1,9 @@
+##2015-01-23 - Release 0.4.0
+- Add facts for facter 2.4
+- Format json with python's json.tool
+- Improve code coverage in unit tests
+- Test on more version of facter in travis matrix
+
 ##2015-01-05 - Release 0.3.3
 - Add facts for OpenSuse 12
 - Add facts for OpenSuse 13
