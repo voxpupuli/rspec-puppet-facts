@@ -16,11 +16,11 @@ Gem::Specification.new do |s|
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
-  s.add_development_dependency 'mime-types', '~> 1.0' # 2.x dropped Ruby 1.8 support
-  s.add_development_dependency 'coveralls', '~> 0.7'
-  s.add_development_dependency 'rake', '~> 10.4'
-  s.add_development_dependency 'rspec', '~> 3.1'
+  s.add_development_dependency 'mime-types'
+  s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec'
   s.add_development_dependency 'mocha'
-  s.add_runtime_dependency 'json', '~> 1.8'
+  s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'facter'
 end
