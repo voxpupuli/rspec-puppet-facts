@@ -217,8 +217,7 @@ There is `Vagrantfile` to automagically populate `facts` directory by spawning a
 
 ```
 $ cd facts
-$ vagrant up
-$ vagrant destroy
+$ vagrant up --provision
 ```
 
 Create i386 facts from x86_64's ones
