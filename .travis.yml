@@ -16,6 +16,7 @@ env:
   - FACTER_GEM_VERSION="~> 2.1.0"
   - FACTER_GEM_VERSION="~> 2.2.0"
   - FACTER_GEM_VERSION="~> 2.3.0"
+  - FACTER_GEM_VERSION="~> 2.4.0"
 matrix:
   fast_finish: true
   allow_failures:
