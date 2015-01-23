@@ -10,7 +10,7 @@ operatingsystem=$(bundle exec facter operatingsystem | tr '[:upper:]' '[:lower:]
 operatingsystemmajrelease=$(bundle exec facter operatingsystemmajrelease)
 hardwaremodel=$(bundle exec facter hardwaremodel)
 
-for version in 1.6.0 1.7.0 2.0.0 2.1.0 2.2.0 2.3.0; do
+for version in 1.6.0 1.7.0 2.0.0 2.1.0 2.2.0 2.3.0 2.4.0; do
   FACTER_GEM_VERSION="~> ${version}" bundle update
   minor_version=$(echo $version | cut -c1-3)
   output_dir="/vagrant/${minor_version}"
