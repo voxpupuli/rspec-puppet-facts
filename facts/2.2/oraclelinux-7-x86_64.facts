@@ -2,10 +2,10 @@
   "gem_version": "~> 2.2.0",
   "kernel": "Linux",
   "system_uptime": {
-    "seconds": 255,
+    "seconds": 180,
     "hours": 0,
     "days": 0,
-    "uptime": "0:04 hours"
+    "uptime": "0:03 hours"
   },
   "gid": "root",
   "hardwaremodel": "x86_64",
@@ -18,7 +18,7 @@
   "blockdevice_sda_vendor": "ATA",
   "blockdevice_sda_model": "VBOX HARDDISK",
   "blockdevices": "sda",
-  "path": "/home/vagrant/vendor/bundler/ruby/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bin",
+  "path": "/home/vagrant/vendor/bundler/ruby/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.11/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.11/bin",
   "partitions": {
     "sda1": {
       "uuid": "cb4a7e2a-22cc-4b61-a14b-03e04399cfc2",
@@ -39,19 +39,19 @@
   "facterversion": "2.2.0",
   "processors": {
     "models": [
-      "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"
+      "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"
     ],
     "count": 1,
     "physicalcount": 1
   },
-  "uptime_seconds": 255,
-  "uptime": "0:04 hours",
+  "uptime_seconds": 180,
+  "uptime": "0:03 hours",
   "ps": "ps -ef",
   "operatingsystemmajrelease": "7",
   "kernelversion": "3.10.0",
   "virtual": "virtualbox",
   "is_virtual": "true",
-  "fqdn": "foo.example.com",
+  "fqdn": "foo.camptocamp.com",
   "selinux": "false",
   "netmask": "255.255.255.0",
   "interfaces": "enp0s3,lo",
@@ -81,13 +81,13 @@
   "uptime_days": 0,
   "ipaddress": "10.0.2.15",
   "memorysize": "490.41 MB",
-  "memoryfree": "350.23 MB",
+  "memoryfree": "348.04 MB",
   "swapsize": "1.03 GB",
   "swapfree": "1.03 GB",
   "swapsize_mb": "1056.00",
   "swapfree_mb": "1056.00",
   "memorysize_mb": "490.41",
-  "memoryfree_mb": "350.23",
+  "memoryfree_mb": "348.04",
   "filesystems": "xfs",
   "hardwareisa": "x86_64",
   "uniqueid": "00000000",
@@ -106,10 +106,10 @@
   "manufacturer": "innotek GmbH",
   "productname": "VirtualBox",
   "serialnumber": "0",
-  "uuid": "1381DB55-B19C-40E9-A9C8-BEAAE25E9FDA",
+  "uuid": "3F673B4F-DB59-4FB3-9FA5-A4B8AEF0A915",
   "type": "Other",
-  "processor0": "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz",
+  "processor0": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
   "processorcount": "1",
   "kernelmajversion": "3.10",
-  "domain": "example.com"
+  "domain": "camptocamp.com"
 }
