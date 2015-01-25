@@ -1,19 +1,19 @@
 {
   "gem_version": "~> 2.2.0",
-  "uptime_seconds": 80,
+  "uptime_seconds": 126,
   "selinux": "false",
   "kernel": "Linux",
   "network_enp0s3": "10.0.2.0",
   "network_lo": "127.0.0.0",
   "gid": "root",
   "memorysize": "459.09 MB",
-  "memoryfree": "403.79 MB",
+  "memoryfree": "404.41 MB",
   "swapsize": "524.00 MB",
   "swapfree": "524.00 MB",
   "swapsize_mb": "524.00",
   "swapfree_mb": "524.00",
   "memorysize_mb": "459.09",
-  "memoryfree_mb": "403.79",
+  "memoryfree_mb": "404.41",
   "virtual": "virtualbox",
   "is_virtual": "true",
   "architecture": "x86_64",
@@ -42,7 +42,7 @@
   "operatingsystemmajrelease": "13",
   "processors": {
     "models": [
-      "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"
+      "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"
     ],
     "count": 1,
     "physicalcount": 1
@@ -60,7 +60,7 @@
   "id": "root",
   "kernelversion": "3.11.6",
   "domain": "example.com",
-  "processor0": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
+  "processor0": "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz",
   "processorcount": "1",
   "ipaddress": "10.0.2.15",
   "filesystems": "ext2,ext3,ext4,iso9660",
@@ -69,13 +69,13 @@
   "operatingsystemrelease": "13.1",
   "fqdn": "foo.example.com",
   "system_uptime": {
-    "seconds": 80,
+    "seconds": 126,
     "hours": 0,
     "days": 0,
-    "uptime": "0:01 hours"
+    "uptime": "0:02 hours"
   },
   "macaddress": "08:00:27:26:48:BF",
-  "uptime": "0:01 hours",
+  "uptime": "0:02 hours",
   "ps": "ps -ef",
   "uptime_days": 0,
   "kernelrelease": "3.11.6-4-default",

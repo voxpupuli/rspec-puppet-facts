@@ -26,7 +26,7 @@
   "kernel": "Linux",
   "sshfp_dsa": "SSHFP 2 1 3dfd901b17745d7e5e8af9774212767f4e9aa91d\nSSHFP 2 2 db04c64ae92d848bd0c1a624a1202005154dde37647f7e0472b0d0e8071aaa98",
   "network_eth0": "10.0.2.0",
-  "uptime_seconds": 182,
+  "uptime_seconds": 126,
   "facterversion": "2.3.0",
   "swapsize_mb": "455.99",
   "blockdevices": "sda,sr0,sr1",
@@ -35,10 +35,10 @@
   "interfaces": "eth0,lo",
   "gem_version": "~> 2.3.0",
   "macaddress_eth0": "08:00:27:50:07:13",
-  "uuid": "5076CE0E-0C58-4166-979B-0D46E09EBC87",
+  "uuid": "6BD712AB-45B7-403C-A799-20116C0DF4BB",
   "is_virtual": true,
   "manufacturer": "innotek GmbH",
-  "uptime": "0:03 hours",
+  "uptime": "0:02 hours",
   "sshdsakey": "AAAAB3NzaC1kc3MAAACBAPoKlwfUXKnNX5H2IPn9K/D/gZobBp0Y6VxteNrLn2sLMb55gyqWV51vfJCQVghHqeeJ254vaS4WKvAezNwluGoSMew7Gpv3pudgZ3anjXdazOmzN74QPvsbM65tCPw2b0z97BkRZ8Yjk2sP88IHszThUeDvHAffqwWTDhlcMSuXAAAAFQC/6QXdVUmEvHAzQmt1Y2LXWePj8wAAAIAhbJaCqGgv7Oa9BoWm7LkFcx7rNkUKK7Ixb6HUTFYPsusgbeZXkAE4nYRCuYVoUMTVSPaAED12r+8S51qKz/zyggrsHJp+vmKGI0eWU8CPaA/VctVnaVCz+vriTje3nMuc+boRO3rrYfHjPwmmOKg5+Vdtj1UpcPdYrUKJtVP+QQAAAIALXeYw8Sd9qSemTQ4WO9cwQYwkzoJ8mXKGTDHgMo+hgnWDhllQJdeyiqOw1qi6ycvt0hIyfEULDoH/LoP6tPtpPsX6ls6UiLNy/e6h++SyQAZi35GKj3g+tZ+aFL8OgYTakzxP9NVs9HwIDhJ+yAFQnW/MX0Jk/UrE/+mC9YLunQ==",
   "macaddress": "08:00:27:50:07:13",
   "timezone": "UTC",
@@ -46,12 +46,12 @@
   "hardwaremodel": "x86_64",
   "processors": {
     "models": [
-      "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"
+      "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"
     ],
     "physicalcount": 1,
     "count": 1
   },
-  "path": "/home/vagrant/vendor/bundler/ruby/1.8/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.11/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.11/bin",
+  "path": "/home/vagrant/vendor/bundler/ruby/1.8/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin",
   "boardmanufacturer": "Oracle Corporation",
   "fqdn": "foo.example.com",
   "blockdevice_sr0_model": "CD-ROM",
@@ -62,10 +62,10 @@
   "processorcount": 1,
   "memorysize": "244.90 MB",
   "system_uptime": {
-    "seconds": 182,
+    "seconds": 126,
     "days": 0,
     "hours": 0,
-    "uptime": "0:03 hours"
+    "uptime": "0:02 hours"
   },
   "partitions": {
     "sda1": {
@@ -105,21 +105,21 @@
   "mtu_eth0": 1500,
   "network_lo": "127.0.0.0",
   "rubyversion": "1.8.7",
-  "memoryfree_mb": "195.40",
+  "memoryfree_mb": "200.44",
   "ipaddress": "10.0.2.15",
   "bios_release_date": "12/01/2006",
   "boardproductname": "VirtualBox",
   "lsbdistdescription": "Debian GNU/Linux 6.0.7 (squeeze)",
   "lsbdistid": "Debian",
   "swapsize": "455.99 MB",
-  "processor0": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
+  "processor0": "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz",
   "blockdevice_sda_vendor": "ATA",
   "blockdevice_sr1_model": "CD-ROM",
   "swapfree_mb": "455.99",
   "architecture": "amd64",
   "blockdevice_sda_model": "VBOX HARDDISK",
   "selinux": false,
-  "memoryfree": "195.40 MB",
+  "memoryfree": "200.44 MB",
   "uptime_hours": 0,
   "domain": "example.com",
   "blockdevice_sr1_size": 1073741312,
