@@ -1,3 +1,6 @@
+##2015-02-22 - Release 0.4.1
+- Really useless release :-)
+
 ##2015-01-23 - Release 0.4.0
 - Add facts for facter 2.4
 - Format json with python's json.tool

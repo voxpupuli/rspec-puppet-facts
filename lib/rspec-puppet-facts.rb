@@ -52,3 +52,10 @@ module RspecPuppetFacts
     JSON.parse(File.read('metadata.json'))
   end
 end
+
+RSpec.configure do |c|
+  begin
+    c.formatter = 'NyanCatFormatter'
+  rescue LoadError
+  end
+end

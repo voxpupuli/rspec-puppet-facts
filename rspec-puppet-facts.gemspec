@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha'
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'facter'
+  s.add_runtime_dependency 'nyan-cat-formatter' if Date.today.strftime('%m%d') == '0401'
 end
