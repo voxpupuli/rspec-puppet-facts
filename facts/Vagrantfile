@@ -136,6 +136,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "pkg install -y devel/ruby-gems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
-    #host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
 end
