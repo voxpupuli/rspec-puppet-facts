@@ -1,7 +1,7 @@
 {
   "gem_version": "~> 2.1.0",
   "uptime_hours": 0,
-  "uptime": "0:09 hours",
+  "uptime": "0:00 hours",
   "zfs_version": "5",
   "interfaces": "em0,em1,lo0",
   "kernel": "FreeBSD",
@@ -52,7 +52,7 @@
   "network_lo0": "127.0.0.0",
   "macaddress": "08:00:27:d1:4c:66",
   "ipaddress": "10.0.2.15",
-  "uptime_seconds": 555,
+  "uptime_seconds": 59,
   "fqdn": "foo.example.com",
   "rubysitedir": "/usr/local/lib/ruby/site_ruby/2.0",
   "processorcount": "1",
@@ -64,12 +64,12 @@
   "uptime_days": 0,
   "osfamily": "FreeBSD",
   "memorysize": "487.11 MB",
-  "memoryfree": "229.85 MB",
+  "memoryfree": "341.32 MB",
   "swapsize": "2.00 GB",
   "swapfree": "2.00 GB",
   "swapsize_mb": "2048.00",
   "swapfree_mb": "2048.00",
   "memorysize_mb": "487.11",
-  "memoryfree_mb": "229.85",
+  "memoryfree_mb": "341.32",
   "id": "root"
 }

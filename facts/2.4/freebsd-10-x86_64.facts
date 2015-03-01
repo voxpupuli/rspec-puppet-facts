@@ -12,10 +12,10 @@
   "osfamily": "FreeBSD",
   "hostname": "foo",
   "facterversion": "2.4.1",
-  "uptime_seconds": 581,
+  "uptime_seconds": 79,
   "rubyversion": "2.0.0",
   "fqdn": "foo.example.com",
-  "uptime": "0:09 hours",
+  "uptime": "0:01 hours",
   "kernelversion": "10.0",
   "sshdsakey": "AAAAB3NzaC1kc3MAAACBAJifA65nyG+g8H6JDNyYFgXl6elVKVFCmFkpqxVewsqKQQUxMTBaViGjmw5DB5/ApMBJiRf74kd7IfgdXLXTkDxMvhbdKYQLqWyOUztF6kynpcu8CbhNipFq/MpzQ8G9eveNeAjcGFGYzqd9mJp9clxWX6dekyu/Mun4A7uMXo5fAAAAFQDJa/uaWDk1kfmvNLw4QxIal82d3wAAAIATMG/MzOJXhqi4cpGAN6YokOk1Z4cJB0LFoqv3GNmQkstgySvkJ+w/6kVry+YNInpMp79v9dJwAK0/Xs7cdizVu2Y5gyq+6jbjAS28vQaYkOvtRhTFYIaq4mYmV2yonuPvVQgII1GsYd3mcI1hRTYNMItx5e8NjS2vh9ZzThTy/AAAAIAnN5qSKZlFa+suWNys+W+5i3pBFEksIokobL9hwgw+0Z/l4LGQr5IzMlpixrHAvs155Y6xJQ3VwC2Wfu3GjJPe3foSQNVCp22tWsxu8ZENYiBN09R7gG3JnBrH6FObYv+HiJTj7NoNv7Nwyx+E7oLrCsyOCtzo/peuAbLk6uZ01A==",
   "sshfp_dsa": "SSHFP 2 1 e499d3294e252b880b8fda95910dc1da314a7b40\nSSHFP 2 2 612cd54d91420ab59be7f3f5af7f7530a7a3765cbad8590605ec834797973ad3",
@@ -46,10 +46,10 @@
   "domain": "example.com",
   "operatingsystemrelease": "10.0-RELEASE",
   "system_uptime": {
-    "seconds": 581,
+    "seconds": 79,
     "hours": 0,
     "days": 0,
-    "uptime": "0:09 hours"
+    "uptime": "0:01 hours"
   },
   "processors": {
     "count": 1
@@ -70,13 +70,13 @@
   "mtu_lo0": 16384,
   "operatingsystemmajrelease": "10",
   "memorysize": "487.11 MB",
-  "memoryfree": "229.71 MB",
+  "memoryfree": "341.51 MB",
   "swapsize": "2.00 GB",
   "swapfree": "2.00 GB",
   "swapsize_mb": "2048.00",
   "swapfree_mb": "2048.00",
   "memorysize_mb": "487.11",
-  "memoryfree_mb": "229.71",
+  "memoryfree_mb": "341.51",
   "ipaddress": "10.0.2.15",
   "id": "root",
   "path": "/usr/home/vagrant/vendor/bundler/ruby/2.0/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/root/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin",
