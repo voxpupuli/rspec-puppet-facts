@@ -6,10 +6,10 @@
   "virtual": "virtualbox",
   "is_virtual": "true",
   "system_uptime": {
-    "seconds": 528,
+    "seconds": 304,
     "hours": 0,
     "days": 0,
-    "uptime": "0:08 hours"
+    "uptime": "0:05 hours"
   },
   "lsbmajdistrelease": "8",
   "architecture": "i386",
@@ -68,12 +68,12 @@
   "kernelrelease": "3.16.0-4-i386",
   "processors": {
     "models": [
-      "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"
+      "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"
     ],
     "count": 1,
     "physicalcount": 1
   },
-  "processor0": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
+  "processor0": "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz",
   "processorcount": "1",
   "lsbdistrelease": "8.0",
   "network_eth0": "10.0.2.0",
@@ -89,13 +89,13 @@
   "ps": "ps -ef",
   "lsbdistdescription": "Debian GNU/Linux 8.0 (jessie)",
   "memorysize": "1000.46 MB",
-  "memoryfree": "860.90 MB",
+  "memoryfree": "881.87 MB",
   "swapsize": "383.00 MB",
   "swapfree": "383.00 MB",
   "swapsize_mb": "383.00",
   "swapfree_mb": "383.00",
   "memorysize_mb": "1000.46",
-  "memoryfree_mb": "860.90",
+  "memoryfree_mb": "881.87",
   "uptime_hours": 0,
   "osfamily": "Debian",
   "hardwareisa": "unknown",
@@ -108,13 +108,13 @@
   "manufacturer": "innotek GmbH",
   "productname": "VirtualBox",
   "serialnumber": "0",
-  "uuid": "1691025D-AD72-47DC-9D93-14998515FD9D",
+  "uuid": "7A23EF82-A0B5-4200-BA48-12423153B8DD",
   "type": "Other",
   "fqdn": "foo.example.com",
   "rubysitedir": "/usr/local/rvm/rubies/ruby-1.9.3-p551/lib/ruby/site_ruby/1.9.1",
-  "uptime_seconds": 528,
-  "path": "/home/vagrant/vendor/bundler/ruby/1.9.1/bin:/usr/local/rvm/gems/ruby-1.9.3-p551/bin:/usr/local/rvm/gems/ruby-1.9.3-p551@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.11/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.11/bin",
-  "uptime": "0:08 hours",
+  "uptime_seconds": 304,
+  "path": "/home/vagrant/vendor/bundler/ruby/1.9.1/bin:/usr/local/rvm/gems/ruby-1.9.3-p551/bin:/usr/local/rvm/gems/ruby-1.9.3-p551@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/bin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin",
+  "uptime": "0:05 hours",
   "kernelversion": "3.16.0",
   "partitions": {
     "sda1": {

@@ -22,7 +22,7 @@
   "blockdevice_sr0_size": 1073741312,
   "kernel": "Linux",
   "network_eth0": "10.0.2.0",
-  "uptime_seconds": 102,
+  "uptime_seconds": 201,
   "facterversion": "2.3.0",
   "sshfp_dsa": "SSHFP 2 1 bfa8a19ebd96e4fdbbd6f9e78794dfe83b668a6d\nSSHFP 2 2 b56c07e128c0221a8bea3b423c9022c03f6f8e3dd694057f46c2653716ed4449",
   "netmask_eth0": "255.255.255.0",
@@ -30,13 +30,13 @@
   "boardserialnumber": "0",
   "swapsize_mb": "525.52",
   "is_virtual": true,
-  "uuid": "E924C61E-9885-4418-865F-1F117202AADF",
+  "uuid": "0D3BDCBA-4E86-47D7-B780-8E59BF828FD5",
   "gem_version": "~> 2.3.0",
   "interfaces": "eth0,lo",
   "macaddress_eth0": "08:00:27:29:A9:D5",
   "sshdsakey": "AAAAB3NzaC1kc3MAAACBAIb2IFEUKqBgr0dR8WcPkF0jak4cRdw0SCKeB94stai3mC/FniW4ZdnNN+i5RiU5x++stx9VtSM8pzqeGGm06gvA3JmSZgc27ZMJb6PMyPwcg4hJZ3++NL0KgZc93ygv7Z8IutWN7zsC9/cP00pOLzz/U6txVDjCMqRqLP8MGvnDAAAAFQC63Ev2PaqEu7HwAwg5C2xzbuqcQQAAAIAfqTF1Xz2valVTSUlE56k8S0YwHmrs5hGTp7pAZtw47mRgUeqY2v8Icz+Ya1OsUkI2XSj7VXBBxPkm+5NVhQ3YjEXu97A819Qug358cdhBeaQULqGiC9TLMbNZthlwBqw14dOkgGAdZDH/evGbqVaoOiN/0g51RSFFFsLFH0gOTwAAAIBkc4/lgKp8SJEr4deCKm7D7C1OPsZhRkVHwaD1S544BlVumem95m3tBLHI5QI9Y3VSTGefN0UYolXHiyoBnk0XWMDu5/YeqSfPIscuNFwcCdfLiADh7iYVF+SGWMb7srCu66SIPo+PCunlzVpVyAAwHMM/g8qt1212ArL9l8gPDQ==",
   "macaddress": "08:00:27:29:A9:D5",
-  "uptime": "0:01 hours",
+  "uptime": "0:03 hours",
   "manufacturer": "innotek GmbH",
   "timezone": "CET",
   "mtu_lo": 16436,
@@ -44,13 +44,13 @@
   "boardmanufacturer": "Oracle Corporation",
   "processors": {
     "models": [
-      "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz"
+      "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz"
     ],
     "physicalcount": 1,
     "count": 1
   },
   "hardwaremodel": "i386",
-  "path": "/home/vagrant/vendor/bundler/ruby/1.8/bin:/home/vagrant/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/usr/lib/mit/bin:/usr/lib/mit/sbin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.11/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.11/bin",
+  "path": "/home/vagrant/vendor/bundler/ruby/1.8/bin:/home/vagrant/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/usr/lib/mit/bin:/usr/lib/mit/sbin:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin",
   "processorcount": 1,
   "blockdevice_sr0_model": "CD-ROM",
   "uptime_days": 0,
@@ -59,10 +59,10 @@
   "operatingsystemrelease": "11.1",
   "sshrsakey": "AAAAB3NzaC1yc2EAAAABIwAAAIEA26RMrxJrySPP2f0Aa8hWT26O6QoSa+ElkcWV6VsHVMe/ouufrKNlzvC5z85RIPK8hzUJpld79SLkJJXxMgauDyQLFRa+5CzxDe+Q5Xi4nzUoHSMYnWte26+GmVjseKkbSyWpdY0W638vRDO9oR1ZQukcHkZ11bJRbA/K6naYWCE=",
   "system_uptime": {
-    "seconds": 102,
+    "seconds": 201,
     "days": 0,
     "hours": 0,
-    "uptime": "0:01 hours"
+    "uptime": "0:03 hours"
   },
   "memorysize": "998.85 MB",
   "gid": "root",
@@ -80,7 +80,7 @@
     }
   },
   "ipaddress": "10.0.2.15",
-  "memoryfree_mb": "907.22",
+  "memoryfree_mb": "914.07",
   "network_lo": "127.0.0.0",
   "rubyversion": "1.8.7",
   "mtu_eth0": 1500,
@@ -97,7 +97,7 @@
   "bios_release_date": "12/01/2006",
   "boardproductname": "VirtualBox",
   "swapsize": "525.52 MB",
-  "processor0": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
+  "processor0": "Intel(R) Core(TM)2 Quad CPU    Q6700  @ 2.66GHz",
   "blockdevice_sr1_model": "CD-ROM",
   "blockdevice_sda_vendor": "ATA",
   "swapfree_mb": "525.52",
@@ -106,7 +106,7 @@
   "blockdevice_sda_model": "VBOX HARDDISK",
   "selinux": false,
   "uptime_hours": 0,
-  "memoryfree": "907.22 MB",
+  "memoryfree": "914.07 MB",
   "blockdevice_sr1_size": 1073741312,
   "operatingsystem": "SLES",
   "blockdevice_sr1_vendor": "VBOX",
