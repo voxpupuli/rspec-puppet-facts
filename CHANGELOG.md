@@ -1,3 +1,6 @@
+##2015-03-06 - Release 0.5.0
+- Add facts for FreeBSD 10
+
 ##2015-02-22 - Release 0.4.1
 - Really useless release :-)
 
