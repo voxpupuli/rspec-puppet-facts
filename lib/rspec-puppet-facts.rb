@@ -55,7 +55,7 @@ end
 
 RSpec.configure do |c|
   begin
-    c.formatter = 'NyanCatFormatter'
+    c.formatter = 'NyanCatFormatter' if Date.today.strftime('%m%d') == '0401'
   rescue LoadError
   end
 end
