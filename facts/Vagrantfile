@@ -138,4 +138,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
+  config.vm.define "freebsd-9-x86_64" do |host|
+    host.vm.hostname = "foo.example.com"
+    host.vm.box = "chef/freebsd-9.2"
+    host.vm.network :private_network, ip: '10.0.0.2'
+    host.vm.synced_folder ".", "/vagrant", :nfs => true
+    host.ssh.shell = '/bin/sh'
+    host.vm.provision "shell", inline: "pkg_add -F -r ruby19-gems"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
 end
