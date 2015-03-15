@@ -1,3 +1,6 @@
+##2015-03-06 - Release 0.6.0
+- Add facts for FreeBSD 9
+
 ##2015-03-06 - Release 0.5.0
 - Add facts for FreeBSD 10
 

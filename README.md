@@ -195,6 +195,7 @@ Operating Systems supported
 * Debian 7
 * Debian 8
 * Fedora 19
+* FreeBSD 9
 * FreeBSD 10
 * OpenSuse 12
 * OpenSuse 13
