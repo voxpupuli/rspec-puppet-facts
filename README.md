@@ -13,6 +13,8 @@ Simplify your unit tests by looping on every supported Operating System and popu
 Before
 ------
 
+### Testing a class or define
+
 ```ruby
 require 'spec_helper'
 
@@ -27,7 +29,7 @@ describe 'myclass' do
         ...
       }
       
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       ...
     end
   end
@@ -41,7 +43,7 @@ describe 'myclass' do
         ...
       }
       
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       ...
     end
   end
@@ -50,8 +52,38 @@ describe 'myclass' do
 end
 ```
 
+### Testing a type or provider
+
+```ruby
+require 'spec_helper'
+
+describe Puppet::Type.type(:mytype) do
+
+  context "on debian-7-x86_64" do
+    before :each do
+      Facter.stubs(:value).with(:osfamily).returns 'Debian'
+      Facter.stubs(:value).with(:operatingsystem).returns 'Debian'
+      Facter.stubs(:value).with(:operatingsystemmajrelease).returns '7'
+    end
+    ...
+  end
+
+  context "on redhat-7-x86_64" do
+    before :each do
+      Facter.stubs(:value).with(:osfamily).returns 'RedHat'
+      Facter.stubs(:value).with(:operatingsystem).returns 'RedHat'
+      Facter.stubs(:value).with(:operatingsystemmajrelease).returns '7'
+    end
+    ...
+  end
+end
+
+```
+
 After
 -----
+
+### Testing a class or define
 
 ```ruby
 require 'spec_helper'
@@ -64,17 +96,44 @@ describe 'myclass' do
         facts
       end
       
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       ...
       case facts[:osfamily]
       when 'Debian'
         ...
-      when 'RedHat'
+      else
         ...
       end
     end
   end
 end
+```
+### Testing a type or provider
+
+```ruby
+require 'spec_helper'
+
+describe Puppet::Type.type(:mytype) do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      before :each do
+        facts.each do |k, v|
+          Facter.stubs(:value).with(k).returns v
+        end
+      end
+      ...
+      case facts[:osfamily]
+      when 'Debian'
+        ...
+      else
+        ...
+      end
+      ...
+    end
+  end
+end
+
 ```
 
 By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems and tests only with `x86_64`, but you can specify for each context which ones you want to use:
@@ -108,7 +167,7 @@ describe 'myclass' do
         facts
       end
       
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       ...
     end
   end
@@ -130,7 +189,7 @@ describe 'myclass' do
         })
       end
       
-      it { should compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       ...
     end
   end
