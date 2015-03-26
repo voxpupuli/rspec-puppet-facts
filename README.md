@@ -118,8 +118,9 @@ describe Puppet::Type.type(:mytype) do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       before :each do
+        Facter.clear
         facts.each do |k, v|
-          Facter.stubs(:value).with(k).returns v
+          Facter.stubs(:fact).with(k).returns Facter.add(k) { setcode { v } }
         end
       end
       ...
