@@ -10,10 +10,10 @@ Based on an original idea from [apenney](https://github.com/apenney/puppet_facts
 
 Simplify your unit tests by looping on every supported Operating System and populating facts.
 
-Before
-------
+Testing a class or define
+-------------------------
 
-### Testing a class or define
+### Before
 
 ```ruby
 require 'spec_helper'
@@ -52,7 +52,36 @@ describe 'myclass' do
 end
 ```
 
-### Testing a type or provider
+### After
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+      
+      it { is_expected.to compile.with_all_deps }
+      ...
+      case facts[:osfamily]
+      when 'Debian'
+        ...
+      else
+        ...
+      end
+    end
+  end
+end
+```
+
+Testing a type or provider
+--------------------------
+
+### Before
 
 ```ruby
 require 'spec_helper'
@@ -80,35 +109,7 @@ end
 
 ```
 
-After
------
-
-### Testing a class or define
-
-```ruby
-require 'spec_helper'
-
-describe 'myclass' do
-
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      let(:facts) do
-        facts
-      end
-      
-      it { is_expected.to compile.with_all_deps }
-      ...
-      case facts[:osfamily]
-      when 'Debian'
-        ...
-      else
-        ...
-      end
-    end
-  end
-end
-```
-### Testing a type or provider
+### After
 
 ```ruby
 require 'spec_helper'
