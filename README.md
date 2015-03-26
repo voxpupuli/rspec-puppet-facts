@@ -1,9 +1,10 @@
 rspec-puppet-facts
 ==================
 
-[![Build Status](https://travis-ci.org/mcanevet/rspec-puppet-facts.png?branch=master)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
-[![Code Climate](https://codeclimate.com/github/mcanevet/rspec-puppet-facts/badges/gpa.svg)](https://codeclimate.com/github/mcanevet/rspec-puppet-facts)
-[![Gem Version](https://badge.fury.io/rb/rspec-puppet-facts.svg)](http://badge.fury.io/rb/rspec-puppet-facts)
+[![Build Status](https://img.shields.io/travis/mcanevet/rspec-puppet-facts/master.svg)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
+[![Code Climate](https://img.shields.io/codeclimate/github/mcanevet/rspec-puppet-facts/flow.svg)](https://codeclimate.com/github/mcanevet/rspec-puppet-facts)
+[![Gem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
+[![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/).
