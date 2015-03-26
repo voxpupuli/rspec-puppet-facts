@@ -143,7 +143,7 @@ Testing a function
 
 ### Before
 
-```
+```ruby
 require 'spec_helper'
 
 describe Puppet::Parser::Functions.function(:myfunction) do
@@ -175,7 +175,7 @@ end
 
 ### After
 
-```
+```ruby
 require 'spec_helper'
 
 describe Puppet::Parser::Functions.function(:myfunction) do
