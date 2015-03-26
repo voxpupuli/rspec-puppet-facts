@@ -138,6 +138,65 @@ end
 
 ```
 
+Testing a function
+------------------
+
+### Before
+
+```
+require 'spec_helper'
+
+describe Puppet::Parser::Functions.function(:myfunction) do
+  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
+
+  context "on debian-7-x86_64" do
+    before :each do
+      scope.stubs(:lookupvar).with('::osfamily').returns('Debian')
+      scope.stubs(:lookupvar).with('osfamily').returns('Debian')
+      scope.stubs(:lookupvar).with('::operatingsystem').returns('Debian')
+      scope.stubs(:lookupvar).with('operatingsystem').returns('Debian')
+      ...
+    end
+    ...
+  end
+
+  context "on redhat-7-x86_64" do
+    before :each do
+      scope.stubs(:lookupvar).with('::osfamily').returns('RedHat')
+      scope.stubs(:lookupvar).with('osfamily').returns('RedHat')
+      scope.stubs(:lookupvar).with('::operatingsystem').returns('RedHat')
+      scope.stubs(:lookupvar).with('operatingsystem').returns('RedHat')
+      ...
+    end
+    ...
+  end
+end
+```
+
+### After
+
+```
+require 'spec_helper'
+
+describe Puppet::Parser::Functions.function(:myfunction) do
+  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      before :each do
+        facts.each do |k, v|
+          scope.stubs(:lookupvar).with("::#{k}").returns(v)
+          scope.stubs(:lookupvar).with(k).returns(v)
+        end
+      end
+    end
+    
+    ...
+    
+  end
+end
+```
+
 By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems and tests only with `x86_64`, but you can specify for each context which ones you want to use:
 
 ```ruby
