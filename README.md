@@ -91,18 +91,20 @@ describe Puppet::Type.type(:mytype) do
 
   context "on debian-7-x86_64" do
     before :each do
-      Facter.stubs(:value).with(:osfamily).returns 'Debian'
-      Facter.stubs(:value).with(:operatingsystem).returns 'Debian'
-      Facter.stubs(:value).with(:operatingsystemmajrelease).returns '7'
+      Facter.clear
+      Facter.stubs(:fact).with(:osfamily).returns Facter.add(:osfamily) { setcode { 'Debian' } }
+      Facter.stubs(:fact).with(:operatingsystem).returns Facter.add(:operatingsystem) { setcode { 'Debian' } }
+      Facter.stubs(:fact).with(:operatingsystemmajrelease).returns Facter.add(:operatingsystemmajrelease) { setcode { '7' } }
     end
     ...
   end
 
   context "on redhat-7-x86_64" do
     before :each do
-      Facter.stubs(:value).with(:osfamily).returns 'RedHat'
-      Facter.stubs(:value).with(:operatingsystem).returns 'RedHat'
-      Facter.stubs(:value).with(:operatingsystemmajrelease).returns '7'
+      Facter.clear
+      Facter.stubs(:fact).with(:osfamily).returns Facter.add(:osfamily) { setcode { 'RedHat' } }
+      Facter.stubs(:fact).with(:operatingsystem).returns Facter.add(:operatingsystem) { setcode { 'RedHat' } }
+      Facter.stubs(:fact).with(:operatingsystemmajrelease).returns Facter.add(:operatingsystemmajrelease) { setcode { '7' } }
     end
     ...
   end
