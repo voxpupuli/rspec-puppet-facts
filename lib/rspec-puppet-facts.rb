@@ -6,7 +6,7 @@ module RspecPuppetFacts
   def on_supported_os( opts = {} )
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
-    opts[:factslocation] ||= File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os}.facts"))
+    opts[:factslocation] ||= File.expand_path(File.join(File.dirname(__FILE__), "../facts/"))
 
     h = {}
 
@@ -17,7 +17,7 @@ module RspecPuppetFacts
           os = "#{operatingsystem}-#{operatingsystemmajrelease.split(" ")[0]}-#{hardwaremodel}"
           # TODO: use SemVer here
           facter_minor_version = Facter.version[0..2]
-          file = :factslocation
+          file = "#{opts[:factslocation]}/#{facter_minor_version}/#{os}.facts"
           # Use File.exists? instead of File.file? here so that we can stub File.file?
           if ! File.exists?(file)
             warn "Can't find facts for '#{os}' for facter #{facter_minor_version}, skipping..."
