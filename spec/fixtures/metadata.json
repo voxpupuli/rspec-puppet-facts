@@ -17,6 +17,10 @@
       "operatingsystemrelease": [
         "6",
         "7"
+      ],
+      "hardware": [ 
+	"x86_64",
+	"i386"
       ]
     },
     {
