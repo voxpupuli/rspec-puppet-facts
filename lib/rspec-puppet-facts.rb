@@ -52,10 +52,3 @@ module RspecPuppetFacts
     JSON.parse(File.read('metadata.json'))
   end
 end
-
-RSpec.configure do |c|
-  begin
-    c.formatter = 'NyanCatFormatter' if Date.today.strftime('%m%d') == '0401'
-  rescue LoadError
-  end
-end
