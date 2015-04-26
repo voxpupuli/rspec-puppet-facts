@@ -1,7 +1,7 @@
 {
-  "gem_version": "~> 2.4.0",
+  "gem_version": "~> 2.3.0",
   "physicalprocessorcount": 1,
-  "hardwaremodel": "i386",
+  "hardwaremodel": "x86_64",
   "operatingsystemrelease": "3.17.1-1-ARCH",
   "processors": {
     "models": [
@@ -14,7 +14,7 @@
     "physicalcount": 1
   },
   "kernel": "Linux",
-  "architecture": "i386",
+  "architecture": "x86_64",
   "operatingsystem": "Archlinux",
   "os": {
     "name": "Archlinux",
@@ -50,7 +50,7 @@
   "filesystems": "ext2,ext3,ext4",
   "kernelversion": "3.17.1",
   "selinux": false,
-  "uptime_seconds": 171,
+  "uptime_seconds": 124,
   "uniqueid": "007f0100",
   "sshdsakey": "AAAAB3NzaC1kc3MAAACBAPinyAL1PJuvq0UC2XR9XaAWXjTk185XXMRe6kPaiKQORM1GCUE7/7pauu+9E+ZrAZQot8Zf+1y0duoyfTETNoDqwd0eoHLFuJe6BvX7H2uBJtR+yvLgUWbO1scAwi3iyRrJpu1QeCbmfF5iLOWs2dFVR3hliW5SbvODO1Se9EInAAAAFQCI7GIuk+8o2G1Z6IlaQjjY9eNi8wAAAIEA1ktx5s0AoFts25kiDyn92YGBbslRjmmjrpiq4ZfnHmzAows3umO4JcJkn+G5KVXbwXbAXZSQMfdLe/uF8p043uAL/9iyQ78lBRLIVVgDHY/GPuMXR0x55FLlWd9jejIaZTrUjKcwkYVaohEyi2Yk3a/bHECjzj4tyRywVOnKQLEAAACAYvYAtlheRNHuNJGFrX/pIvM1m1UhPIf0BehRE6nBnRHBkrPOYPgdquwgMbHE3dqBou96uyo9R+/PjY5M5FQBN6b3mte8dhboCvtKFMnt6c3unJ7wJrRgpRHgJispAWKXbkCkzKUoGDfgktTlrWrc6XZSC53wy1EcN0GORMURguQ=",
   "sshfp_dsa": "SSHFP 2 1 2b87c7bab2ad1ba52cc3721f93f2bded9d10c6b7\nSSHFP 2 2 4d26708d214bce4cd5b7defd0f9f191ab2ccfd3bf65c20d1141a79e5a9bb62d2",
@@ -60,7 +60,7 @@
   "sshfp_ecdsa": "SSHFP 3 1 11f706cf11b667dc861bd8802520cb95a163e337\nSSHFP 3 2 b6980ca450eded201afabbafea99370a9ecad5cc2a1507aba8ba065436440c15",
   "sshed25519key": "AAAAC3NzaC1lZDI1NTE5AAAAIM/P3CCojy8wcLXvMDIIyUpitRxpxXAcZZQWoS5zRphw",
   "sshfp_ed25519": "SSHFP 4 1 68e399fca6b9e5a319a73184883b8a5dc14a5587\nSSHFP 4 2 01ed705785ac5f57e14888f378edcf41fb4e4a52bb5e44d90015b3e7abc14f25",
-  "rubyplatform": "i386-linux",
+  "rubyplatform": "x86_64-linux",
   "partitions": {
     "sda1": {
       "uuid": "0bb2fd3d-f4bb-49b3-9d1c-41eb2138b4ba",
@@ -81,7 +81,7 @@
   "is_virtual": true,
   "uptime_hours": 0,
   "path": "/home/vagrant/vendor/bundler/ruby/2.1.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/gems/1.8/bin/:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin",
-  "timezone": "AEDT",
+  "timezone": "AEST",
   "uptime_days": 0,
   "network_eth0": "10.0.2.0",
   "network_lo": "127.0.0.0",
@@ -90,20 +90,20 @@
   "hostname": "foo",
   "ps": "ps -ef",
   "memorysize": "493.76 MB",
-  "memoryfree": "401.34 MB",
+  "memoryfree": "400.88 MB",
   "swapsize": "0.00 MB",
   "swapfree": "0.00 MB",
   "swapsize_mb": "0.00",
   "swapfree_mb": "0.00",
   "memorysize_mb": "493.76",
-  "memoryfree_mb": "401.34",
+  "memoryfree_mb": "400.88",
   "system_uptime": {
-    "seconds": 171,
+    "seconds": 124,
     "hours": 0,
     "days": 0,
     "uptime": "0:02 hours"
   },
-  "facterversion": "2.4.0",
+  "facterversion": "2.3.0",
   "blockdevice_sda_size": 10737418240,
   "blockdevice_sda_vendor": "ATA",
   "blockdevice_sda_model": "VBOX HARDDISK",
