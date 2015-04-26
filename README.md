@@ -320,6 +320,7 @@ Operating Systems supported
 * Fedora 19
 * FreeBSD 9
 * FreeBSD 10
+* Gentoo
 * OpenSuse 12
 * OpenSuse 13
 * Oracle 5

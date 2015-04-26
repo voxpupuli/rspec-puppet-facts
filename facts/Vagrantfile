@@ -4,6 +4,20 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+$install_rvm = <<SCRIPT
+# Install mpapis public key
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 ||
+curl -sSL https://rvm.io/mpapis.asc | gpg --import - &&
+
+# Run the installer
+\\curl -sSL https://get.rvm.io | bash -s stable &&
+
+# Install Ruby
+source /etc/profile.d/rvm.sh &&
+rvm install 1.9.3 &&
+rvm use --create 1.9.3
+SCRIPT
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "foo.example.com"
@@ -123,6 +137,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.synced_folder ".", "/vagrant", :nfs => true
     host.ssh.shell = '/bin/sh'
     host.vm.provision "shell", inline: "pkg_add -F -r ruby19-gems"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
+  config.vm.define "gentoo-x86_64" do |host|
+    host.vm.box = "cmiles/gentoo-amd64-minimal"
+    host.vm.provision "shell", inline: "emerge-webrsync && emerge app-crypt/gnupg net-misc/curl"
+    host.vm.provision "shell", inline: $install_rvm
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
