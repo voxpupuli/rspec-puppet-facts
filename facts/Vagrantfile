@@ -5,27 +5,24 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.hostname = "foo.example.com"
+
   config.vm.define "debian-6-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "debian-607-x64-virtualbox-nocm"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/debian-607-x64-vbox4210-nocm.box"
+    host.vm.box = "puppetlabs/debian-6.0.10-64-nocm"
     host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby rubygems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "debian-7-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "debian-73-x64-virtualbox-nocm"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/debian-73-x64-virtualbox-nocm.box"
+    host.vm.box = "puppetlabs/debian-7.8-64-nocm"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "debian-8-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "debian-8-x64-virtualbox"
-    host.vm.box_url = "https://box.fogmail.org/basebox-0.2.0.box"
+    host.vm.box = "camptocamp/debian-8-amd64"
     host.vm.provision "shell", inline: "apt-get update && apt-get install -y curl"
     host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
     host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.9.3 && rvm use --create 1.9.3"
@@ -34,7 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "ubuntu-10.04-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "ubuntu-server-10044-x64-vbox4210-nocm"
     host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-10044-x64-vbox4210-nocm.box"
     host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby ruby-dev rubygems libopenssl-ruby"
@@ -44,27 +40,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "ubuntu-12.04-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "ubuntu-server-12042-x64-vbox4210-nocm"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
+    host.vm.box = "puppetlabs/ubuntu-12.04-64-nocm"
     host.vm.provision "shell", inline: "apt-get update && apt-get install -y rubygems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "ubuntu-14.04-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
-    host.vm.box_url = "https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-nocm"
     host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby ruby-dev"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "centos-5-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "centos-510-x64-virtualbox-nocm"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-510-x64-virtualbox-nocm.box"
+    host.vm.box = "puppetlabs/centos-5.11-64-nocm"
     host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
     host.vm.provision "shell", inline: "source /etc/profile.d/rvm.sh && rvm install 1.9.3 && rvm use --create 1.9.3"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
@@ -72,25 +62,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "centos-6-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "centos-65-x64-virtualbox-nocm"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-nocm.box"
+    host.vm.box = "puppetlabs/centos-6.6-64-nocm"
     host.vm.provision "shell", inline: "yum -y install ruby-devel rubygems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "centos-7-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "puppetlabs/centos-7.0-64-nocm"
-    host.vm.box_url = "https://vagrantcloud.com/puppetlabs/centos-7.0-64-nocm"
     host.vm.provision "shell", inline: "yum -y install ruby ruby-devel"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "fedora-19-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "chef/fedora-19"
     host.vm.provision "shell", inline: "yum -y install ruby ruby-devel"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
@@ -98,23 +83,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "archlinux-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "terrywang/archlinux"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "sles-11sp1-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
-    host.vm.box = "sles11-sp1-x86_64"
-    host.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/sles-11sp1-x64-vbox4210.box"
+    host.vm.box = "suse/sles11sp3"
     host.vm.provision "shell", inline: "gem update --system"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "opensuse-12-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "alexeym/opensuse-12.3"
     host.vm.provision "shell", inline: "zypper install -y rubygems ruby-devel make gcc"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
@@ -122,14 +103,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "opensuse-13-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "chef/opensuse-13.1"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "freebsd-10-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "chef/freebsd-10.0"
     host.vm.network :private_network, ip: '10.0.0.2'
     host.vm.synced_folder ".", "/vagrant", :nfs => true
@@ -139,7 +118,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
   config.vm.define "freebsd-9-x86_64" do |host|
-    host.vm.hostname = "foo.example.com"
     host.vm.box = "chef/freebsd-9.2"
     host.vm.network :private_network, ip: '10.0.0.2'
     host.vm.synced_folder ".", "/vagrant", :nfs => true
