@@ -139,5 +139,38 @@ describe 'RspecPuppetFacts' do
         expect { subject }.to output(/Can't find facts for 'debian-4-x86_64'/).to_stderr
       end
     end
+
+    context 'When operatingsystemrelease has minor release' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6.5",
+                  "6.6",
+                  "7.1"
+                ]
+              }
+            ]
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 3 elements' do
+        expect(subject.size).to eq 3
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'redhat-5-x86_64',
+          'redhat-6-x86_64',
+          'redhat-7-x86_64',
+        ]
+      end
+    end
   end
 end
