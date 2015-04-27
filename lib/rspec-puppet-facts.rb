@@ -14,7 +14,7 @@ module RspecPuppetFacts
       if os_sup['operatingsystemrelease']
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
-            os = "#{operatingsystem}-#{operatingsystemmajrelease.split(/[ \.]/)[0]}-#{hardwaremodel}"
+            os = "#{operatingsystem}-#{operatingsystemmajrelease.split(" ")[0]}-#{hardwaremodel}"
             # TODO: use SemVer here
             facter_minor_version = Facter.version[0..2]
             file = File.expand_path(File.join(File.dirname(__FILE__), "../facts/#{facter_minor_version}/#{os}.facts"))
