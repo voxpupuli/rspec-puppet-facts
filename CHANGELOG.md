@@ -1,3 +1,7 @@
+##2015-05-26 - Release 0.9.0
+- Add facts for Ubuntu 14.10
+- Add facts for Ubuntu 15.04
+
 ##2015-04-27 - Release 0.8.0
 - Remove support for Operating System minor release (causes problems with Ubuntu naming)
 - Add Gentoo support
