@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Fix for squeeze, el7, arch, opensuse12 and opensuse13
 export PATH=$PATH:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin
