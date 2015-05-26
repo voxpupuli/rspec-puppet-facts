@@ -67,6 +67,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
+  config.vm.define "ubuntu-14.10-x86_64" do |host|
+    host.vm.box = "chef/ubuntu-14.10"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby ruby-dev"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
+  config.vm.define "ubuntu-15.04-x86_64" do |host|
+    host.vm.box = "ubuntu/vivid64"
+    host.vm.provision "shell", inline: $install_rvm
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
   config.vm.define "centos-5-x86_64" do |host|
     host.vm.box = "puppetlabs/centos-5.11-64-nocm"
     host.vm.provision "shell", inline: "curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \\curl -sSL https://get.rvm.io | bash -s stable"
