@@ -333,9 +333,12 @@ Operating Systems supported
 * Scientific 6
 * Scientific 7
 * SLES 11
+* Solaris 11
 * Ubuntu 10.04
 * Ubuntu 12.04
 * Ubuntu 14.04
+* Ubuntu 14.10
+* Ubuntu 15.04
 
 Add new Operating System support
 --------------------------------
