@@ -163,4 +163,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
   end
-end
+  config.vm.define "solaris-11-x86_64" do |host|
+    host.vm.box = "http://benden.us/vagrant/solaris-11.2.box"
+    host.ssh.insert_key = false
+    host.vm.provision "shell", inline: "pkg info gcc || pkg install gcc"
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -i S -g0 -y 'Bye' &"
+  end
+ end
