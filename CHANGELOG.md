@@ -1,3 +1,6 @@
+##2015-05-27 - Release 0.10.0
+- Add facts for Solaris 11
+
 ##2015-05-26 - Release 0.9.0
 - Add facts for Ubuntu 14.10
 - Add facts for Ubuntu 15.04
