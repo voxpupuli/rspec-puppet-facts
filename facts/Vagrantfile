@@ -171,4 +171,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -i S -g0 -y 'Bye' &"
   end
+  config.vm.define "openbsd-5.7-x86_64" do |host|
+    host.vm.box = "bodgit/openbsd-5.7-amd64"
+    host.vm.synced_folder ".", "/vagrant", :nfs => true
+    host.vm.provision "shell", inline: <<-SCRIPT.gsub(/^ +/, '')
+      . ~/.profile
+
+      pkg_info -qe 'bash->=0' || pkg_add -I bash
+      ln -sf /usr/local/bin/bash /bin
+
+      pkg_info -qe 'ruby->=1.9.3' || pkg_add -I ruby-1.9.3.551p1
+      ln -sf /usr/local/bin/ruby19 /usr/local/bin/ruby
+      ln -sf /usr/local/bin/erb19 /usr/local/bin/erb
+      ln -sf /usr/local/bin/irb19 /usr/local/bin/irb
+      ln -sf /usr/local/bin/rdoc19 /usr/local/bin/rdoc
+      ln -sf /usr/local/bin/ri19 /usr/local/bin/ri
+      ln -sf /usr/local/bin/rake19 /usr/local/bin/rake
+      ln -sf /usr/local/bin/gem19 /usr/local/bin/gem
+      ln -sf /usr/local/bin/testrb19 /usr/local/bin/testrb
+    SCRIPT
+    host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
+    host.vm.provision "shell", path: "get_facts.sh"
+    host.vm.provision "shell", inline: "/sbin/shutdown -h now"
+  end
  end
