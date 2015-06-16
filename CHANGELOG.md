@@ -1,3 +1,6 @@
+##2015-06-16 - Realease 0.11.0
+- Add facts for OpenBSD 5.7
+
 ##2015-05-27 - Release 0.10.0
 - Add facts for Solaris 11
 

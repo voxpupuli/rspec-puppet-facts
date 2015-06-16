@@ -321,6 +321,7 @@ Operating Systems supported
 * FreeBSD 9
 * FreeBSD 10
 * Gentoo
+* OpenBSD 5.7
 * OpenSuse 12
 * OpenSuse 13
 * Oracle 5
