@@ -31,6 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define "debian-7-x86_64" do |host|
     host.vm.box = "puppetlabs/debian-7.8-64-nocm"
+    host.vm.provision "shell", inline: "apt-get update && apt-get install -y ruby rubygems"
     host.vm.provision "file", source: "Gemfile", destination: "Gemfile"
     host.vm.provision "shell", path: "get_facts.sh"
     host.vm.provision "shell", inline: "/sbin/shutdown -h now"
