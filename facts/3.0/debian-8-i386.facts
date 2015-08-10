@@ -1,0 +1,204 @@
+{
+  "augeas": {
+    "version": "1.4.0"
+  },
+  "disks": {
+    "sda": {
+      "model": "VBOX HARDDISK",
+      "size": "50.00 GiB",
+      "size_bytes": 53687091200,
+      "vendor": "ATA"
+    }
+  },
+  "dmi": {
+    "bios": {
+      "release_date": "12/01/2006",
+      "vendor": "innotek GmbH",
+      "version": "VirtualBox"
+    },
+    "board": {
+      "manufacturer": "Oracle Corporation",
+      "product": "VirtualBox",
+      "serial_number": "0"
+    },
+    "chassis": {
+      "type": "Other"
+    },
+    "manufacturer": "innotek GmbH",
+    "product": {
+      "name": "VirtualBox",
+      "serial_number": "0",
+      "uuid": "6CA7AA69-CA40-44AE-AE80-E08ACFB305DE"
+    }
+  },
+  "facterversion": "3.0.2",
+  "filesystems": "ext2,ext3,ext4",
+  "identity": {
+    "gid": 0,
+    "group": "root",
+    "uid": 0,
+    "user": "root"
+  },
+  "is_virtual": true,
+  "kernel": "Linux",
+  "kernelmajversion": "3.16",
+  "kernelrelease": "3.16.0-4-i386",
+  "kernelversion": "3.16.0",
+  "load_averages": {
+    "15m": 0.05,
+    "1m": 0.24,
+    "5m": 0.12
+  },
+  "memory": {
+    "system": {
+      "available": "405.84 MiB",
+      "available_bytes": 425553920,
+      "capacity": "17.92%",
+      "total": "494.45 MiB",
+      "total_bytes": 518467584,
+      "used": "88.61 MiB",
+      "used_bytes": 92913664
+    }
+  },
+  "mountpoints": {
+    "/": {
+      "available": "47.70 GiB",
+      "available_bytes": 51216269312,
+      "capacity": "2.83%",
+      "device": "/dev/sda1",
+      "filesystem": "ext4",
+      "options": [
+        "rw",
+        "relatime",
+        "errors=remount-ro",
+        "data=ordered"
+      ],
+      "size": "49.09 GiB",
+      "size_bytes": 52708372480,
+      "used": "1.39 GiB",
+      "used_bytes": 1492103168
+    }
+  },
+  "networking": {
+    "dhcp": "10.0.2.2",
+    "domain": "example.com",
+    "fqdn": "foo.example.com",
+    "hostname": "foo",
+    "interfaces": {
+      "eth0": {
+        "dhcp": "10.0.2.2",
+        "ip": "10.0.2.15",
+        "ip6": "fe80::a00:27ff:feac:cc97",
+        "mac": "08:00:27:ac:cc:97",
+        "mtu": 1500,
+        "netmask": "255.255.255.0",
+        "netmask6": "ffff:ffff:ffff:ffff::",
+        "network": "10.0.2.0",
+        "network6": "fe80::"
+      },
+      "lo": {
+        "ip": "127.0.0.1",
+        "ip6": "::1",
+        "mtu": 65536,
+        "netmask": "255.0.0.0",
+        "netmask6": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "network": "127.0.0.0",
+        "network6": "::1"
+      }
+    },
+    "ip": "10.0.2.15",
+    "ip6": "fe80::a00:27ff:feac:cc97",
+    "mac": "08:00:27:ac:cc:97",
+    "mtu": 1500,
+    "netmask": "255.255.255.0",
+    "netmask6": "ffff:ffff:ffff:ffff::",
+    "network": "10.0.2.0",
+    "network6": "fe80::"
+  },
+  "os": {
+    "architecture": "i386",
+    "distro": {
+      "codename": "jessie",
+      "description": "Debian GNU/Linux 8.0 (jessie)",
+      "id": "Debian",
+      "release": {
+        "full": "8.0",
+        "major": "8",
+        "minor": "0"
+      }
+    },
+    "family": "Debian",
+    "hardware": "i386",
+    "name": "Debian",
+    "release": {
+      "full": "8.0",
+      "major": "8",
+      "minor": "0"
+    },
+    "selinux": {
+      "enabled": false
+    }
+  },
+  "partitions": {
+    "/dev/sda1": {
+      "filesystem": "ext4",
+      "mount": "/",
+      "partuuid": "3f32c253-01",
+      "size": "50.00 GiB",
+      "size_bytes": 53684994048,
+      "uuid": "70354118-3eac-4801-8ae0-8b0952fc3631"
+    }
+  },
+  "path": "/usr/gnu/bin:/usr/local/rvm/gems/ruby-1.9.3-p551/bin:/usr/local/rvm/gems/ruby-1.9.3-p551@global/bin:/usr/local/rvm/rubies/ruby-1.9.3-p551/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/bin:/var/lib/gems/1.8/bin/:/usr/local/bin:/root/.gem/ruby/2.1.0/bin:/usr/lib64/ruby/gems/1.9.1/gems/bundler-1.7.12/bin:/usr/lib64/ruby/gems/2.0.0/gems/bundler-1.7.12/bin:/usr/ruby/1.9/bin",
+  "processors": {
+    "count": 1,
+    "isa": "unknown",
+    "models": [
+      "Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz"
+    ],
+    "physicalcount": 1
+  },
+  "ruby": {
+    "platform": "i386-linux",
+    "sitedir": "/opt/puppetlabs/puppet/lib/ruby/site_ruby/2.1.0",
+    "version": "2.1.6"
+  },
+  "ssh": {
+    "dsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 2 1 e7609f950ccb8e7ed71d5fdfb127fa4f3aa06514",
+        "sha256": "SSHFP 2 2 fbd7acd56719fe9a832158a3cfa7e2ed385b2215d8325945d81ed971d9d3ffc4"
+      },
+      "key": "AAAAB3NzaC1kc3MAAACBAOreNnm7haYLpuw/Bn/LY98M4XoCm9u3maQjEoW1KPptVhQmMWLzjzr95yqUB8kIdvNMLpeRsOg+uLoGIYe7Du1h87GT1bqAcad5kXMTwNSMDpDeQ/4Ysx4rMcInan3oEv/qymmsd+xZg427M0/BV/f1hw4M2V0s5Bk07ev0SpbJAAAAFQCrifLfmCKIp6WlAThrHhFMmiYisQAAAIBotfaVvvQdLkBHSWaSLSE6MSPGl2eCDOoZqOHA4R5mflpZCl4h3IZKWPq+eLyyod1lU87H2F1ekodtDizncEo5y7/LkBcVjitgSu7K/ZS1QsCGqJWsJy/WlSEjDHIvhgd1uBdbk4x1NwkwA964ndGuKMRO+awaHkTOvh54neKUqQAAAIA3NfdGQ3E3SuFXosp+2xMP0NX1XCM9rdjrJfar3Q8slS0yCYFkNtRiM86vNeHvkOZ6ULRju3mWPK8bWTwwbqZ78i0Vm8xLRqGcAJzOqI8SMgI/ifEjzO+PgT85sFS63qu+tnnUeRsciCR4OlPe0sQGOHZiKNB+VO/9oXnfV+mWxQ=="
+    },
+    "ecdsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 3 1 d73b0049912bbcd5a41799fc6c167062e45d44fc",
+        "sha256": "SSHFP 3 2 9b649280ab39382a16ca2bbe4d137b57562cf551a548d39f851a3c61bc28e9b6"
+      },
+      "key": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGoRQjC1yLD2WQPAX0JkNkexV95GNvRtXGzNs5E4KlsmhaA/LB7ldiGH3l4I+GZz/QO1tNBTCS0JzN8lbbUt2rQ="
+    },
+    "ed25519": {
+      "fingerprints": {
+        "sha1": "SSHFP 4 1 2e51520d01c292f74d90284dfec18bbf8ed27021",
+        "sha256": "SSHFP 4 2 cd726870b974b728c4ed4c985c54a70380307a5ad602ec3634a9b2f268912812"
+      },
+      "key": "AAAAC3NzaC1lZDI1NTE5AAAAIP0SLNfNVEgY5YjIWc4iHj4UyoOv+CngaZGELIoSFwjr"
+    },
+    "rsa": {
+      "fingerprints": {
+        "sha1": "SSHFP 1 1 47991d976d6e76e0b47350fd1c1a98ccb93eae02",
+        "sha256": "SSHFP 1 2 095005fce92dfa71348d338ac4b96e86f35a98c612dabbe7beb965fd256422d0"
+      },
+      "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCh54opbpv1KnPpRhqklduOHI0tnnnVmlaWObEIWK7vAeKYKDaSMrte9BswmczriTYAmJZM+eRtbDyl6445GOozz4wtSNLPkHJSPcV1Vuk4XySInWFbnQI7VpTKYzVwdKL7NhrzZS6+haGqdSLNd5dWUrnAKClQ0iWOFg+u/TBiJbVtVdJ8OjjeLZZY5fDEaS+Gj4X1C5k7gNxgPVc7ohOS+oC40/wb4CLYJX4nqkdEAaILELumaXjoS8FFQkvKl18XpPdrFkWRppd73xQ0LvYgeL8Qwqcu0TInNLSZv+RNSDe3QTreTiPIiuOLy5PB17jei4BAJ7NmeasTbU3xXkbx"
+    }
+  },
+  "system_uptime": {
+    "days": 0,
+    "hours": 0,
+    "seconds": 260,
+    "uptime": "0:04 hours"
+  },
+  "timezone": "CEST",
+  "virtual": "virtualbox"
+}
