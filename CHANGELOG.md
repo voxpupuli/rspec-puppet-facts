@@ -1,4 +1,7 @@
-##2015-06-16 - Realease 0.11.0
+##2015-08-10 - Rekease 0.12.0
+- Add Facter3 support
+
+##2015-06-16 - Release 0.11.0
 - Add facts for OpenBSD 5.7
 
 ##2015-05-27 - Release 0.10.0
