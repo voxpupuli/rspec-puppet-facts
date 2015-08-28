@@ -1,4 +1,7 @@
-##2015-08-10 - Rekease 0.12.0
+##2015-08-27 - Release 1.0.0
+- Use facterdb
+
+##2015-08-10 - Release 0.12.0
 - Add Facter3 support
 
 ##2015-06-16 - Release 0.11.0
