@@ -1,3 +1,6 @@
+##2015-08-29 - Release 1.0.1
+- Fix for old versions of Facter that does not provide operatingsystemmajrelease for some OSes
+
 ##2015-08-27 - Release 1.0.0
 - Use facterdb
 
