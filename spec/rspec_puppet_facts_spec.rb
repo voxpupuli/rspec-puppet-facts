@@ -114,11 +114,9 @@ describe 'RspecPuppetFacts' do
         expect(subject.class).to eq Hash
       end
       it 'should have 1 elements' do
-        pending 'FIXME: SLES does NOT have operatingsystemmajrelease fact before facter 2.2' unless Facter.version >= '2.2'
         expect(subject.size).to eq 1
       end
       it 'should return supported OS' do
-        pending 'FIXME: SLES does NOT have operatingsystemmajrelease fact before facter 2.2' unless Facter.version >= '2.2'
         expect(subject.keys.sort).to eq [
           'sles-11-x86_64',
         ]
@@ -173,7 +171,6 @@ describe 'RspecPuppetFacts' do
         expect(subject.size).to eq 2
       end
       it 'should return supported OS' do
-        pending 'FIXME: ArchLinux does NOT have operatingsystemmajrelease fact before facter 2.2' unless Facter.version >= '2.2'
         expect(subject.keys.sort).to eq [
           'archlinux-3-x86_64',
           'debian-8-x86_64',
