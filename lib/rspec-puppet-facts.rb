@@ -14,9 +14,9 @@ module RspecPuppetFacts
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
             filter << {
-              :operatingsystem => os_sup['operatingsystem'],
+              :operatingsystem        => os_sup['operatingsystem'],
               :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(" ")[0]}/",
-              :hardwaremodel => hardwaremodel,
+              :hardwaremodel          => hardwaremodel,
             }
           end
         end
@@ -24,7 +24,7 @@ module RspecPuppetFacts
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
             :operatingsystem => os_sup['operatingsystem'],
-            :hardwaremodel => hardwaremodel,
+            :hardwaremodel   => hardwaremodel,
           }
         end
       end
