@@ -32,7 +32,7 @@ module RspecPuppetFacts
 
     h = {}
     FacterDB::get_os_facts(Facter.version[0..2], filter).map do |facts|
-      h["#{facts['operatingsystem'].downcase}-#{facts['operatingsystemrelease'].split('.')[0]}-#{facts['hardwaremodel']}"] = facts
+      h["#{facts[:operatingsystem].downcase}-#{facts[:operatingsystemrelease].split('.')[0]}-#{facts[:hardwaremodel]}"] = facts
     end
     h
   end
