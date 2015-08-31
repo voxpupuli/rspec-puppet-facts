@@ -1,3 +1,6 @@
+##2015-08-31 - Release 1.0.2
+- Keys where not symbolized anymore since v1.0.0
+
 ##2015-08-29 - Release 1.0.1
 - Fix for old versions of Facter that does not provide operatingsystemmajrelease for some OSes
 
