@@ -1,3 +1,6 @@
+##2015-09-03 - Release 1.0.3
+- Fix FreeBSD support
+
 ##2015-08-31 - Release 1.0.2
 - Keys where not symbolized anymore since v1.0.0
 
