@@ -13,6 +13,13 @@ module RspecPuppetFacts
       if os_sup['operatingsystemrelease']
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
+
+            if os_sup['operatingsystem'] =~ /FreeBSD/
+              hardwaremodel = 'amd64'
+            elsif os_sup['operatingsystem'] =~ /Solaris/
+              hardwaremodel = 'i86pc'
+            end
+
             filter << {
               :operatingsystem        => os_sup['operatingsystem'],
               :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(" ")[0]}/",
