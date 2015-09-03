@@ -95,6 +95,34 @@ describe 'RspecPuppetFacts' do
       end
     end
 
+    context 'When testing FreeBSD 10' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "FreeBSD",
+                "operatingsystemrelease" => [
+                  "10",
+                ],
+              },
+            ],
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 elements' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'freebsd-10-amd64',
+        ]
+      end
+    end
+
     context 'When operatingsystemrelease has space' do
       subject {
         on_supported_os(
