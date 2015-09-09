@@ -1,5 +1,5 @@
 module RspecPuppetFacts
   module Version
-    STRING = '1.0.3'
+    STRING = '1.1.0'
   end
 end

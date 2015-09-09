@@ -1,3 +1,6 @@
+##2015-09-09 - Release 1.1.0
+- Populate augeasversion, puppetversion and rubyversion
+
 ##2015-09-03 - Release 1.0.3
 - Fix FreeBSD support
 
