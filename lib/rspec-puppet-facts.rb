@@ -1,3 +1,4 @@
+require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
@@ -39,6 +40,11 @@ module RspecPuppetFacts
 
     h = {}
     FacterDB::get_os_facts(Facter.version[0..2], filter).map do |facts|
+      facts.merge!({
+        :puppetversion => Puppet.version,
+        :rubyversion   => RUBY_VERSION,
+      })
+      facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version') if Puppet.features.augeas?
       h["#{facts[:operatingsystem].downcase}-#{facts[:operatingsystemrelease].split('.')[0]}-#{facts[:hardwaremodel]}"] = facts
     end
     h
