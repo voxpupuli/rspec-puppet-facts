@@ -15,7 +15,7 @@ module RspecPuppetFacts
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
 
-            if os_sup['operatingsystem'] =~ /FreeBSD/
+            if os_sup['operatingsystem'] =~ /BSD/
               hardwaremodel = 'amd64'
             elsif os_sup['operatingsystem'] =~ /Solaris/
               hardwaremodel = 'i86pc'
