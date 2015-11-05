@@ -1,3 +1,6 @@
+##2015-11-05 - Release 1.2.0
+- Requires facterdb 0.3.0
+
 ##2015-09-15 - Release 1.1.1
 - Fix OpenBSD support
 
