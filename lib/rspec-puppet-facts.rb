@@ -22,6 +22,7 @@ module RspecPuppetFacts
             end
 
             filter << {
+              :facterversion          => "/^#{Facter.version[0..2]}/",
               :operatingsystem        => os_sup['operatingsystem'],
               :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(" ")[0]}/",
               :hardwaremodel          => hardwaremodel,
@@ -31,6 +32,7 @@ module RspecPuppetFacts
       else
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
+            :facterversion   => "/^#{Facter.version[0..2]}/",
             :operatingsystem => os_sup['operatingsystem'],
             :hardwaremodel   => hardwaremodel,
           }
@@ -39,7 +41,7 @@ module RspecPuppetFacts
     end
 
     h = {}
-    FacterDB::get_os_facts(Facter.version[0..2], filter).map do |facts|
+    FacterDB::get_facts(filter).map do |facts|
       facts.merge!({
         :puppetversion => Puppet.version,
         :rubyversion   => RUBY_VERSION,
