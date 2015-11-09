@@ -44,6 +44,7 @@ module RspecPuppetFacts
     FacterDB::get_facts(filter).map do |facts|
       facts.merge!({
         :puppetversion => Puppet.version,
+        :rubysitedir   => RbConfig::CONFIG["sitelibdir"],
         :rubyversion   => RUBY_VERSION,
       })
       facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version') if Puppet.features.augeas?
