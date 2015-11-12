@@ -1,3 +1,6 @@
+##2015-11-12 - Release 1.3.0
+- Dynamically set rubysitedir
+
 ##2015-11-05 - Release 1.2.0
 - Requires facterdb 0.3.0
 
