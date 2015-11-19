@@ -95,6 +95,310 @@ describe 'RspecPuppetFacts' do
       end
     end
 
+    context 'When specifying supported_os and a string as only_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :only_os => 'debian-6-x86_64'
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 element' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 1 element as only_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :only_os => ['debian-6-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 element' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 2 elements as only_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :only_os => ['debian-6-x86_64', 'redhat-5-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 2 elements' do
+        expect(subject.size).to eq 2
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-6-x86_64',
+          'redhat-5-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 2 elements of the same osfamily as only_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :only_os => ['redhat-6-x86_64', 'redhat-5-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 2 elements' do
+        expect(subject.size).to eq 2
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'redhat-5-x86_64',
+          'redhat-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and a string as excluded_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :excluded_os => 'debian-6-x86_64'
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 3 elements' do
+        expect(subject.size).to eq 3
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-7-x86_64',
+          'redhat-5-x86_64',
+          'redhat-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 1 element as excluded_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :excluded_os => ['debian-6-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 3 elements' do
+        expect(subject.size).to eq 3
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-7-x86_64',
+          'redhat-5-x86_64',
+          'redhat-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 2 elements as excluded_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :excluded_os => ['debian-6-x86_64', 'redhat-5-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 2 elements' do
+        expect(subject.size).to eq 2
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-7-x86_64',
+          'redhat-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os and an array of 2 elements of the same osfamily as excluded_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                "operatingsystem" => "RedHat",
+                "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ],
+            :excluded_os => ['redhat-6-x86_64', 'redhat-5-x86_64']
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 2 elements' do
+        expect(subject.size).to eq 2
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-6-x86_64',
+          'debian-7-x86_64',
+        ]
+      end
+    end
+
     context 'When testing FreeBSD 10' do
       subject {
         on_supported_os(
