@@ -260,6 +260,40 @@ describe 'myclass' do
 end
 ```
 
+You can easily reduce the calls to FacterDB by using `only_os` and` exclude_os`
+parameters. This can help reducing the time of the tests.
+
+Both arguments take a string of an array of _distro-version-hardwaremodel_ value:
+
+* ubuntu-12-x86_64
+* redhat-7-x86_64
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass' do
+
+  on_supported_os({:only_os => 'ubuntu-12-x86_64'}).each do |os, facts|
+    context "on #{os}" do
+      it { is_expected.to compile.with_all_deps }
+      ...
+    end
+  end
+  on_supported_os({:only_os => ['ubuntu-12-x86_64', 'ubuntu-16-x86_64']}).each do |os, facts|
+    context "on #{os}" do
+      it { is_expected.to compile.with_all_deps }
+      ...
+    end
+  end
+  on_supported_os({:exclude_os => 'ubuntu-16-x86_64'}).each do |os, facts|
+    context "on #{os}" do
+      it { is_expected.to compile.with_all_deps }
+      ...
+    end
+  end
+end
+```
+
 Usage
 -----
 

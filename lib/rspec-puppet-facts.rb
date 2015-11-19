@@ -8,6 +8,8 @@ module RspecPuppetFacts
   def on_supported_os( opts = {} )
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
+    opts[:only_os] ||= Array.new
+    opts[:excluded_os] ||= Array.new
 
     filter = []
     opts[:supported_os].map do |os_sup|
@@ -21,6 +23,11 @@ module RspecPuppetFacts
               hardwaremodel = 'i86pc'
             end
 
+            osmajorreleaseshorcut = operatingsystemmajrelease.split(/[\s\.]/).first
+            pretty_name = "#{os_sup['operatingsystem']}-#{osmajorreleaseshorcut}-#{hardwaremodel}".downcase
+            next unless Array(opts[:only_os]).length == 0 or opts[:only_os].include?(pretty_name)
+            next if Array(opts[:excluded_os]).include?(pretty_name)
+
             filter << {
               :facterversion          => "/^#{Facter.version[0..2]}/",
               :operatingsystem        => os_sup['operatingsystem'],
@@ -31,6 +38,10 @@ module RspecPuppetFacts
         end
       else
         opts[:hardwaremodels].each do |hardwaremodel|
+          pretty_name = "#{os_sup['operatingsystem']}-#{hardwaremodel}".downcase
+          next unless Array(opts[:only_os]).length == 0 or opts[:only_os].include?(pretty_name)
+          next if Array(opts[:excluded_os]).include?(pretty_name)
+
           filter << {
             :facterversion   => "/^#{Facter.version[0..2]}/",
             :operatingsystem => os_sup['operatingsystem'],
