@@ -239,6 +239,7 @@ end
 ```
 
 Append some facts:
+------------------
 
 ```ruby
 require 'spec_helper'
