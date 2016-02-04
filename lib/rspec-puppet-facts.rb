@@ -2,6 +2,7 @@ require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
+require 'mcollective'
 
 module RspecPuppetFacts
 
@@ -43,6 +44,7 @@ module RspecPuppetFacts
     h = {}
     FacterDB::get_facts(filter).map do |facts|
       facts.merge!({
+        :mco_version   => MCollective::VERSION,
         :puppetversion => Puppet.version,
         :rubysitedir   => RbConfig::CONFIG["sitelibdir"],
         :rubyversion   => RUBY_VERSION,
