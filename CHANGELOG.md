@@ -1,3 +1,6 @@
+##2016-02-04 - Release 1.4.1
+- Add missing mcollective-client dependency
+
 ##2016-02-04 - Release 1.4.0
 - Dynamically set mco_version
 
