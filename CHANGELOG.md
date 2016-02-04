@@ -1,3 +1,6 @@
+##2016-02-04 - Release 1.4.0
+- Dynamically set mco_version
+
 ##2015-11-12 - Release 1.3.0
 - Dynamically set rubysitedir
 
