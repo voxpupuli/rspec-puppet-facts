@@ -151,6 +151,36 @@ describe 'RspecPuppetFacts' do
       end
     end
 
+    unless Facter.version.to_f < 2.4
+      context 'When testing Windows 7' do
+        subject {
+          on_supported_os(
+            {
+              :supported_os => [
+                {
+                  "operatingsystem" => "windows",
+                  "operatingsystemrelease" => [
+                    "7",
+                  ],
+                },
+              ],
+            }
+          )
+        }
+        it 'should return a hash' do
+          expect(subject.class).to eq Hash
+        end
+        it 'should have 1 elements' do
+          expect(subject.size).to eq 1
+        end
+        it 'should return supported OS' do
+          expect(subject.keys.sort).to eq [
+            'windows-7-x64',
+          ]
+        end
+      end
+    end
+
     context 'When operatingsystemrelease has space' do
       subject {
         on_supported_os(

@@ -20,6 +20,8 @@ module RspecPuppetFacts
               hardwaremodel = 'amd64'
             elsif os_sup['operatingsystem'] =~ /Solaris/
               hardwaremodel = 'i86pc'
+            elsif os_sup['operatingsystem'] =~ /windows/
+              hardwaremodel = 'x64'
             end
 
             filter << {
