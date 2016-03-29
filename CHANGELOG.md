@@ -1,3 +1,6 @@
+##2016-03-29 - Release 1.5.0
+- Add some Microsft Windows support
+
 ##2016-02-04 - Release 1.4.1
 - Add missing mcollective-client dependency
 
