@@ -80,7 +80,7 @@ module RspecPuppetFacts
   end
 
   # @api private
-  def self.get_metadata
+  def get_metadata
     if ! File.file?('metadata.json')
       fail StandardError, "Can't find metadata.json... dunno why"
     end

@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+fixtures = {
+  :metadata_missing_os_support =>
+    File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support'),
+  :metadata_valid =>
+    JSON.parse(File.read('spec/fixtures/metadata.json'),
+               {:symbolize_names => true}),
+}
+
+
 describe 'RspecPuppetFacts' do
 
   describe '#on_supported_os' do
@@ -17,9 +26,8 @@ describe 'RspecPuppetFacts' do
 
           context 'With missing operatingsystem_support section' do
             before :each do
-              fixture = File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support')
               expect(File).to receive(:file?).with('metadata.json').and_return true
-              expect(File).to receive(:read).with('metadata.json').and_return fixture
+              expect(File).to receive(:read).with('metadata.json').and_return fixtures[:metadata_missing_os_support]
             end
 
             it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
@@ -28,22 +36,16 @@ describe 'RspecPuppetFacts' do
 
         context 'With a valid metadata.json' do
           before :each do
-            fixture = File.read('spec/fixtures/metadata.json')
-            expect(File).to receive(:file?).with('metadata.json').and_return true
-            expect(File).to receive(:read).and_call_original
-            expect(File).to receive(:read).with('metadata.json').and_return fixture
+            expect(RspecPuppetFacts).to receive(:meta_supported_os).and_return(fixtures[:metadata_valid][:operatingsystem_support])
           end
 
           it 'should return a hash' do
-            pending 'FIXME'
-            expect( on_supported_os().class ).to eq Hash
+            expect(subject.class).to eq Hash
           end
           it 'should have 5 elements' do
-            pending 'FIXME'
             expect(subject.size).to eq 5
           end
           it 'should return supported OS' do
-            pending 'FIXME'
             expect(subject.keys.sort).to eq [
               'debian-6-x86_64',
               'debian-7-x86_64',
@@ -303,4 +305,44 @@ describe 'RspecPuppetFacts' do
       end
     end
   end
+
+  describe '#get_metadata' do
+    subject { RspecPuppetFacts.get_metadata() }
+
+    context 'with missing metadata.json' do
+      before :each do
+        expect(File).to receive(:file?).with('metadata.json').and_return false
+      end
+      it { expect { subject }.to raise_error(StandardError, /Can't find metadata.json/) }
+    end
+
+    context 'with metadata.json present' do
+      before :each do
+        expect(File).to receive(:file?).with('metadata.json').and_return true
+        expect(File).to receive(:read).with('metadata.json').and_return "guard_str"
+        expect(JSON).to receive(:parse).with("guard_str", {:symbolize_names => true}).and_return "ok"
+      end
+      it { is_expected.to eq("ok") }
+    end
+
+  end
+
+  describe '#get_meta_supported_os' do
+    subject { RspecPuppetFacts.get_meta_supported_os() }
+
+    context 'with valid operatingsystem_support section' do
+      before :each do
+        expect(RspecPuppetFacts).to receive(:get_metadata).and_return(fixtures[:metadata_valid])
+      end
+      it { is_expected.to eq fixtures[:metadata_valid][:operatingsystem_support] }
+    end
+
+    context 'with missing operatingsystem_support section' do
+      before :each do
+        expect(RspecPuppetFacts).to receive(:get_metadata).and_return(JSON.parse(fixtures[:metadata_missing_os_support]))
+      end
+      it { expect{subject}.to raise_error(StandardError, /Unknown operatingsystem support/) }
+    end
+  end
+
 end
