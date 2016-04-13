@@ -56,7 +56,7 @@ describe 'RspecPuppetFacts' do
       end
     end
 
-    context 'When specifying supported_os' do
+    context 'When specifying supported_os with string hash keys' do
       subject {
         on_supported_os(
           {
@@ -71,6 +71,45 @@ describe 'RspecPuppetFacts' do
               {
                 "operatingsystem" => "RedHat",
                 "operatingsystemrelease" => [
+                  "5",
+                  "6"
+                ]
+              }
+            ]
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 4 elements' do
+        expect(subject.size).to eq 4
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'debian-6-x86_64',
+          'debian-7-x86_64',
+          'redhat-5-x86_64',
+          'redhat-6-x86_64',
+        ]
+      end
+    end
+
+    context 'When specifying supported_os with symbol hash keys' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                :operatingsystem => "Debian",
+                :operatingsystemrelease => [
+                  "6",
+                  "7"
+                ]
+              },
+              {
+                :operatingsystem => "RedHat",
+                :operatingsystemrelease => [
                   "5",
                   "6"
                 ]

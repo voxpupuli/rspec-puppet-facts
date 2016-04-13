@@ -7,26 +7,27 @@ require 'mcollective'
 module RspecPuppetFacts
 
   def on_supported_os( opts = {} )
+    opts = RspecPuppetFacts.deep_symbolize(opts)
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
 
     filter = []
     opts[:supported_os].map do |os_sup|
-      if os_sup['operatingsystemrelease']
-        os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
+      if os_sup[:operatingsystemrelease]
+        os_sup[:operatingsystemrelease].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
 
-            if os_sup['operatingsystem'] =~ /BSD/
+            if os_sup[:operatingsystem] =~ /BSD/
               hardwaremodel = 'amd64'
-            elsif os_sup['operatingsystem'] =~ /Solaris/
+            elsif os_sup[:operatingsystem] =~ /Solaris/
               hardwaremodel = 'i86pc'
-            elsif os_sup['operatingsystem'] =~ /windows/
+            elsif os_sup[:operatingsystem] =~ /windows/
               hardwaremodel = 'x64'
             end
 
             filter << {
               :facterversion          => "/^#{Facter.version[0..2]}/",
-              :operatingsystem        => os_sup['operatingsystem'],
+              :operatingsystem        => os_sup[:operatingsystem],
               :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(" ")[0]}/",
               :hardwaremodel          => hardwaremodel,
             }
@@ -36,7 +37,7 @@ module RspecPuppetFacts
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
             :facterversion   => "/^#{Facter.version[0..2]}/",
-            :operatingsystem => os_sup['operatingsystem'],
+            :operatingsystem => os_sup[:operatingsystem],
             :hardwaremodel   => hardwaremodel,
           }
         end
@@ -58,6 +59,13 @@ module RspecPuppetFacts
   end
 
   # @api private
+  def self.deep_symbolize(obj)
+    return obj.inject({}){|memo,(k,v)| memo[k.to_sym] =  deep_symbolize(v); memo} if obj.is_a? Hash
+    return obj.inject([]){|memo,v    | memo           << deep_symbolize(v); memo} if obj.is_a? Array
+    return obj
+  end
+
+  # @api private
   def self.meta_supported_os
     @meta_supported_os ||= get_meta_supported_os
   end
@@ -65,10 +73,10 @@ module RspecPuppetFacts
   # @api private
   def self.get_meta_supported_os
     metadata = get_metadata
-    if metadata['operatingsystem_support'].nil?
+    if metadata[:operatingsystem_support].nil?
       fail StandardError, "Unknown operatingsystem support"
     end
-    metadata['operatingsystem_support']
+    metadata[:operatingsystem_support]
   end
 
   # @api private
@@ -76,6 +84,6 @@ module RspecPuppetFacts
     if ! File.file?('metadata.json')
       fail StandardError, "Can't find metadata.json... dunno why"
     end
-    JSON.parse(File.read('metadata.json'))
+    JSON.parse(File.read('metadata.json'), {:symbolize_names => true})
   end
 end
