@@ -54,6 +54,15 @@ describe RspecPuppetFacts do
               redhat-7-x86_64
             )
           end
+
+          it 'should be able to filter the received OS facts' do
+            allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+            expect(subject.keys.sort).to eq %w(
+              redhat-5-x86_64
+              redhat-6-x86_64
+              redhat-7-x86_64
+            )
+          end
         end
 
         context 'With a broken metadata.json' do
@@ -119,6 +128,14 @@ describe RspecPuppetFacts do
         expect(subject.keys.sort).to eq %w(
           debian-6-x86_64
           debian-7-x86_64
+          redhat-5-x86_64
+          redhat-6-x86_64
+        )
+      end
+
+      it 'should be able to filter the received OS facts' do
+        allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+        expect(subject.keys.sort).to eq %w(
           redhat-5-x86_64
           redhat-6-x86_64
         )

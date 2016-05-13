@@ -277,6 +277,18 @@ require 'rspec-puppet-facts'
 include RspecPuppetFacts
 ```
 
+Run the tests:
+
+```bash
+rake spec
+```
+
+Run the tests only on some of the facts sets:
+
+```bash
+SPEC_FACTS_OS='ubuntu-14' rake spec
+```
+
 Finaly, Add some `facter` version to test in your .travis.yml
 
 ```yaml
