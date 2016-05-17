@@ -4,9 +4,22 @@ require 'facterdb'
 require 'json'
 require 'mcollective'
 
+# The purpose of this module is to simplify the Puppet
+# module's RSpec tests by looping through all supported
+# OS'es and their facts data which is received from the FacterDB.
 module RspecPuppetFacts
-
-  def on_supported_os( opts = {} )
+  # Use the provided options or the data from the metadata.json file
+  # to find a set of matching facts in the FacterDB.
+  # OS names and facts can be used in the Puppet RSpec tests
+  # to run the examples against all supported facts combinations.
+  #
+  # @return [Hash <String => Hash>]
+  # @param [Hash] opts
+  # @option opts [String,Array<String>] :hardwaremodels The OS architecture names, i.e. x86_64
+  # @option opts [Array<Hash>] :supported_os If this options is provided the data
+  # will be used instead of the "operatingsystem_support" section if the metadata file
+  # even if the file is missing.
+  def on_supported_os(opts = {})
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
@@ -26,19 +39,19 @@ module RspecPuppetFacts
             end
 
             filter << {
-              :facterversion          => "/^#{Facter.version[0..2]}/",
-              :operatingsystem        => os_sup['operatingsystem'],
-              :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(' ')[0]}/",
-              :hardwaremodel          => hardwaremodel,
+                :facterversion          => "/^#{Facter.version[0..2]}/",
+                :operatingsystem        => os_sup['operatingsystem'],
+                :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(' ')[0]}/",
+                :hardwaremodel          => hardwaremodel,
             }
           end
         end
       else
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
-            :facterversion   => "/^#{Facter.version[0..2]}/",
-            :operatingsystem => os_sup['operatingsystem'],
-            :hardwaremodel   => hardwaremodel,
+              :facterversion   => "/^#{Facter.version[0..2]}/",
+              :operatingsystem => os_sup['operatingsystem'],
+              :hardwaremodel   => hardwaremodel,
           }
         end
       end
@@ -77,6 +90,11 @@ module RspecPuppetFacts
     @common_facts
   end
 
+  # Get the "operatingsystem_support" structure from
+  # the parsed metadata.json file
+  # @raise [StandardError] if there is no "operatingsystem_support"
+  # in the metadata
+  # @return [Array<Hash>]
   # @api private
   def self.meta_supported_os
     unless metadata['operatingsystem_support'].is_a? Array
@@ -85,6 +103,10 @@ module RspecPuppetFacts
     metadata['operatingsystem_support']
   end
 
+  # Read the metadata file and parse
+  # its JSON content.
+  # @raise [StandardError] if the metadata file is missing
+  # @return [Hash]
   # @api private
   def self.metadata
     return @metadata if @metadata
@@ -95,19 +117,27 @@ module RspecPuppetFacts
     @metadata = JSON.parse content
   end
 
+  # This file contains the Puppet module's metadata
+  # @return [String]
   # @api private
   def self.metadata_file
     'metadata.json'
   end
 
+  # Print a warning message to the console
+  # @param message [String]
   # @api private
   def self.warning(message)
     STDERR.puts message
   end
 
+  # Reset the memoization
+  # to make the saved structures
+  # be generated again
   # @api private
   def self.reset
     @common_facts = nil
     @metadata = nil
   end
+
 end
