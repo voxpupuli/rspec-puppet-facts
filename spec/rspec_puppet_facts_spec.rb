@@ -1,58 +1,85 @@
 require 'spec_helper'
+require 'json'
 
-describe 'RspecPuppetFacts' do
+describe RspecPuppetFacts do
+  let(:metadata_file) do
+    'spec/fixtures/metadata.json'
+  end
 
   describe '#on_supported_os' do
 
-    context 'Without parameter' do
-      subject { on_supported_os() }
+    context 'Without specifying supported_os' do
+      subject { on_supported_os }
 
       context 'Without metadata.json' do
+        before(:each) do
+          expect(File).to receive(:file?).with('metadata.json').and_return false
+        end
+
         it { expect { subject }.to raise_error(StandardError, /Can't find metadata.json/) }
       end
 
       context 'With a metadata.json' do
+        it 'can load the metadata file' do
+          allow(RspecPuppetFacts).to receive(:metadata_file).and_return(metadata_file)
+          RspecPuppetFacts.reset
+          expect(RspecPuppetFacts.metadata).to be_a Hash
+          expect(RspecPuppetFacts.metadata['name']).to eq 'mcanevet-mymodule'
+        end
+
+        context 'With a valid metadata.json' do
+          let(:metadata) do
+            fixture = File.read(metadata_file)
+            JSON.parse fixture
+          end
+
+          before :each do
+            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+          end
+
+          it 'should return a hash' do
+            is_expected.to be_a Hash
+          end
+
+          it 'should have 5 elements' do
+            expect(subject.size).to eq 5
+          end
+
+          it 'should return supported OS' do
+            expect(subject.keys.sort).to eq %w(
+              debian-6-x86_64
+              debian-7-x86_64
+              redhat-5-x86_64
+              redhat-6-x86_64
+              redhat-7-x86_64
+            )
+          end
+        end
 
         context 'With a broken metadata.json' do
+          before :each do
+            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+          end
 
-          context 'With missing operatingsystem_support section' do
-            before :each do
-              fixture = File.read('spec/fixtures/metadata.json_with_missing_operatingsystem_support')
-              expect(File).to receive(:file?).with('metadata.json').and_return true
-              expect(File).to receive(:read).with('metadata.json').and_return fixture
+          context 'With a missing operatingsystem_support section' do
+            let(:metadata) do
+              {}
+            end
+
+            it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
+          end
+
+          context 'With a wrong operatingsystem_support section' do
+            let(:metadata) do
+              {
+                  'operatingsystem_support' => 'Ubuntu',
+              }
             end
 
             it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
           end
         end
 
-        context 'With a valid metadata.json' do
-          before :each do
-            fixture = File.read('spec/fixtures/metadata.json')
-            expect(File).to receive(:file?).with('metadata.json').and_return true
-            expect(File).to receive(:read).and_call_original
-            expect(File).to receive(:read).with('metadata.json').and_return fixture
-          end
-
-          it 'should return a hash' do
-            pending 'FIXME'
-            expect( on_supported_os().class ).to eq Hash
-          end
-          it 'should have 5 elements' do
-            pending 'FIXME'
-            expect(subject.size).to eq 5
-          end
-          it 'should return supported OS' do
-            pending 'FIXME'
-            expect(subject.keys.sort).to eq [
-              'debian-6-x86_64',
-              'debian-7-x86_64',
-              'redhat-5-x86_64',
-              'redhat-6-x86_64',
-              'redhat-7-x86_64',
-            ]
-          end
-        end
       end
     end
 
@@ -79,19 +106,22 @@ describe 'RspecPuppetFacts' do
           }
         )
       }
+
       it 'should return a hash' do
-        expect(subject.class).to eq Hash
+        is_expected.to be_a Hash
       end
+
       it 'should have 4 elements' do
         expect(subject.size).to eq 4
       end
+
       it 'should return supported OS' do
-        expect(subject.keys.sort).to eq [
-          'debian-6-x86_64',
-          'debian-7-x86_64',
-          'redhat-5-x86_64',
-          'redhat-6-x86_64',
-        ]
+        expect(subject.keys.sort).to eq %w(
+          debian-6-x86_64
+          debian-7-x86_64
+          redhat-5-x86_64
+          redhat-6-x86_64
+        )
       end
     end
 
@@ -151,33 +181,59 @@ describe 'RspecPuppetFacts' do
       end
     end
 
-    unless Facter.version.to_f < 2.4
-      context 'When testing Windows 7' do
-        subject {
-          on_supported_os(
+    context 'When testing Solaris 11', :if => Facter.version.to_f >= 2.0 do
+      subject {
+        on_supported_os(
             {
-              :supported_os => [
-                {
-                  "operatingsystem" => "windows",
-                  "operatingsystemrelease" => [
-                    "7",
-                  ],
-                },
-              ],
+                :supported_os => [
+                    {
+                        "operatingsystem" => "Solaris",
+                        "operatingsystemrelease" => [
+                            "11",
+                        ],
+                    },
+                ],
             }
-          )
-        }
-        it 'should return a hash' do
-          expect(subject.class).to eq Hash
-        end
-        it 'should have 1 elements' do
-          expect(subject.size).to eq 1
-        end
-        it 'should return supported OS' do
-          expect(subject.keys.sort).to eq [
-            'windows-7-x64',
-          ]
-        end
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 elements' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq %w(
+          solaris-11-i86pc
+        )
+      end
+    end
+
+    context 'When testing Windows 7', :if => Facter.version.to_f >= 2.4 do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "windows",
+                "operatingsystemrelease" => [
+                  "7",
+                ],
+              },
+            ],
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 elements' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq [
+          'windows-7-x64',
+        ]
       end
     end
 
@@ -226,8 +282,8 @@ describe 'RspecPuppetFacts' do
       }
 
       it 'should output warning message' do
-        pending "TODO: Show a warning when missing facts in database"
-        expect { subject }.to output(/Can't find facts for 'debian-4-x86_64'/).to_stderr
+        expect(RspecPuppetFacts).to receive(:warning).with(/No facts were found in the FacterDB/)
+        subject
       end
     end
 
@@ -257,11 +313,47 @@ describe 'RspecPuppetFacts' do
         expect(subject.size).to eq 2
       end
       it 'should return supported OS' do
-        expect(subject.keys.sort).to eq [
-          'archlinux-3-x86_64',
-          'debian-8-x86_64',
-        ]
+        expect(subject.keys.sort).to eq %w(
+          archlinux-3-x86_64
+          debian-8-x86_64
+        )
       end
     end
   end
+
+  context '#misc' do
+    it 'should have a common facts structure' do
+      RspecPuppetFacts.reset
+      expect(subject.common_facts).to be_a Hash
+      expect(subject.common_facts).not_to be_empty
+    end
+
+    it 'should not add "augeasversion" if Augeas is supported' do
+      allow(Puppet.features).to receive(:augeas?).and_return(false)
+      RspecPuppetFacts.reset
+      expect(subject.common_facts).not_to include :augeasversion
+    end
+
+    it 'should determine the Augeas version if Augeas is supported' do
+      module Augeas_stub
+        NO_MODL_AUTOLOAD = true
+        def self.open(*_args)
+          self
+        end
+        def self.get(*_args)
+          'my_version'
+        end
+      end
+
+      allow(Puppet.features).to receive(:augeas?).and_return(true)
+      stub_const('Augeas', Augeas_stub)
+      RspecPuppetFacts.reset
+      expect(subject.common_facts[:augeasversion]).to eq 'my_version'
+    end
+
+    it 'can output a warning message' do
+      expect { RspecPuppetFacts.warning('test') }.to output(/test/).to_stderr_from_any_process
+    end
+  end
+
 end
