@@ -5,3 +5,5 @@ Gemfile.lock
 .bundle/
 coverage/
 .idea
+doc
+.yardoc
