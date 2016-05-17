@@ -1,3 +1,9 @@
+##2016-05-17 - Release 1.6.0
+- Cleanup and refactor methods
+- Add YARD documentation
+- Refactor and fix rspec
+- Add the OS filter support
+
 ##2016-03-29 - Release 1.5.0
 - Add some Microsft Windows support
 
