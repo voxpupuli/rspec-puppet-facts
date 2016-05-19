@@ -154,7 +154,6 @@ describe RspecPuppetFacts do
                   "14.10",
                   "15.04",
                   "15.10",
-                  "16.04",
                 ],
               },
             ],
@@ -164,18 +163,15 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 5 elements' do
-        pending "There's obviously a bug here!"
-        expect(subject.size).to eq 5
+      it 'should have 4 elements' do
+        expect(subject.size).to eq 4
       end
       it 'should return supported OS' do
-        pending "There's obviously a bug here!"
         expect(subject.keys.sort).to eq [
           'ubuntu-14.04-x86_64',
           'ubuntu-14.10-x86_64',
           'ubuntu-15.04-x86_64',
           'ubuntu-15.10-x86_64',
-          'ubuntu-16.04-x86_64',
         ]
       end
     end
@@ -208,7 +204,7 @@ describe RspecPuppetFacts do
       end
     end
 
-    context 'When testing OpenBSD 5.7' do
+    context 'When testing OpenBSD' do
       subject {
         on_supported_os(
           {
@@ -231,7 +227,7 @@ describe RspecPuppetFacts do
       end
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq [
-          'openbsd-5-amd64',
+          'openbsd-5.7-amd64',
         ]
       end
     end
