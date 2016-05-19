@@ -8,30 +8,10 @@ require 'mcollective'
 # module's RSpec tests by looping through all supported
 # OS'es and their facts data which is received from the FacterDB.
 module RspecPuppetFacts
-  # Use the provided options or the data from the metadata.json file
-  # to find a set of matching facts in the FacterDB.
-  # OS names and facts can be used in the Puppet RSpec tests
-  # to run the examples against all supported facts combinations.
-  #
-  # The list of received OS facts can also be filtered by the SPEC_FACTS_OS
-  # environment variable. For example, if the variable is set to "debian"
-  # only the OS names which start with "debian" will be returned. It allows a
-  # user to quickly run the tests only on a single facts set without any
-  # file modifications.
-  #
-  # @return [Hash <String => Hash>]
-  # @param [Hash] opts
-  # @option opts [String,Array<String>] :hardwaremodels The OS architecture names, i.e. x86_64
-  # @option opts [Array<Hash>] :supported_os If this options is provided the data
-  # will be used instead of the "operatingsystem_support" section if the metadata file
-  # even if the file is missing.
-  def on_supported_os(opts = {})
-    opts[:hardwaremodels] ||= ['x86_64']
-    opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
-    opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
 
+  def jgrep_filter(supported_os, opts)
     filter = []
-    opts[:supported_os].map do |os_sup|
+    supported_os.map do |os_sup|
       if os_sup['operatingsystemrelease']
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
@@ -62,15 +42,63 @@ module RspecPuppetFacts
         end
       end
     end
+    filter
+  end
 
-    received_facts = FacterDB::get_facts(filter)
-    unless received_facts.any?
-      RspecPuppetFacts.warning "No facts were found in the FacterDB for: #{filter.inspect}"
-      return {}
+  # Use the provided options or the data from the metadata.json file
+  # to find a set of matching facts in the FacterDB.
+  # OS names and facts can be used in the Puppet RSpec tests
+  # to run the examples against all supported facts combinations.
+  #
+  # The list of received OS facts can also be filtered by the SPEC_FACTS_OS
+  # environment variable. For example, if the variable is set to "debian"
+  # only the OS names which start with "debian" will be returned. It allows a
+  # user to quickly run the tests only on a single facts set without any
+  # file modifications.
+  #
+  # @return [Array<Hash>]
+  # @param [Hash] opts
+  # @option opts [String,Array<String>] :hardwaremodels The OS architecture names, i.e. x86_64
+  # @option opts [Array<Hash>] :supported_os If this options is provided the data
+  # will be used instead of the "operatingsystem_support" section if the metadata file
+  # even if the file is missing.
+  def on_supported_operatingsystem(opts = {})
+    opts[:hardwaremodels] ||= ['x86_64']
+    opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
+    opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
+
+    os_facts_array = []
+    RspecPuppetFacts.facterdb_facts(jgrep_filter(opts[:supported_os], opts)).map do |facts|
+      next unless facts[:operatingsystem].downcase.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
+      os_facts_array << facts.merge(RspecPuppetFacts.common_facts)
     end
+    os_facts_array
+  end
+
+  # Use the provided options or the data from the metadata.json file
+  # to find a set of matching facts in the FacterDB.
+  # OS names and facts can be used in the Puppet RSpec tests
+  # to run the examples against all supported facts combinations.
+  #
+  # The list of received OS facts can also be filtered by the SPEC_FACTS_OS
+  # environment variable. For example, if the variable is set to "debian"
+  # only the OS names which start with "debian" will be returned. It allows a
+  # user to quickly run the tests only on a single facts set without any
+  # file modifications.
+  #
+  # @return [Hash <String => Hash>]
+  # @param [Hash] opts
+  # @option opts [String,Array<String>] :hardwaremodels The OS architecture names, i.e. x86_64
+  # @option opts [Array<Hash>] :supported_os If this options is provided the data
+  # will be used instead of the "operatingsystem_support" section if the metadata file
+  # even if the file is missing.
+  def on_supported_os(opts = {})
+    opts[:hardwaremodels] ||= ['x86_64']
+    opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
+    opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
 
     os_facts_hash = {}
-    received_facts.map do |facts|
+    RspecPuppetFacts.facterdb_facts(jgrep_filter(opts[:supported_os], opts)).map do |facts|
       os = "#{facts[:operatingsystem].downcase}-#{facts[:operatingsystemrelease].split('.')[0]}-#{facts[:hardwaremodel]}"
       next unless os.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
       facts.merge! RspecPuppetFacts.common_facts
@@ -87,6 +115,15 @@ module RspecPuppetFacts
   # @api private
   def self.spec_facts_os_filter
     ENV['SPEC_FACTS_OS']
+  end
+
+  def self.facterdb_facts(filter)
+    received_facts = FacterDB::get_facts(filter)
+    unless received_facts.any?
+      RspecPuppetFacts.warning "No facts were found in the FacterDB for: #{filter.inspect}"
+      return {}
+    end
+    received_facts
   end
 
   # These facts are common for all OS'es and will be
