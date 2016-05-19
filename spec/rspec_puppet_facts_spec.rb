@@ -142,6 +142,44 @@ describe RspecPuppetFacts do
       end
     end
 
+    context 'When testing Ubuntu' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Ubuntu",
+                "operatingsystemrelease" => [
+                  "14.04",
+                  "14.10",
+                  "15.04",
+                  "15.10",
+                  "16.04",
+                ],
+              },
+            ],
+          }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 5 elements' do
+        pending "There's obviously a bug here!"
+        expect(subject.size).to eq 5
+      end
+      it 'should return supported OS' do
+        pending "There's obviously a bug here!"
+        expect(subject.keys.sort).to eq [
+          'ubuntu-14.04-amd64',
+          'ubuntu-14.10-amd64',
+          'ubuntu-15.04-amd64',
+          'ubuntu-15.10-amd64',
+          'ubuntu-16.04-amd64',
+        ]
+      end
+    end
+
     context 'When testing FreeBSD 10' do
       subject {
         on_supported_os(
