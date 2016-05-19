@@ -60,8 +60,8 @@ require 'spec_helper'
 
 describe 'myclass' do
 
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
+  on_supported_operatingsystem.each do |facts|
+    context "on #{facts[:operatingsystem]} #{facts[:operatingsystemmajrelease]}" do
       let(:facts) do
         facts
       end
@@ -119,8 +119,8 @@ require 'spec_helper'
 
 describe Puppet::Type.type(:mytype) do
 
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
+  on_supported_operatingsystem.each do |facts|
+    context "on #{facts[:operatingsystem]} #{facts[:operatingsystemmajrelease]}" do
       before :each do
         Facter.clear
         facts.each do |k, v|
@@ -184,8 +184,8 @@ require 'spec_helper'
 describe Puppet::Parser::Functions.function(:myfunction) do
   let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
 
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
+  on_supported_operatingsystem.each do |facts|
+    context "on #{facts[:operatingsystem]} #{facts[:operatingsystemmajrelease]}" do
       before :each do
         facts.each do |k, v|
           scope.stubs(:lookupvar).with("::#{k}").returns(v)
@@ -207,7 +207,7 @@ require 'spec_helper'
 
 describe 'myclass' do
 
-  on_supported_os({
+  on_supported_operatingsystem({
     :hardwaremodels => ['i386', 'x86_64'],
     :supported_os   => [
       {
@@ -225,8 +225,8 @@ describe 'myclass' do
         ]
       }
     ],
-  }).each do |os, facts|
-    context "on #{os}" do
+  }).each do |facts|
+    context "on #{facts[:operatingsystem]} #{facts[:operatingsystemmajrelease]}" do
       let(:facts) do
         facts
       end
@@ -246,8 +246,8 @@ require 'spec_helper'
 
 describe 'myclass' do
 
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
+  on_supported_operatingsystem.each do |facts|
+    context "on #{facts[:operatingsystem]} #{facts[:operatingsystemmajrelease]}" do
       let(:facts) do
         facts.merge({
           :foo => 'bar',
