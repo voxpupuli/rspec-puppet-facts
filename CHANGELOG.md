@@ -1,3 +1,6 @@
+##2016-05-19 - Release 1.6.1
+- Fix a bug where not all specified Ubuntu or OpenBSD were captured
+
 ##2016-05-17 - Release 1.6.0
 - Cleanup and refactor methods
 - Add YARD documentation
