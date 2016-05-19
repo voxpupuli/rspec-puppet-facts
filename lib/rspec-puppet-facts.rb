@@ -71,7 +71,19 @@ module RspecPuppetFacts
 
     os_facts_hash = {}
     received_facts.map do |facts|
-      os = "#{facts[:operatingsystem].downcase}-#{facts[:operatingsystemrelease].split('.')[0]}-#{facts[:hardwaremodel]}"
+      # Fix facter bug
+      if facts[:operatingsystem] == 'Ubuntu'
+        operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0..1].join('.')
+      elsif facts[:operatingsystem] == 'OpenBSD'
+        operatingsystemmajrelease = facts[:operatingsystemrelease]
+      else
+        if facts[:operatingsystemmajrelease].nil?
+          operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0]
+        else
+          operatingsystemmajrelease = facts[:operatingsystemmajrelease]
+        end
+      end
+      os = "#{facts[:operatingsystem].downcase}-#{operatingsystemmajrelease}-#{facts[:hardwaremodel]}"
       next unless os.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
       facts.merge! RspecPuppetFacts.common_facts
       os_facts_hash[os] = facts
