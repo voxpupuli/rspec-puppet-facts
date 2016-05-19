@@ -171,11 +171,11 @@ describe RspecPuppetFacts do
       it 'should return supported OS' do
         pending "There's obviously a bug here!"
         expect(subject.keys.sort).to eq [
-          'ubuntu-14.04-amd64',
-          'ubuntu-14.10-amd64',
-          'ubuntu-15.04-amd64',
-          'ubuntu-15.10-amd64',
-          'ubuntu-16.04-amd64',
+          'ubuntu-14.04-x86_64',
+          'ubuntu-14.10-x86_64',
+          'ubuntu-15.04-x86_64',
+          'ubuntu-15.10-x86_64',
+          'ubuntu-16.04-x86_64',
         ]
       end
     end
