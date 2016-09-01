@@ -372,6 +372,50 @@ describe RspecPuppetFacts do
     end
   end
 
+  context '#add_custom_fact' do
+    subject {
+      on_supported_os(
+        {
+          :supported_os => [
+            {
+              "operatingsystem" => "RedHat",
+              "operatingsystemrelease" => [
+                "6",
+                "7"
+              ]
+            }
+          ]
+        }
+      )
+    }
+
+    before(:each) do
+      RspecPuppetFacts.reset
+    end
+
+    it 'adds a simple fact and value' do
+      add_custom_fact 'root_home', '/root'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+    end
+
+    it 'confines a fact to a particular operating system' do
+      add_custom_fact 'root_home', '/root', :confine => 'redhat-7-x86_64'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-6-x86_64']['root_home']).to be_nil
+    end
+
+    it 'excludes a fact from a particular operating system' do
+      add_custom_fact 'root_home', '/root', :exclude => 'redhat-7-x86_64'
+      expect(subject['redhat-7-x86_64']['root_home']).to be_nil
+      expect(subject['redhat-6-x86_64']['root_home']).to eq '/root'
+    end
+
+    it 'takes a proc as a value' do
+      add_custom_fact 'root_home', ->(_os, _facts) { '/root' }
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+    end
+  end
+
   context '#misc' do
     it 'should have a common facts structure' do
       RspecPuppetFacts.reset
