@@ -7,3 +7,5 @@ if facterversion = ENV['FACTER_GEM_VERSION']
 else
   gem 'facter', :require => false
 end
+
+gem 'json', '~> 1.0', {"platforms"=>["ruby_18", "ruby_19"]}
