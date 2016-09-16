@@ -8,4 +8,8 @@ else
   gem 'facter', :require => false
 end
 
-gem 'json', '~> 1.0', {"platforms"=>["ruby_18", "ruby_19"]}
+platforms :ruby_18, :ruby_19 do
+  gem 'json', '~> 1.0'
+  gem 'json_pure', '~> 1.0'
+  gem 'tins', '~> 1.6.0'
+end
