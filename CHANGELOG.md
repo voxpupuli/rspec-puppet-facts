@@ -1,3 +1,6 @@
+##2016-09-16 - Release 1.7.0
+- Support custom facts defined by spec_helper
+
 ##2016-05-19 - Release 1.6.1
 - Fix a bug where not all specified Ubuntu or OpenBSD were captured
 
