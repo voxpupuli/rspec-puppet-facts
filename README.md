@@ -241,7 +241,7 @@ end
 Append some facts:
 ------------------
 
-1. In your spec
+You can locally override facts in your spec:
 
 ```ruby
 require 'spec_helper'
@@ -263,11 +263,12 @@ describe 'myclass' do
 end
 ```
 
-2. In your `spec_helper.rb`
+You can also globally set facts in `spec/spec_helper.rb`
+
   * Simple:
 
     ```ruby
-    add_custom_fact 'foo', 'bar'
+    add_custom_fact :concat_basedir, '/doesnotexist'
     ```
 
   * Confine to an OS:
@@ -284,7 +285,7 @@ end
   * Call a proc to get a value:
 
     ```ruby
-    add_custom_fact :root_home, ->(_os,facts) { "/tmp/#{facts['hostname']}"
+    add_custom_fact :root_home, ->(_os,facts) { "/tmp/#{facts['hostname']}" }
     ```
 
 Usage
@@ -296,7 +297,7 @@ Add this in your Gemfile:
 gem 'rspec-puppet-facts', :require => false
 ```
 
-Add this is your spec/spec_helper.rb:
+Add this is your `spec/spec_helper.rb`:
 
 ```ruby
 require 'rspec-puppet-facts'
