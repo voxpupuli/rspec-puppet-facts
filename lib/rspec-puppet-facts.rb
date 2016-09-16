@@ -86,15 +86,65 @@ module RspecPuppetFacts
       os = "#{facts[:operatingsystem].downcase}-#{operatingsystemmajrelease}-#{facts[:hardwaremodel]}"
       next unless os.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
       facts.merge! RspecPuppetFacts.common_facts
-      os_facts_hash[os] = facts
+      os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
     os_facts_hash
+  end
+
+  # Register a custom fact that will be included in the facts hash.
+  # If it should be limited to a particular OS, pass a :confine option
+  # that contains the operating system(s) to confine to.  If it should
+  # be excluded on a particular OS, use :exclude.
+  #
+  # @param [String]      name           Fact name
+  # @param [String,Proc] value          Fact value. If proc, takes 2 params: os and facts hash
+  # @param [Hash]        opts
+  # @option opts [String,Array<String>] :confine The applicable OS's
+  # @option opts [String,Array<String>] :exclude OS's to exclude
+  #
+  def add_custom_fact(name, value, options = {})
+    options[:confine] = [options[:confine]] if options[:confine].is_a?(String)
+    options[:exclude] = [options[:exclude]] if options[:exclude].is_a?(String)
+
+    RspecPuppetFacts.register_custom_fact(name, value, options)
+  end
+
+  # Adds a custom fact to the @custom_facts variable.
+  #
+  # @param [String]      name           Fact name
+  # @param [String,Proc] value          Fact value. If proc, takes 2 params: os and facts hash
+  # @param [Hash]        opts
+  # @option opts [String,Array<String>] :confine The applicable OS's
+  # @option opts [String,Array<String>] :exclude OS's to exclude
+  # @api private
+  def self.register_custom_fact(name, value, options)
+    @custom_facts ||= {}
+    @custom_facts[name.to_s] = {:options => options, :value => value}
+  end
+
+  # Adds any custom facts according to the rules defined for the operating
+  # system with the given facts.
+  # @param [String] os    Name of the operating system
+  # @param [Hash]   facts Facts hash
+  # @return [Hash]  facts Facts hash with custom facts added
+  # @api private
+  def self.with_custom_facts(os, facts)
+    return facts unless @custom_facts
+
+    @custom_facts.each do |name, fact|
+      next if fact[:options][:confine] && !fact[:options][:confine].include?(os)
+      next if fact[:options][:exclude] && fact[:options][:exclude].include?(os)
+
+      facts[name] = fact[:value].respond_to?(:call) ? fact[:value].call(os, facts) : fact[:value]
+    end
+
+    facts
   end
 
   # If provided this filter can be used to limit the set
   # of retrieved facts only to the matched OS names.
   # The value is being taken from the SPEC_FACTS_OS environment
-  # variable and 
+  # variable and
   # @return [nil,String]
   # @api private
   def self.spec_facts_os_filter
@@ -165,6 +215,7 @@ module RspecPuppetFacts
   # be generated again
   # @api private
   def self.reset
+    @custom_facts = nil
     @common_facts = nil
     @metadata = nil
   end

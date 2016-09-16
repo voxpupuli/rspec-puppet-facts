@@ -29,7 +29,7 @@ describe 'myclass' do
         :operatingsystemmajrelease => '7',
         ...
       }
-      
+
       it { is_expected.to compile.with_all_deps }
       ...
     end
@@ -43,12 +43,12 @@ describe 'myclass' do
         :operatingsystemmajrelease => '6',
         ...
       }
-      
+
       it { is_expected.to compile.with_all_deps }
       ...
     end
   end
-  
+
   ...
 end
 ```
@@ -65,7 +65,7 @@ describe 'myclass' do
       let(:facts) do
         facts
       end
-      
+
       it { is_expected.to compile.with_all_deps }
       ...
       case facts[:osfamily]
@@ -193,9 +193,9 @@ describe Puppet::Parser::Functions.function(:myfunction) do
         end
       end
     end
-    
+
     ...
-    
+
   end
 end
 ```
@@ -230,7 +230,7 @@ describe 'myclass' do
       let(:facts) do
         facts
       end
-      
+
       it { is_expected.to compile.with_all_deps }
       ...
     end
@@ -240,6 +240,8 @@ end
 
 Append some facts:
 ------------------
+
+1. In your spec
 
 ```ruby
 require 'spec_helper'
@@ -253,13 +255,37 @@ describe 'myclass' do
           :foo => 'bar',
         })
       end
-      
+
       it { is_expected.to compile.with_all_deps }
       ...
     end
   end
 end
 ```
+
+2. In your `spec_helper.rb`
+  * Simple:
+
+    ```ruby
+    add_custom_fact 'foo', 'bar'
+    ```
+
+  * Confine to an OS:
+
+    ```ruby
+    add_custom_fact :root_home, '/root', :confine => 'redhat-7-x86_64'
+    ```
+
+  * Exclude an OS:
+
+    ```ruby
+    add_custom_fact :root_home, '/root', :exclude => 'redhat-7-x86_64'
+    ```
+  * Call a proc to get a value:
+
+    ```ruby
+    add_custom_fact :root_home, ->(_os,facts) { "/tmp/#{facts['hostname']}"
+    ```
 
 Usage
 -----
