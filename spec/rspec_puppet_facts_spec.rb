@@ -33,7 +33,7 @@ describe RspecPuppetFacts do
             JSON.parse fixture
           end
 
-          before :each do
+          before(:each) do
             allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
           end
 
@@ -414,6 +414,46 @@ describe RspecPuppetFacts do
       add_custom_fact 'root_home', ->(_os, _facts) { '/root' }
       expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
     end
+  end
+
+  context '#add_custom_facts_from_yaml' do
+    subject {
+      on_supported_os(
+        {
+          :supported_os => [
+            {
+              "operatingsystem" => "RedHat",
+              "operatingsystemrelease" => [
+                "6",
+                "7"
+              ]
+            }
+          ]
+        }
+      )
+    }
+
+    before(:each) do
+      RspecPuppetFacts.reset
+    end
+
+    it 'import global facts from yaml file' do
+      add_custom_facts_from_yaml 'spec/global_facts.yml'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+    end
+
+    it 'confines a fact loaded from yaml to a particular operating system' do
+      add_custom_facts_from_yaml 'spec/global_facts.yml', :confine => 'redhat-7-x86_64'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-6-x86_64']['root_home']).to be_nil
+    end
+
+    it 'excludes a fact loaded from yaml from a particular operating system' do
+      add_custom_facts_from_yaml 'spec/global_facts.yml', :exclude => 'redhat-7-x86_64'
+      expect(subject['redhat-7-x86_64']['root_home']).to be_nil
+      expect(subject['redhat-6-x86_64']['root_home']).to eq '/root'
+    end
+
   end
 
   context '#misc' do

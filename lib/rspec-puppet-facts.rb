@@ -3,6 +3,7 @@ require 'facter'
 require 'facterdb'
 require 'json'
 require 'mcollective'
+require 'yaml'
 
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported
@@ -107,6 +108,29 @@ module RspecPuppetFacts
     options[:exclude] = [options[:exclude]] if options[:exclude].is_a?(String)
 
     RspecPuppetFacts.register_custom_fact(name, value, options)
+  end
+
+  # Register all custom facts from yaml for inclusion in the facts hash.
+  #
+  # @param [String]      file           Path to YAML File in base <module>/spec dir
+  # @option opts [String,Array<String>] :confine The applicable OS's
+  # @option opts [String,Array<String>] :exclude OS's to exclude
+  #
+  def add_custom_facts_from_yaml(file, options = {})
+    options[:confine] = [options[:confine]] if options[:confine].is_a?(String)
+    options[:exclude] = [options[:exclude]] if options[:exclude].is_a?(String)
+
+    # Ensure YAML File Exists - error if not found
+    fail StandardError, "YAML file: #{file} not found - facts cannot be loaded!" unless File.exists?(file)
+    # Ensure Loading YAML File does not yield empty var - error if empty
+    fail StandardError, "YAML Variables Not Loaded - YAML file: #{file} is empty" unless !File.zero?(file)
+    yaml_facts = YAML.load_file(file)
+    fail StandardError, "YAML Variables Not Loaded - is YAML file: #{file} empty?" unless !yaml_facts.nil?
+
+    # Iterate through yaml variables, and invoke custom fact registration
+    yaml_facts.each_pair do |key, value|
+      RspecPuppetFacts.register_custom_fact(key, value, options)
+    end
   end
 
   # Adds a custom fact to the @custom_facts variable.

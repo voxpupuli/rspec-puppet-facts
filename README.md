@@ -288,6 +288,19 @@ You can also globally set facts in `spec/spec_helper.rb`
     add_custom_fact :root_home, ->(_os,facts) { "/tmp/#{facts['hostname']}" }
     ```
 
+  * Load facts directly from YAML file in <module>/spec and confined/excluded as above
+
+     ```ruby
+      # Assign fact import to variable as a constant
+      # Ensure File is in <module>/spec dir and is prefaced with 'spec' i.e. 'spec/<file>'
+      GLOBAL_FACTS = add_custom_facts_from_yaml 'spec/<yml_file>'
+     ```
+  * Facts loaded from YAML can then be referenced in spec tests as:
+
+    ```ruby
+    GLOBAL_FACTS['<fact_name>']
+    ```
+
 Usage
 -----
 
