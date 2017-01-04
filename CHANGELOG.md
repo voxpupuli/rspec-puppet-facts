@@ -1,3 +1,6 @@
+##2017-01-04 - Release 1.7.1
+- Ignore case when choosing H/W models
+
 ##2016-09-16 - Release 1.7.0
 - Support custom facts defined by spec_helper
 
