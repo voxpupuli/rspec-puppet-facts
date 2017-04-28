@@ -7,60 +7,48 @@ rspec-puppet-facts
 [![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
 
-Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
-this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet)
-tests against the facts for all your supported operating systems (provided by
-[facterdb](https://github.com/camptocamp/facterdb). This allows you to simplify
-your unit tests by removing the need for you to specify the facts yourself.
+Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb). This simplifies unit testing because you don't need to specify the facts yourself.
 
-Installation
-------------
-If you're using Bundler to manage gems in your module repository, you can 
-install rspec-puppet-facts by adding following line to your `Gemfile` and
-then running `bundle install`.
+## Installation
 
-```ruby
+If you're using Bundler to manage gems in your module repository, install `rspec-puppet-facts` by adding it to the Gemfile.
+
+1. Add the following line to your `Gemfile`:
+
+   ```ruby
 gem 'rspec-puppet-facts', '~> 1.7', :require => false
-```
+   ```
 
-If you're not using Bundler, you can install rspec-puppet-facts using RubyGems.
+2. Run `bundle install`.
 
-```
+If you're not using Bundler, install the `rspec-puppet-facts` manually.
+
+1. On the command line, run:
+
+   ```
 $ gem install rspec-puppet-facts
-```
+   ```
 
-Once the gem is installed (using either method), you'll need to make the gem
-available to rspec by adding the following lines near the top of your
-`spec/spec_helper.rb` file.
+After the gem is installed (using either method), make the gem available to rspec by adding the following lines near [TODO: does it matter where? what's meant by 'near'?] the top of your `spec/spec_helper.rb` file. [TODO: where is this file?]
 
 ```ruby
 require 'rspec-puppet-facts'
 include RspecPuppetFacts
 ```
 
-Specifying the supported operating systems
-------------------------------------------
+## Specifying the supported operating systems
 
-In order to know which facts to run your tests against, rspec-puppet-facts
-needs to know which operating systems your module supports. It does this by
-reading the `metadata.json` file at the root of your module. You can read
-the documentation for this file [here](https://docs.puppet.com/puppet/latest/modules_metadata.html)
+To determine which facts to run your tests against, `rspec-puppet-facts` checks your module's `metadata.json` to find out what operating systems your module supports. The `metadata.json` file is located in the root of your module. To learn more about this file, see Puppet's [metatdata](https://docs.puppet.com/puppet/latest/modules_metadata.html) documentation.
 
-By default rspec-puppet-facts will only provide the facts for `x86_64`
-architecture, but this and the supported operating system list can be
-overridden by passing a hash to `on_supported_os` in your tests. This hash
-is expected to contain either or both of the following two keys:
+By default, `rspec-puppet-facts` provides the facts only for `x86_64` architecture. However, you can override this default and the supported operating system list by passing a hash to `on_supported_os` in your tests. This hash must contain either or both of the following keys:
 
-  * `:hardwaremodels` - An array of hardware architecture names as strings.
+  * `:hardwaremodels` - An array of hardware architecture names, as strings.
   * `:supported_os`   - An array of hashes representing the operating systems.
                         **Note: the keys of these hashes must be strings**
-    * `'operatingsystem'`        - The name of the operating system as a string.
-    * `'operatingsystemrelease'` - An array of version numbers as strings.
+    * `'operatingsystem'`        - The name of the operating system, as a string.
+    * `'operatingsystemrelease'` - An array of version numbers, as strings.
 
-This is particularly useful if your module is split into operating system
-subclasses. For example, if you had a class called `myclass::debian` that
-you wanted to test against Debian 6 and Debian 7 on both x86\_64 and i386
-architectures, you could write the following test:
+This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 6 and Debian 7 on both `x86_64` _and_ `i386` architectures, you could write the following test:
 
 ```ruby
 require 'spec_helper'
@@ -82,12 +70,16 @@ describe 'myclass::debian' do
 end
 ```
 
-Usage
------
+## Usage
 
-As mentioned earlier, rspec-puppet-facts removes the need for you to manually
-specify facts for all the different operating systems that your module supports
-in your unit tests. Whereas previously you might have written tests like this:
+Use the `on_supported_os` iterator to loop through all of your module's supported operating systems. This allows you to simplify your tests and remove a lot of duplicate code.
+
+Each iteration of `on_supported_os` provides two variables to your tests. (In the code examples below, these variables are specified by the values between the pipe (`|`) characters.)
+
+  * The first value is the name of the fact set. This is made from the values of the operatingsystem, operatingsystemmajrelease, and architecture facts separated by dashes (for example, 'debian-7-x86_64').
+  * The second value is the facts for that combination of operating system, release, and architecture.
+
+For example, previously, you might have written a test that specified Debian 7 and Red Hat 6 as the supported modules:
 
 ```ruby
 require 'spec_helper'
@@ -126,18 +118,7 @@ describe 'myclass' do
 end
 ```
 
-Using rspec-puppet-facts, you can simplify these tests and remove a lot of
-duplicate code by using the `on_supported_os` iterator to loop through all the
-supported operating systems.
-
-Each iteration of `on_supported_os` provides two variables to your tests (the
-names of which are specified by the values between the pipe (`|`) characters.
-
-  * The first value is the name of the fact set. This is made from the values
-    of the operatingsystem, operatingsystemmajrelease, and architecture facts
-    separated by dashes (e.g. debian-7-x86_64).
-  * The second value is the facts for that combination of operatingsystem,
-    release and architecture.
+With `on_supported_os` iteration, you can rewrite this test to loop over each of the supported operating systems without explicitly specifying them:
 
 ```ruby
 require 'spec_helper'
@@ -165,11 +146,11 @@ describe 'myclass' do
 end
 ```
 
-Testing a type or provider
---------------------------
+### Testing a type or provider
 
-Similarly to when testing manifests, you can use rspec-puppet-facts to simplify
-your type and provider unit tests as well. Instead of writing tests like:
+Use `on_supported_os` in the same way for your type and provider unit tests.
+
+**Specifying each operating system**:
 
 ```ruby
 require 'spec_helper'
@@ -205,9 +186,7 @@ end
 
 ```
 
-You can again use the `on_supported_os` iterator to loop through all your
-supported operating systems to remove the duplicate code from your tests and
-end up with something like:
+**Looping with `on_supported_os` iterator**:
 
 ```ruby
 require 'spec_helper'
@@ -237,12 +216,11 @@ end
 
 ```
 
-Testing a function
-------------------
+### Testing a function
 
-Just like when testing manifests, types, or providers, you can use
-rspec-puppet-facts to simplify your function unit tests. Instead of writing
-tests like:
+As with testing manifests, types, or providers, `on_supported_os` iteration simplifies your function unit tests. 
+
+**Specifying each operating system**:
 
 ```ruby
 require 'spec_helper'
@@ -276,7 +254,7 @@ describe 'myfunction' do
 end
 ```
 
-You can instead simplify your tests to something like:
+**Looping with `on_supported_os` iterator**:
 
 ```ruby
 require 'spec_helper'
@@ -296,12 +274,20 @@ describe 'myfunction' do
 end
 ```
 
-Overriding fact values
-----------------------
+### Adding custom fact values 
 
-You can override fact values and include additional facts is your tests by
-merging these values with the facts hash provided by each iteration of
-`on_supported_os`.
+By adding custom fact values, you can:
+
+* Override fact values
+* Include additional facts in your tests.
+* Add global custom facts for all of your unit tests
+* Add custom facts to only certain operating systems
+* Add custom facts to all operating systems _except_ specific operating systems
+* Create dynamic values for custom facts by setting a lambda as the value.
+
+#### Override and add facts
+
+To override fact values and include additional facts in your tests, merge values with the facts hash provided by each iteration of `on_supported_os`.
 
 ```ruby
 require 'spec_helper'
@@ -324,11 +310,11 @@ describe 'myclass' do
 end
 ```
 
-You can also globally set custom fact values in your `spec/spec_helper.rb` file
-so that they are automatically available to all of your unit tests using
-`on_supported_os`. This is done using the `add_custom_fact` function by passing
-it the fact name and then the value.
+#### Set global custom facts
 
+Set global custom fact values in your `spec/spec_helper.rb` file so that they are automatically available to all of your unit tests using `on_supported_os`.
+
+Pass the fact name and value to the `add_custom_fact` function:
 
 ```ruby
 require 'rspec-puppet'
@@ -344,26 +330,25 @@ RSpec.configure do |config|
 end
 ```
 
-These custom facts can be confined so that they are only added to the facts for
-specific operating systems
+#### Confine custom facts
+
+To add custom facts for only certain operating systems, set `confine` with the operating system as a string value:
 
 ```ruby
 add_custom_fact :root_home, '/root', :confine => 'redhat-7-x86_64'
 ```
 
-Similarly, the custom facts can be confined so that they are added to the facts
-for all operating systems except specific ones
+To add custom facts for all operating systems _except_ specific ones, set `exclude` with the operating system as a string value:
 
 ```ruby
 add_custom_fact :root_home, '/root', :exclude => 'redhat-7-x86_64'
 ```
 
-In addition to the static fact values shown in the previous examples, you can
-pass a lambda as the value for the custom fact in order to create dynamic
-values. For example, if you wanted to define a global custom fact that uses the
-value of another fact, you can do that with a lambda. The lambda will be passed
-the same operating system name and fact values that your tests are provided by
-`on_supported_os`.
+#### Create dynamic facts
+
+In addition to the static fact values shown in the previous examples, you can create dynamic values.
+
+To do this, pass a lambda as the value for the custom fact. The lambda is passed the same values for operating system name and fact values that your tests are provided by `on_supported_os`.
 
 ```ruby
 add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']" }
@@ -372,14 +357,9 @@ add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']" }
 Running your tests
 ------------------
 
-For most cases, there is no change to how you run your tests. Running `rake
-spec` will run all the tests against the facts for all the supported
-operating systems.
+For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.
 
-If you want to run the tests against the facts for specific operating systems,
-you can provide a filter in the `SPEC_FACTS_OS` environment variable and only
-the supported operating systems whose name starts with the specified filter
-will be used.
+If you want to run the tests against the facts for specific operating systems, you can provide a filter in the `SPEC_FACTS_OS` environment variable and only the supported operating systems whose name starts with the specified filter will be used.
 
 ```bash
 SPEC_FACTS_OS='ubuntu-14' rake spec
