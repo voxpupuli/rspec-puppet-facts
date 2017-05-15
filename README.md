@@ -25,11 +25,11 @@ If you're not using Bundler, install the `rspec-puppet-facts` manually.
 
 1. On the command line, run:
 
-   ```
+   ```bash
 $ gem install rspec-puppet-facts
    ```
 
-After the gem is installed (using either method), make the gem available to rspec by adding the following lines near [TODO: does it matter where? what's meant by 'near'?] the top of your `spec/spec_helper.rb` file. [TODO: where is this file?]
+After the gem is installed (using either method), make the gem available to rspec by adding the following lines in your `spec/spec_helper.rb` file. Place the lines after `require 'rspec-puppet'` and before the `RSpec.configure` block, if one exists.
 
 ```ruby
 require 'rspec-puppet-facts'
