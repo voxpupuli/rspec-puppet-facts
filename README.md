@@ -7,14 +7,79 @@ rspec-puppet-facts
 [![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
 
-Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/).
+Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb). This simplifies unit testing because you don't need to specify the facts yourself.
 
-Simplify your unit tests by looping on every supported Operating System and populating facts.
+## Installation
 
-Testing a class or define
--------------------------
+If you're using Bundler to manage gems in your module repository, install `rspec-puppet-facts` by adding it to the Gemfile.
 
-### Before
+1. Add the following line to your `Gemfile`:
+
+   ```ruby
+gem 'rspec-puppet-facts', '~> 1.7', :require => false
+   ```
+
+2. Run `bundle install`.
+
+If you're not using Bundler, install the `rspec-puppet-facts` manually.
+
+1. On the command line, run:
+
+   ```bash
+$ gem install rspec-puppet-facts
+   ```
+
+After the gem is installed (using either method), make the gem available to rspec by adding the following lines in your `spec/spec_helper.rb` file. Place the lines after `require 'rspec-puppet'` and before the `RSpec.configure` block, if one exists.
+
+```ruby
+require 'rspec-puppet-facts'
+include RspecPuppetFacts
+```
+
+## Specifying the supported operating systems
+
+To determine which facts to run your tests against, `rspec-puppet-facts` checks your module's `metadata.json` to find out what operating systems your module supports. The `metadata.json` file is located in the root of your module. To learn more about this file, see Puppet's [metatdata](https://docs.puppet.com/puppet/latest/modules_metadata.html) documentation.
+
+By default, `rspec-puppet-facts` provides the facts only for `x86_64` architecture. However, you can override this default and the supported operating system list by passing a hash to `on_supported_os` in your tests. This hash must contain either or both of the following keys:
+
+  * `:hardwaremodels` - An array of hardware architecture names, as strings.
+  * `:supported_os`   - An array of hashes representing the operating systems.
+                        **Note: the keys of these hashes must be strings**
+    * `'operatingsystem'`        - The name of the operating system, as a string.
+    * `'operatingsystemrelease'` - An array of version numbers, as strings.
+
+This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 6 and Debian 7 on both `x86_64` _and_ `i386` architectures, you could write the following test:
+
+```ruby
+require 'spec_helper'
+
+describe 'myclass::debian' do
+  test_on = {
+    :hardwaremodels => ['x86_64', 'i386'],
+    :supported_os   => [
+      {
+        'operatingsystem'        => 'Debian',
+        'operatingsystemrelease' => ['6', '7'],
+      },
+    ],
+  }
+
+  on_supported_os(test_on).each do |os, facts|
+    it { is_expected.to compile.with_all_deps }
+  end
+end
+```
+
+## Usage
+
+Use the `on_supported_os` iterator to loop through all of your module's supported operating systems. This allows you to simplify your tests and remove a lot of duplicate code.
+
+Each iteration of `on_supported_os` provides two variables to your tests. (In the code examples below, these variables are specified by the values between the pipe (`|`) characters.)
+
+  * The first value is the name of the fact set. This is made from the values of the operatingsystem, operatingsystemmajrelease, and architecture facts separated by dashes (for example, 'debian-7-x86_64').
+  * The second value is the facts for that combination of operating system, release, and architecture.
+
+For example, previously, you might have written a test that specified Debian 7 and Red Hat 6 as the supported modules:
 
 ```ruby
 require 'spec_helper'
@@ -29,10 +94,10 @@ describe 'myclass' do
         :operatingsystemmajrelease => '7',
         ...
       }
-
-      it { is_expected.to compile.with_all_deps }
-      ...
     end
+
+    it { is_expected.to compile.with_all_deps }
+    ...
   end
 
   context "on redhat-6-x86_64" do
@@ -43,17 +108,17 @@ describe 'myclass' do
         :operatingsystemmajrelease => '6',
         ...
       }
-
-      it { is_expected.to compile.with_all_deps }
-      ...
     end
+
+    it { is_expected.to compile.with_all_deps }
+    ...
   end
 
   ...
 end
 ```
 
-### After
+With `on_supported_os` iteration, you can rewrite this test to loop over each of the supported operating systems without explicitly specifying them:
 
 ```ruby
 require 'spec_helper'
@@ -68,6 +133,8 @@ describe 'myclass' do
 
       it { is_expected.to compile.with_all_deps }
       ...
+
+      # If you need any to specify any operating system specific tests
       case facts[:osfamily]
       when 'Debian'
         ...
@@ -79,177 +146,157 @@ describe 'myclass' do
 end
 ```
 
-Testing a type or provider
---------------------------
+### Testing a type or provider
 
-### Before
+Use `on_supported_os` in the same way for your type and provider unit tests.
+
+**Specifying each operating system**:
 
 ```ruby
 require 'spec_helper'
 
-describe Puppet::Type.type(:mytype) do
+describe 'mytype' do
 
   context "on debian-7-x86_64" do
-    before :each do
-      Facter.clear
-      Facter.stubs(:fact).with(:osfamily).returns Facter.add(:osfamily) { setcode { 'Debian' } }
-      Facter.stubs(:fact).with(:operatingsystem).returns Facter.add(:operatingsystem) { setcode { 'Debian' } }
-      Facter.stubs(:fact).with(:operatingsystemmajrelease).returns Facter.add(:operatingsystemmajrelease) { setcode { '7' } }
-    end
-    ...
-  end
-
-  context "on redhat-7-x86_64" do
-    before :each do
-      Facter.clear
-      Facter.stubs(:fact).with(:osfamily).returns Facter.add(:osfamily) { setcode { 'RedHat' } }
-      Facter.stubs(:fact).with(:operatingsystem).returns Facter.add(:operatingsystem) { setcode { 'RedHat' } }
-      Facter.stubs(:fact).with(:operatingsystemmajrelease).returns Facter.add(:operatingsystemmajrelease) { setcode { '7' } }
-    end
-    ...
-  end
-end
-
-```
-
-### After
-
-```ruby
-require 'spec_helper'
-
-describe Puppet::Type.type(:mytype) do
-
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      before :each do
-        Facter.clear
-        facts.each do |k, v|
-          Facter.stubs(:fact).with(k).returns Facter.add(k) { setcode { v } }
-        end
-      end
-      ...
-      case facts[:osfamily]
-      when 'Debian'
-        ...
-      else
-        ...
-      end
-      ...
-    end
-  end
-end
-
-```
-
-Testing a function
-------------------
-
-### Before
-
-```ruby
-require 'spec_helper'
-
-describe Puppet::Parser::Functions.function(:myfunction) do
-  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
-
-  context "on debian-7-x86_64" do
-    before :each do
-      scope.stubs(:lookupvar).with('::osfamily').returns('Debian')
-      scope.stubs(:lookupvar).with('osfamily').returns('Debian')
-      scope.stubs(:lookupvar).with('::operatingsystem').returns('Debian')
-      scope.stubs(:lookupvar).with('operatingsystem').returns('Debian')
-      ...
-    end
-    ...
-  end
-
-  context "on redhat-7-x86_64" do
-    before :each do
-      scope.stubs(:lookupvar).with('::osfamily').returns('RedHat')
-      scope.stubs(:lookupvar).with('osfamily').returns('RedHat')
-      scope.stubs(:lookupvar).with('::operatingsystem').returns('RedHat')
-      scope.stubs(:lookupvar).with('operatingsystem').returns('RedHat')
-      ...
-    end
-    ...
-  end
-end
-```
-
-### After
-
-```ruby
-require 'spec_helper'
-
-describe Puppet::Parser::Functions.function(:myfunction) do
-  let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
-
-  on_supported_os.each do |os, facts|
-    context "on #{os}" do
-      before :each do
-        facts.each do |k, v|
-          scope.stubs(:lookupvar).with("::#{k}").returns(v)
-          scope.stubs(:lookupvar).with(k).returns(v)
-        end
-      end
-    end
-
-    ...
-
-  end
-end
-```
-
-By default rspec-puppet-facts looks at your `metadata.json` to find supported operating systems and tests only with `x86_64`, but you can specify for each context which ones you want to use:
-
-```ruby
-require 'spec_helper'
-
-describe 'myclass' do
-
-  on_supported_os({
-    :hardwaremodels => ['i386', 'x86_64'],
-    :supported_os   => [
+    let(:facts) do
       {
-        "operatingsystem" => "Debian",
-        "operatingsystemrelease" => [
-          "6",
-          "7"
-        ]
-      },
-      {
-        "operatingsystem" => "RedHat",
-        "operatingsystemrelease" => [
-          "5",
-          "6"
-        ]
+        :osfamily                  => 'Debian',
+        :operatingsystem           => 'Debian',
+        :operatingsystemmajrelease => '7',
       }
-    ],
-  }).each do |os, facts|
+    end
+
+    it { should be_valid_type }
+    ...
+  end
+
+  context "on redhat-7-x86_64" do
+    let(:facts) do
+      {
+        :osfamily                  => 'RedHat',
+        :operatingsystem           => 'RedHat',
+        :operatingsystemmajrelease => '7',
+      }
+    end
+
+    it { should be_valid_type }
+    ...
+  end
+end
+
+```
+
+**Looping with `on_supported_os` iterator**:
+
+```ruby
+require 'spec_helper'
+
+describe 'mytype' do
+
+  on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do
         facts
       end
 
-      it { is_expected.to compile.with_all_deps }
+      it { should be_valid_type }
+      ...
+
+      # If you need to specify any operating system specific tests
+      case facts[:osfamily]
+      when 'Debian'
+        ...
+      else
+        ...
+      end
+      ...
+    end
+  end
+end
+
+```
+
+### Testing a function
+
+As with testing manifests, types, or providers, `on_supported_os` iteration simplifies your function unit tests. 
+
+**Specifying each operating system**:
+
+```ruby
+require 'spec_helper'
+
+describe 'myfunction' do
+  context "on debian-7-x86_64" do
+    let(:facts) do
+      {
+        :osfamily        => 'Debian',
+        :operatingsystem => 'Debian',
+        ...
+      }
+    end
+
+    it { should run.with_params('something').and_return('a value') }
+    ...
+  end
+
+  context "on redhat-7-x86_64" do
+    let(:facts) do
+      {
+        :osfamily        => 'RedHat',
+        :operatingsystem => 'RedHat',
+        ...
+      }
+    end
+
+    it { should run.with_params('something').and_return('a value') }
+    ...
+  end
+end
+```
+
+**Looping with `on_supported_os` iterator**:
+
+```ruby
+require 'spec_helper'
+
+describe 'myfunction' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+
+      it { should run.with_params('something').and_return('a value') }
       ...
     end
   end
 end
 ```
 
-Append some facts:
-------------------
+### Adding custom fact values 
 
-You can locally override facts in your spec:
+By adding custom fact values, you can:
+
+* Override fact values
+* Include additional facts in your tests.
+* Add global custom facts for all of your unit tests
+* Add custom facts to only certain operating systems
+* Add custom facts to all operating systems _except_ specific operating systems
+* Create dynamic values for custom facts by setting a lambda as the value.
+
+#### Override and add facts
+
+To override fact values and include additional facts in your tests, merge values with the facts hash provided by each iteration of `on_supported_os`.
 
 ```ruby
 require 'spec_helper'
 
 describe 'myclass' do
-
   on_supported_os.each do |os, facts|
     context "on #{os}" do
+
+      # Add the 'foo' fact with the value 'bar' to the tests
       let(:facts) do
         facts.merge({
           :foo => 'bar',
@@ -263,78 +310,57 @@ describe 'myclass' do
 end
 ```
 
-You can also globally set facts in `spec/spec_helper.rb`
+#### Set global custom facts
 
-  * Simple:
+Set global custom fact values in your `spec/spec_helper.rb` file so that they are automatically available to all of your unit tests using `on_supported_os`.
 
-    ```ruby
-    add_custom_fact :concat_basedir, '/doesnotexist'
-    ```
-
-  * Confine to an OS:
-
-    ```ruby
-    add_custom_fact :root_home, '/root', :confine => 'redhat-7-x86_64'
-    ```
-
-  * Exclude an OS:
-
-    ```ruby
-    add_custom_fact :root_home, '/root', :exclude => 'redhat-7-x86_64'
-    ```
-  * Call a proc to get a value:
-
-    ```ruby
-    add_custom_fact :root_home, ->(_os,facts) { "/tmp/#{facts['hostname']}" }
-    ```
-
-Usage
------
-
-Add this in your Gemfile:
+Pass the fact name and value to the `add_custom_fact` function:
 
 ```ruby
-gem 'rspec-puppet-facts', :require => false
-```
-
-Add this is your `spec/spec_helper.rb`:
-
-```ruby
+require 'rspec-puppet'
 require 'rspec-puppet-facts'
 include RspecPuppetFacts
+
+# Add the 'concat_basedir' fact to all tests
+add_custom_fact :concat_basedir, '/doesnotexist'
+
+RSpec.configure do |config|
+  # normal rspec-puppet configuration
+  ...
+end
 ```
 
-Run the tests:
+#### Confine custom facts
 
-```bash
-rake spec
+To add custom facts for only certain operating systems, set `confine` with the operating system as a string value:
+
+```ruby
+add_custom_fact :root_home, '/root', :confine => 'redhat-7-x86_64'
 ```
 
-Run the tests only on some of the facts sets:
+To add custom facts for all operating systems _except_ specific ones, set `exclude` with the operating system as a string value:
+
+```ruby
+add_custom_fact :root_home, '/root', :exclude => 'redhat-7-x86_64'
+```
+
+#### Create dynamic facts
+
+In addition to the static fact values shown in the previous examples, you can create dynamic values.
+
+To do this, pass a lambda as the value for the custom fact. The lambda is passed the same values for operating system name and fact values that your tests are provided by `on_supported_os`.
+
+```ruby
+add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']" }
+```
+
+Running your tests
+------------------
+
+For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.
+
+If you want to run the tests against the facts for specific operating systems, you can provide a filter in the `SPEC_FACTS_OS` environment variable and only the supported operating systems whose name starts with the specified filter will be used.
 
 ```bash
 SPEC_FACTS_OS='ubuntu-14' rake spec
-```
-
-Finaly, Add some `facter` version to test in your .travis.yml
-
-```yaml
-...
-matrix:
-  fast_finish: true
-  include:
-  - rvm: 1.8.7
-    env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
-  - rvm: 1.8.7
-    env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.7.0"
-  - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 3.0" FACTER_GEM_VERSION="~> 2.1.0"
-  - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 3.0" FACTER_GEM_VERSION="~> 2.2.0"
-  - rvm: 2.0.0
-    env: PUPPET_GEM_VERSION="~> 3.0"
-  allow_failures:
-    - rvm: 1.8.7
-      env: PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
-...
 ```
