@@ -15,9 +15,9 @@ If you're using Bundler to manage gems in your module repository, install `rspec
 
 1. Add the following line to your `Gemfile`:
 
-   ```ruby
+```ruby
 gem 'rspec-puppet-facts', '~> 1.7', :require => false
-   ```
+```
 
 2. Run `bundle install`.
 
@@ -25,9 +25,9 @@ If you're not using Bundler, install the `rspec-puppet-facts` manually.
 
 1. On the command line, run:
 
-   ```bash
+```bash
 $ gem install rspec-puppet-facts
-   ```
+```
 
 After the gem is installed (using either method), make the gem available to rspec by adding the following lines in your `spec/spec_helper.rb` file. Place the lines after `require 'rspec-puppet'` and before the `RSpec.configure` block, if one exists.
 
