@@ -370,6 +370,109 @@ describe RspecPuppetFacts do
         )
       end
     end
+
+    context 'Without a custom facterversion in the options hash' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ]
+        )
+      end
+
+      it 'returns facts from the loaded facter version' do
+        major, minor = Facter.version.split('.')
+        is_expected.to match(
+          'centos-7-x86_64' => include(
+            facterversion: /\A#{major}\.#{minor}\./
+          )
+        )
+      end
+    end
+
+    context 'With a custom facterversion (3.1) in the options hash' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: '3.1'
+        )
+      end
+
+      it 'returns facts from a facter version matching 3.1' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(facterversion: '3.1.6')
+        )
+      end
+    end
+
+    context 'With a custom facterversion (3.1.2) in the options hash' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: '3.1.2'
+        )
+      end
+
+      it 'returns facts from a facter version matching 3.1' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(facterversion: '3.1.6')
+        )
+      end
+    end
+
+    context 'With a custom facterversion (3.3) in the options hash' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: '3.3'
+        )
+      end
+
+      it 'returns facts from a facter version matching 3.3' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(facterversion: '3.3.0')
+        )
+      end
+    end
+
+    context 'With a custom facterversion (3.3.2) in the options hash' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: '3.3.2'
+        )
+      end
+
+      it 'returns facts from a facter version matching 3.3' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(facterversion: '3.3.0')
+        )
+      end
+    end
+
+    context 'With an invalid facterversion in the options hash' do
+      let(:method_call) do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: '3'
+        )
+      end
+
+      it 'raises an error' do
+        expect { method_call }.to raise_error(ArgumentError,
+                                              /:facterversion must be in the /)
+      end
+    end
   end
 
   context '#add_custom_fact' do
@@ -451,4 +554,69 @@ describe RspecPuppetFacts do
     end
   end
 
+  describe '.facter_version_to_filter' do
+    context 'when passed a version that is major.minor (1)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('1.2') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A1\.2\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor (2)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('10.2') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A10\.2\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor (3)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('1.20') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A1\.20\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor (4)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('10.20') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A10\.20\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor.patch (1)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('1.2.3') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A1\.2\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor.patch (2)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('10.2.3') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A10\.2\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor.patch (3)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('1.20.3') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A1\.20\./')
+      end
+    end
+
+    context 'when passed a version that is major.minor.patch (4)' do
+      subject { RspecPuppetFacts.facter_version_to_filter('10.20.3') }
+
+      it 'returns the correct JGrep statement expression' do
+        is_expected.to eq('/\A10\.20\./')
+      end
+    end
+  end
 end
