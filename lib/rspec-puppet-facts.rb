@@ -23,12 +23,22 @@ module RspecPuppetFacts
   # @param [Hash] opts
   # @option opts [String,Array<String>] :hardwaremodels The OS architecture names, i.e. x86_64
   # @option opts [Array<Hash>] :supported_os If this options is provided the data
+  # @option opts [String] :facterversion the facter version of which to
+  # select facts from, e.g.: '3.6'
   # will be used instead of the "operatingsystem_support" section if the metadata file
   # even if the file is missing.
   def on_supported_os(opts = {})
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
+    opts[:facterversion] ||= Facter.version
+
+    unless (facterversion = opts[:facterversion]) =~ /\A\d+\.\d+(?:\.\d+)*\z/
+      raise ArgumentError, ":facterversion must be in the format 'n.n' or " \
+        "'n.n.n' (n is numeric), not '#{facterversion}'"
+    end
+
+    facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
 
     filter = []
     opts[:supported_os].map do |os_sup|
@@ -45,7 +55,7 @@ module RspecPuppetFacts
             end
 
             filter << {
-                :facterversion          => "/^#{Facter.version[0..2]}/",
+                :facterversion          => facter_version_filter,
                 :operatingsystem        => os_sup['operatingsystem'],
                 :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(' ')[0]}/",
                 :hardwaremodel          => hardwaremodel,
@@ -55,7 +65,7 @@ module RspecPuppetFacts
       else
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
-              :facterversion   => "/^#{Facter.version[0..2]}/",
+              :facterversion   => facter_version_filter,
               :operatingsystem => os_sup['operatingsystem'],
               :hardwaremodel   => hardwaremodel,
           }
@@ -220,4 +230,12 @@ module RspecPuppetFacts
     @metadata = nil
   end
 
+  # Generates a JGrep statement expression for a specific facter version
+  # @return [String] JGrep statement expression
+  # @param version [String] the Facter version
+  # @api private
+  def self.facter_version_to_filter(version)
+    major, minor = version.split('.')
+    "/\\A#{major}\\.#{minor}\\./"
+  end
 end
