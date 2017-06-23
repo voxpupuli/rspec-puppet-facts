@@ -1,3 +1,6 @@
+##2017-06-23 - Release 1.8.0
+- Support specifying facter version
+
 ##2017-01-04 - Release 1.7.1
 - Ignore case when choosing H/W models
 
