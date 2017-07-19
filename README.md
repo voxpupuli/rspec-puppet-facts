@@ -65,6 +65,7 @@ describe 'myclass::debian' do
   }
 
   on_supported_os(test_on).each do |os, facts|
+    let (:facts) { facts }
     it { is_expected.to compile.with_all_deps }
   end
 end
