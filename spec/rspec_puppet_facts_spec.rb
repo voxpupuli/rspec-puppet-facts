@@ -384,7 +384,7 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.#{minor}\./
+            facterversion: /\A#{major}\.[0-#{minor}]\./
           )
         )
       end
