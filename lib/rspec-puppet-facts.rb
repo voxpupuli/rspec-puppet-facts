@@ -88,6 +88,14 @@ module RspecPuppetFacts
       return {}
     end
 
+    unless version == facterversion
+      if RspecPuppetFacts.spec_facts_strict?
+        raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
+      else
+        RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
+      end
+    end
+
     os_facts_hash = {}
     received_facts.map do |facts|
       # Fix facter bug
@@ -168,6 +176,13 @@ module RspecPuppetFacts
   # @api private
   def self.spec_facts_os_filter
     ENV['SPEC_FACTS_OS']
+  end
+
+  # If SPEC_FACTS_STRICT is set to `yes`, RspecPuppetFacts will error on missing FacterDB entries, instead of warning & skipping the tests, or using an older facter version.
+  # @return [Boolean]
+  # @api private
+  def self.spec_facts_strict?
+    ENV['SPEC_FACTS_STRICT'] == 'yes'
   end
 
   # These facts are common for all OS'es and will be

@@ -364,3 +364,5 @@ If you want to run the tests against the facts for specific operating systems, y
 ```bash
 SPEC_FACTS_OS='ubuntu-14' rake spec
 ```
+
+When no facts are available for the specific facter/operating system combination, the library will fall back to facts from earlier versions of the requested operating system, to allow testing to continue when new versions of facter are released. Set `SPEC_FACTS_STRICT=yes` to instead trigger a failure.

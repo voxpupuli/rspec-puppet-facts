@@ -397,7 +397,7 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: "#{major}.#{minor.to_i + 1}"
+          facterversion: "#{major}.#{minor.to_i + 100}"
         )
       end
 
@@ -405,9 +405,18 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.[0-#{minor.to_i + 1}]\./
+            facterversion: /\A#{major}\.[0-#{minor.to_i + 100}]\./
           )
         )
+      end
+
+      context 'With SPEC_FACTS_STRICT set to `yes`' do
+        before(:each) do
+          allow(RspecPuppetFacts).to receive(:spec_facts_strict?).and_return(true)
+        end
+        it 'errors' do
+          expect { subject }.to raise_error ArgumentError, /No facts were found in the FacterDB.*aborting/
+        end
       end
     end
 
