@@ -372,6 +372,9 @@ describe RspecPuppetFacts do
     end
 
     context 'Without a custom facterversion in the options hash' do
+      before(:each) do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
       subject do
         on_supported_os(
           supported_os: [
@@ -381,23 +384,25 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from the loaded facter version' do
-        major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.[0-#{minor}]\./
+            facterversion: /\A2\.4\./
           )
         )
       end
     end
 
     context 'With a version that is above the current gem' do
+      before(:each) do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
+
       subject do
-        major, minor = Facter.version.split('.')
         on_supported_os(
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: "#{major}.#{minor.to_i + 100}"
+          facterversion: "2.5"
         )
       end
 
@@ -405,7 +410,7 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.[0-#{minor.to_i + 100}]\./
+            facterversion: /\A2\.4\./
           )
         )
       end
