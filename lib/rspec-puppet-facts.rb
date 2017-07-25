@@ -39,6 +39,15 @@ module RspecPuppetFacts
     end
 
     facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
+    db = FacterDB.get_facts({ :facterversion =>  facter_version_filter })
+
+    version = facterversion
+    while db.empty? && version !~ /\d+\.0\.\d+/
+      version = RspecPuppetFacts.down_facter_version(version)
+      facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
+      db = FacterDB.get_facts({ :facterversion =>  facter_version_filter})
+    end
+
 
     filter = []
     opts[:supported_os].map do |os_sup|
@@ -77,6 +86,14 @@ module RspecPuppetFacts
     unless received_facts.any?
       RspecPuppetFacts.warning "No facts were found in the FacterDB for: #{filter.inspect}"
       return {}
+    end
+
+    unless version == facterversion
+      if RspecPuppetFacts.spec_facts_strict?
+        raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
+      else
+        RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
+      end
     end
 
     os_facts_hash = {}
@@ -161,6 +178,13 @@ module RspecPuppetFacts
     ENV['SPEC_FACTS_OS']
   end
 
+  # If SPEC_FACTS_STRICT is set to `yes`, RspecPuppetFacts will error on missing FacterDB entries, instead of warning & skipping the tests, or using an older facter version.
+  # @return [Boolean]
+  # @api private
+  def self.spec_facts_strict?
+    ENV['SPEC_FACTS_STRICT'] == 'yes'
+  end
+
   # These facts are common for all OS'es and will be
   # added to the facts retrieved from the FacterDB
   # @api private
@@ -237,5 +261,16 @@ module RspecPuppetFacts
   def self.facter_version_to_filter(version)
     major, minor = version.split('.')
     "/\\A#{major}\\.#{minor}\\./"
+  end
+  # Subtracts from the minor version passed and returns a string representing
+  # the next minor version down
+  # @return [String] next version below
+  # @param version [String] the Facter version
+  # @param minor_subtractor [int] the value which to subtract by
+  # @api private
+  def self.down_facter_version(version, minor_subtractor = 1)
+      major, minor, z = version.split('.')
+      minor = (minor.to_i - minor_subtractor).to_s
+      "#{major}.#{minor}.#{z}"
   end
 end

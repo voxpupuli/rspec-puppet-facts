@@ -219,7 +219,7 @@ end
 
 ### Testing a function
 
-As with testing manifests, types, or providers, `on_supported_os` iteration simplifies your function unit tests. 
+As with testing manifests, types, or providers, `on_supported_os` iteration simplifies your function unit tests.
 
 **Specifying each operating system**:
 
@@ -275,7 +275,7 @@ describe 'myfunction' do
 end
 ```
 
-### Adding custom fact values 
+### Adding custom fact values
 
 By adding custom fact values, you can:
 
@@ -352,11 +352,10 @@ In addition to the static fact values shown in the previous examples, you can cr
 To do this, pass a lambda as the value for the custom fact. The lambda is passed the same values for operating system name and fact values that your tests are provided by `on_supported_os`.
 
 ```ruby
-add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']" }
+add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']}" }
 ```
 
-Running your tests
-------------------
+## Running your tests
 
 For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.
 
@@ -365,3 +364,5 @@ If you want to run the tests against the facts for specific operating systems, y
 ```bash
 SPEC_FACTS_OS='ubuntu-14' rake spec
 ```
+
+When no facts are available for the specific facter/operating system combination, the library will fall back to facts from earlier versions of the requested operating system, to allow testing to continue when new versions of facter are released. Set `SPEC_FACTS_STRICT=yes` to instead trigger a failure.

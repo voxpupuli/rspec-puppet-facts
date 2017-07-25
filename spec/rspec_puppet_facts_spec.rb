@@ -372,6 +372,9 @@ describe RspecPuppetFacts do
     end
 
     context 'Without a custom facterversion in the options hash' do
+      before(:each) do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
       subject do
         on_supported_os(
           supported_os: [
@@ -381,12 +384,44 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from the loaded facter version' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(
+            facterversion: /\A2\.4\./
+          )
+        )
+      end
+    end
+
+    context 'With a version that is above the current gem' do
+      before(:each) do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
+
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ],
+          facterversion: "2.5"
+        )
+      end
+
+      it 'returns facts from a facter version matching future and below' do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.#{minor}\./
+            facterversion: /\A2\.4\./
           )
         )
+      end
+
+      context 'With SPEC_FACTS_STRICT set to `yes`' do
+        before(:each) do
+          allow(RspecPuppetFacts).to receive(:spec_facts_strict?).and_return(true)
+        end
+        it 'errors' do
+          expect { subject }.to raise_error ArgumentError, /No facts were found in the FacterDB.*aborting/
+        end
       end
     end
 
