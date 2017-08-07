@@ -61,6 +61,7 @@ module RspecPuppetFacts
               hardwaremodel = 'i86pc'
             elsif os_sup['operatingsystem'] =~ /Windows/i
               hardwaremodel = 'x64'
+              os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
             end
 
             filter << {
