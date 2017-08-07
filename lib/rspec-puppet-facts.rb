@@ -55,6 +55,7 @@ module RspecPuppetFacts
         os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
 
+            os_release_filter = "/^#{operatingsystemmajrelease.split(' ')[0]}/"
             if os_sup['operatingsystem'] =~ /BSD/i
               hardwaremodel = 'amd64'
             elsif os_sup['operatingsystem'] =~ /Solaris/i
@@ -64,15 +65,18 @@ module RspecPuppetFacts
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
 
+              # force quoting because windows releases can contain spaces
+              os_release_filter = "\"#{operatingsystemmajrelease}\""
+
               if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(version, '3.4') < 0
-                operatingsystemmajrelease = '/^10\\.0\\./'
+                os_release_filter = '/^10\\.0\\./'
               end
             end
 
             filter << {
                 :facterversion          => facter_version_filter,
                 :operatingsystem        => os_sup['operatingsystem'],
-                :operatingsystemrelease => "/^#{operatingsystemmajrelease.split(' ')[0]}/",
+                :operatingsystemrelease => os_release_filter,
                 :hardwaremodel          => hardwaremodel,
             }
           end
