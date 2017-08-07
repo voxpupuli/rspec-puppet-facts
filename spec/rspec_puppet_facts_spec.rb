@@ -265,31 +265,50 @@ describe RspecPuppetFacts do
       end
     end
 
-    context 'When testing Windows 7', :if => Facter.version.to_f >= 2.4 do
-      subject {
+    context 'When testing Windows', :if => Facter.version.to_f >= 2.4 do
+      subject do
         on_supported_os(
           {
             :supported_os => [
               {
-                "operatingsystem" => "windows",
-                "operatingsystemrelease" => [
-                  "7",
-                ],
-              },
+                'operatingsystem'        => 'Windows',
+                'operatingsystemrelease' => release,
+              }
             ],
           }
         )
-      }
-      it 'should return a hash' do
-        expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
-        expect(subject.size).to eq 1
+
+      context 'with a standard release' do
+        let(:release) { ['7'] }
+
+        it { is_expected.to be_a(Hash) }
+        it { is_expected.to have_attributes(:size => 1) }
+        it { is_expected.to include('windows-7-x64' => an_instance_of(Hash)) }
       end
-      it 'should return supported OS' do
-        expect(subject.keys.sort).to eq [
-          'windows-7-x64',
-        ]
+
+      context 'with a revision release' do
+        let(:release) { ['2012 R2'] }
+
+        it { is_expected.to be_a(Hash) }
+        it { is_expected.to have_attributes(:size => 1) }
+        it { is_expected.to include('windows-2012 R2-x64' => an_instance_of(Hash)) }
+      end
+
+      context 'with a Server prefixed release' do
+        let(:release) { ['Server 2012'] }
+
+        it { is_expected.to be_a(Hash) }
+        it { is_expected.to have_attributes(:size => 1) }
+        it { is_expected.to include('windows-2012-x64' => an_instance_of(Hash)) }
+      end
+
+      context 'with a 2016 release' do
+        let(:release) { ['2016'] }
+
+        it { is_expected.to be_a(Hash) }
+        it { is_expected.to have_attributes(:size => 1) }
+        it { is_expected.to include('windows-2016-x64' => an_instance_of(Hash)) }
       end
     end
 
