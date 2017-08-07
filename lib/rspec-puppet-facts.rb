@@ -63,6 +63,10 @@ module RspecPuppetFacts
               hardwaremodel = 'x64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
+
+              if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(version, '3.4') < 0
+                operatingsystemmajrelease = '/^10\\.0\\./'
+              end
             end
 
             filter << {
@@ -105,6 +109,8 @@ module RspecPuppetFacts
         operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0..1].join('.')
       elsif facts[:operatingsystem] == 'OpenBSD'
         operatingsystemmajrelease = facts[:operatingsystemrelease]
+      elsif facts[:operatingsystem] == 'windows' && facts[:operatingsystemrelease].start_with?('10.0.')
+        operatingsystemmajrelease = '2016'
       else
         if facts[:operatingsystemmajrelease].nil?
           operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0]
