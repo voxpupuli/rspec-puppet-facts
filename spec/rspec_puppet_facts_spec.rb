@@ -47,8 +47,8 @@ describe RspecPuppetFacts do
 
           it 'should return supported OS' do
             expect(subject.keys.sort).to eq %w(
-              debian-6-x86_64
               debian-7-x86_64
+              debian-8-x86_64
               redhat-5-x86_64
               redhat-6-x86_64
               redhat-7-x86_64
@@ -100,8 +100,8 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "Debian",
                 "operatingsystemrelease" => [
-                  "6",
-                  "7"
+                  "7",
+                  "8",
                 ]
               },
               {
@@ -126,8 +126,8 @@ describe RspecPuppetFacts do
 
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq %w(
-          debian-6-x86_64
           debian-7-x86_64
+          debian-8-x86_64
           redhat-5-x86_64
           redhat-6-x86_64
         )
@@ -150,29 +150,32 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "Ubuntu",
                 "operatingsystemrelease" => [
+                  "12.04",
                   "14.04",
-                  "14.10",
-                  "15.04",
-                  "15.10",
+                  "16.04",
                 ],
               },
             ],
           }
         )
       }
+
+      let(:expected_fact_sets) do
+        if Facter.version.to_f < 1.7
+          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64']
+        else
+          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
+        end
+      end
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
       it 'should have 4 elements' do
-        expect(subject.size).to eq 4
+        expect(subject.size).to eq(expected_fact_sets.size)
       end
       it 'should return supported OS' do
-        expect(subject.keys.sort).to eq [
-          'ubuntu-14.04-x86_64',
-          'ubuntu-14.10-x86_64',
-          'ubuntu-15.04-x86_64',
-          'ubuntu-15.10-x86_64',
-        ]
+        expect(subject.keys.sort).to eq(expected_fact_sets)
       end
     end
 
@@ -188,6 +191,7 @@ describe RspecPuppetFacts do
                 ],
               },
             ],
+            :facterversion => '2.4',
           }
         )
       }
@@ -216,6 +220,7 @@ describe RspecPuppetFacts do
                 ],
               },
             ],
+            :facterversion => '2.4',
           }
         )
       }
@@ -352,7 +357,8 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "Archlinux",
               },
-            ]
+            ],
+            :facterversion => '2.4',
           }
         )
       }
@@ -402,7 +408,7 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: "2.5"
+          facterversion: "2.6"
         )
       end
 
@@ -410,7 +416,7 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A2\.4\./
+            facterversion: /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
           )
         )
       end
