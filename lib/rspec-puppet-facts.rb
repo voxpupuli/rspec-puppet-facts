@@ -61,7 +61,7 @@ module RspecPuppetFacts
             elsif os_sup['operatingsystem'] =~ /Solaris/i
               hardwaremodel = 'i86pc'
             elsif os_sup['operatingsystem'] =~ /Windows/i
-              hardwaremodel = 'x64'
+              hardwaremodel = version =~ /^[12]\./ ? 'x64' : 'x86_64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
 
