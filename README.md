@@ -355,6 +355,71 @@ To do this, pass a lambda as the value for the custom fact. The lambda is passed
 add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']}" }
 ```
 
+### Suppling Custom External Facts through FacterDB
+Rspec-puppet-facts uses a gem called facterdb that contains many fact sets of various combinations that are pre generated.  Rspec-puppet-facts queries
+facterdb to pull out a specific fact set to use when testing. 
+
+The default facts are great for many things but there will be times when you need to have custom
+fact sets that only make sense in your environment or might contain sensitive information.
+
+To supply external facts to facterdb just set the `FACTERDB_SEARCH_PATHS` environment variable with one or more
+paths to your facts.
+
+When separating paths please use the default path separator character supported by your OS.  
+* Unix/Linux/OSX = `:` 
+* Windows = `;`
+
+This means you will need to supply your own fact sets in addition to the ones contained in facterdb.
+So each fact set you create must meet the following requirements:
+
+1. A JSON serialized file containing a single Hash of all the facts.
+2. The facts file must end in `.facts`
+3. Must be placed inside some directory.  You can organize this directory however you like.
+
+[Example file](https://github.com/camptocamp/facterdb/blob/master/facts/3.5/oraclelinux-5-i386.facts)
+
+Facterdb is smart enough the search your supplied directories for files ending with '.facts'.  You can even supply
+multiple directories.
+
+Example:
+
+`FACTERDB_SEARCH_PATHS="/var/opt/lib/custom_facts"`
+
+or
+
+`FACTERDB_SEARCH_PATHS="/var/opt/lib/custom_facts:/tmp/custom_facts:/home/user1/custom_facts"`
+
+
+You can create these files via many methods.
+
+* `puppet facts | jq '.values' > /tmp/custom_facts/datacenter_a/2.4/os_x.facts`  # must have jq command
+* Via puppetdb queries
+* hand crafted
+
+
+Additionally you can skip the default FacterDB facts completely by setting the environment variable `FACTERDB_SKIP_DEFAULTDB`.
+This will instruct facterdb to not look at its built-in facts which can be useful should you need to completely replace which facts are used.
+
+
+Setting the variable `FACTERDB_SKIP_DEFAULTDB` to anything will disable the internal facts used by facterdb.  You would most likely use this in combination
+with the `FACTERDB_SEARCH_PATHS` environment variable.
+
+Example:
+
+```
+FACTERDB_SEARCH_PATHS="/var/opt/lib/custom_facts:/tmp/custom_facts:/home/user1/custom_facts"
+FACTERDB_SKIP_DEFAULTDB='yes'
+```
+
+We recommend placing custom external facts under spec/fixtures/facts directory.
+
+Additionally, if you plan on using these custom facts everytime you should set the following in your spec helper.
+
+```ruby
+module_spec_dir = File.dirname(__FILE__)
+custom_facts = File.join(module_spec_dir, 'fixtures', 'facts')
+ENV['FACTERDB_SEARCH_PATHS'] = custom_facts
+```
 ## Running your tests
 
 For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.
