@@ -60,6 +60,13 @@ module RspecPuppetFacts
               hardwaremodel = 'amd64'
             elsif os_sup['operatingsystem'] =~ /Solaris/i
               hardwaremodel = 'i86pc'
+            elsif os_sup['operatingsystem'] =~ /AIX/i
+              hardwaremodel = '/^IBM,.*/'
+              os_release_filter = if operatingsystemmajrelease =~ /\A(\d+)\.(\d+)\Z/
+                                    "/^#{$~[1]}#{$~[2]}00-/"
+                                  else
+                                    "/^#{operatingsystemmajrelease}-/"
+                                  end
             elsif os_sup['operatingsystem'] =~ /Windows/i
               hardwaremodel = version =~ /^[12]\./ ? 'x64' : 'x86_64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
