@@ -265,7 +265,7 @@ describe RspecPuppetFacts do
       end
     end
 
-    context 'When testing AIX 7.1', :if => Facter.version.to_f >= 2.0 do
+    context 'When testing AIX 7.1' do
       subject {
         on_supported_os(
             {
@@ -273,7 +273,7 @@ describe RspecPuppetFacts do
                     {
                         "operatingsystem" => "AIX",
                         "operatingsystemrelease" => [
-                            "7.1",
+                            "7.1", "7100"
                         ],
                     },
                 ],
@@ -288,6 +288,8 @@ describe RspecPuppetFacts do
         expect(subject.size).to eq 1
       end
       it 'should return supported OS' do
+        # NOTE: See FACT-1827 for details on the IBM,8284-22A part
+        # That has to match whatever hardware generated the facts file.
         expect(subject.keys.sort).to eq %w(
           aix-7100-IBM,8284-22A
         )
