@@ -265,6 +265,35 @@ describe RspecPuppetFacts do
       end
     end
 
+    context 'When testing AIX 7.1', :if => Facter.version.to_f >= 2.0 do
+      subject {
+        on_supported_os(
+            {
+                :supported_os => [
+                    {
+                        "operatingsystem" => "AIX",
+                        "operatingsystemrelease" => [
+                            "7.1",
+                        ],
+                    },
+                ],
+                :facterversion => '3.9'
+            }
+        )
+      }
+      it 'should return a hash' do
+        expect(subject.class).to eq Hash
+      end
+      it 'should have 1 elements' do
+        expect(subject.size).to eq 1
+      end
+      it 'should return supported OS' do
+        expect(subject.keys.sort).to eq %w(
+          aix-7100-IBM,8284-22A
+        )
+      end
+    end
+
     context 'When testing Windows', :if => Facter.version.to_f >= 2.4 do
       subject do
         on_supported_os(
