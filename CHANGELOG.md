@@ -1,3 +1,6 @@
+## 2018-10-24 - Release 1.9.2
+- Catch the right `LoadError` on missing augeas gem. Thanks to [baurmatt](https://github.com/baurmatt) for the quick fix, and [rodjek](https://github.com/rodjek) for dealing with the testing
+
 ## 2018-10-24 - Release 1.9.1
 - Do not rely on features of Augeas because Puppet 6
 
