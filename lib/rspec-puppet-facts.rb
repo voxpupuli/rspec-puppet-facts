@@ -219,7 +219,7 @@ module RspecPuppetFacts
     begin
       require 'augeas'
       @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
-    rescue => e
+    rescue LoadError => e
       RspecPuppetFacts.warning "Failed to retrieve Augeas version: #{e}"
     end
     @common_facts
