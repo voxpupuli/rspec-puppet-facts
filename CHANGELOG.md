@@ -1,3 +1,6 @@
+## 2018-10-24 - Release 1.9.1
+- Do not rely on features of Augeas because Puppet 6
+
 ## 2018-01-31 - Release 1.9.0
 - Bumps facterdb requirement to 0.5.0
 - Adds docs for using custom external facts
