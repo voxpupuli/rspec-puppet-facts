@@ -216,13 +216,23 @@ module RspecPuppetFacts
         :rubysitedir   => RbConfig::CONFIG['sitelibdir'],
         :rubyversion   => RUBY_VERSION,
     }
-    begin
-      require 'augeas'
+
+    if augeas?
       @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
-    rescue => e
-      RspecPuppetFacts.warning "Failed to retrieve Augeas version: #{e}"
     end
+
     @common_facts
+  end
+
+  # Determine if the Augeas gem is available.
+  # @api private
+  # @return [Boolean] true if the augeas gem could be loaded.
+  def self.augeas?
+    require 'augeas'
+    true
+  rescue LoadError => e
+    RspecPuppetFacts.warning "Failed to retrieve Augeas version: #{e}"
+    false
   end
 
   # Get the "operatingsystem_support" structure from

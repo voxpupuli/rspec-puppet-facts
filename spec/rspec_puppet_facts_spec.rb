@@ -618,7 +618,7 @@ describe RspecPuppetFacts do
     end
 
     it 'should not add "augeasversion" if Augeas is supported' do
-      allow(Puppet.features).to receive(:augeas?).and_return(false)
+      allow(described_class).to receive(:augeas?).and_return(false)
       RspecPuppetFacts.reset
       expect(subject.common_facts).not_to include :augeasversion
     end
@@ -634,7 +634,7 @@ describe RspecPuppetFacts do
         end
       end
 
-      allow(Puppet.features).to receive(:augeas?).and_return(true)
+      allow(described_class).to receive(:augeas?).and_return(true)
       stub_const('Augeas', Augeas_stub)
       RspecPuppetFacts.reset
       expect(subject.common_facts[:augeasversion]).to eq 'my_version'
