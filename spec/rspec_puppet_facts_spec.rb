@@ -161,17 +161,13 @@ describe RspecPuppetFacts do
       }
 
       let(:expected_fact_sets) do
-        if Facter.version.to_f < 1.7
-          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64']
-        else
-          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
-        end
+        ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
       end
 
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 4 elements' do
+      it 'should have 3 elements' do
         expect(subject.size).to eq(expected_fact_sets.size)
       end
       it 'should return supported OS' do
