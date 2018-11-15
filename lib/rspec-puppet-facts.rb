@@ -81,7 +81,6 @@ module RspecPuppetFacts
             end
 
             filter << {
-                :facterversion          => facter_version_filter,
                 :operatingsystem        => os_sup['operatingsystem'],
                 :operatingsystemrelease => os_release_filter,
                 :hardwaremodel          => hardwaremodel,
@@ -91,7 +90,6 @@ module RspecPuppetFacts
       else
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
-              :facterversion   => facter_version_filter,
               :operatingsystem => os_sup['operatingsystem'],
               :hardwaremodel   => hardwaremodel,
           }
@@ -99,18 +97,37 @@ module RspecPuppetFacts
       end
     end
 
+    # FacterDB may have newer versions of facter data for which it contains a subset of all possible
+    # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
+    # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
+    filter.each do |filter_spec|
+      facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
+      db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
+
+      version = facterversion
+      while db.empty? && version !~ /\d+\.0($|\.\d+)/
+        version = RspecPuppetFacts.down_facter_version(version)
+        facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
+        db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
+      end
+
+      next if db.empty?
+
+      unless version == facterversion
+        if RspecPuppetFacts.spec_facts_strict?
+          raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
+        else
+          RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
+        end
+      end
+
+      filter_spec[:facterversion] = facter_version_filter
+    end
+
     received_facts = FacterDB::get_facts(filter)
     unless received_facts.any?
       RspecPuppetFacts.warning "No facts were found in the FacterDB for: #{filter.inspect}"
       return {}
-    end
-
-    unless version == facterversion
-      if RspecPuppetFacts.spec_facts_strict?
-        raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
-      else
-        RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
-      end
     end
 
     os_facts_hash = {}

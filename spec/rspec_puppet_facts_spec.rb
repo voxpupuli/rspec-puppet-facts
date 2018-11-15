@@ -564,6 +564,29 @@ describe RspecPuppetFacts do
                                               /:facterversion must be in the /)
       end
     end
+
+    context 'Downgrades to a facter version with facts per OS' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
+            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] }
+          ],
+          facterversion: '3.9.5'
+        )
+      end
+
+      it 'returns CentOS facts from a facter version matching 3.8' do
+        is_expected.to include(
+          'centos-7-x86_64' => include(facterversion: '3.8.0')
+        )
+      end
+      it 'returns OpenSuSE facts from a facter version matching 3.9' do
+        is_expected.to include(
+          'opensuse-42-x86_64' => include(facterversion: '3.9.2')
+        )
+      end
+    end
   end
 
   context '#add_custom_fact' do
