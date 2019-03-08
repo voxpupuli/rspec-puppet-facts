@@ -9,6 +9,8 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.5
+  - 2.4.5
+  - 2.5.3
 env:
   - FACTER_GEM_VERSION="~> 1.6.0"
   - FACTER_GEM_VERSION="~> 1.7.0"
