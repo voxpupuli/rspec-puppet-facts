@@ -1,3 +1,6 @@
+## 2019-03-22 - Release 1.9.4
+- Take two on getting rubygems autodeploy going. So much for docs,
+    looking at other projects for this one.
 ## 2019-03-22 - Release 1.9.3
 - Various CI updates - [Garrett Honeycutt](https://github.com/ghoneycutt/)
 - Symbolize hash keys in `register_custom_fact`
