@@ -1,3 +1,8 @@
+## 2019-03-22 - Release 1.9.3
+- Various CI updates - [Garrett Honeycutt](https://github.com/ghoneycutt/)
+- Symbolize hash keys in `register_custom_fact`
+  [https://github.com/mcanevet/rspec-puppet-facts/pull/77](https://github.com/mcanevet/rspec-puppet-facts/pull/77)
+
 ## 2018-10-24 - Release 1.9.2
 - Catch the right `LoadError` on missing augeas gem. Thanks to [baurmatt](https://github.com/baurmatt) for the quick fix, and [rodjek](https://github.com/rodjek) for dealing with the testing
 
