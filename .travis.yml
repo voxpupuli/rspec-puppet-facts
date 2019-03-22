@@ -12,3 +12,10 @@ matrix:
   fast_finish: true
 notifications:
   email: false
+deploy:
+  provider: rubygems
+  api_key:
+    secure: bf8TDsGk8S6BLjCMLhVgR+YWzeksvaa3v0+IGPBQGXplK9OzvXvf4dTiwZtffrdq9gkKbXxwqpzPfqGQ1tYK+M3+r7wx/rNNo+NobRjIP6SQRgqRVStHlrkWdAm6yv1L9M2mIYh7Fn2Pj0VXTqI1dIlTOlpSq8gq1HM83SIk5b1LyW8vzIoRcmsYpivS2JKHVHx5BXDUrkJkZMQwDcYFVwmhqVRAdZb5oODU86gnlgiMCIjZrWIVG9iaNWPkFS8hoOaFMQ3S6CKYL+MZZ2x4kRJ/spV8yl9sobrD/G1Pw/fqprZW9Xyz1mFmyr20yMfhluvXht9FqrKIKE4bzeyj7mfP6dqGzz6b2rh7mp+jF43Q3SFn71NtH6v1Llw0QT/c7hM/+3CXOVLVpW5VG94Ys5srJbMMW1ZPYs/dHoJBuM58jBNtxyDHI3OWp8yZMWiwV77/eqD5U0EUZY2jnxRsee/0hgVvMc6+VSuAABY5DWznDrqoTi01yJRFZTl8YTm1vRVOUD3nftau4jKGiO5K+l/9c4kSsWfvd1G0evnCrEWktaMScObvPdB67cZsM/VBgxAgGOw1mQiBUMR1jy+LUnT+FEHEYZ5kcBgqS3eZ8WK9YTevq2MKzmjEh/9V+S8qZhO+srXTy+PCTV5FsLmM52ayWLTH7nusd/eHc8QKbRc=
+  gem: rspec-puppet-facts
+  on:
+    tags: true
