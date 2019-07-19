@@ -428,9 +428,6 @@ describe RspecPuppetFacts do
     end
 
     context 'Without a custom facterversion in the options hash' do
-      before(:each) do
-        allow(Facter).to receive(:version).and_return('2.4.5')
-      end
       subject do
         on_supported_os(
           supported_os: [
@@ -440,9 +437,36 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from the loaded facter version' do
+        facter_version = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A2\.4\./
+            facterversion: /\A#{facter_version[0]}\.#{facter_version[1]}\./
+          )
+        )
+      end
+    end
+
+    context 'With a default Facter version specified in the RSpec configuration' do
+      before(:each) do
+        RSpec.configuration.default_facter_version = '3.1.0'
+      end
+
+      after(:each) do
+        RSpec.configuration.default_facter_version = Facter.version
+      end
+
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ]
+        )
+      end
+
+      it 'returns facts from the specified default Facter version' do
+        is_expected.to match(
+          'centos-7-x86_64' => include(
+            facterversion: /\A3\.1\./
           )
         )
       end

@@ -4,6 +4,10 @@ require 'facterdb'
 require 'json'
 require 'mcollective'
 
+RSpec.configure do |c|
+  c.add_setting :default_facter_version, :default => Facter.version
+end
+
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported
 # OS'es and their facts data which is received from the FacterDB.
@@ -31,7 +35,7 @@ module RspecPuppetFacts
     opts[:hardwaremodels] ||= ['x86_64']
     opts[:hardwaremodels] = [opts[:hardwaremodels]] unless opts[:hardwaremodels].is_a? Array
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
-    opts[:facterversion] ||= Facter.version
+    opts[:facterversion] ||= RSpec.configuration.default_facter_version
 
     unless (facterversion = opts[:facterversion]) =~ /\A\d+\.\d+(?:\.\d+)*\z/
       raise ArgumentError, ":facterversion must be in the format 'n.n' or " \
