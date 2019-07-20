@@ -71,6 +71,19 @@ describe 'myclass::debian' do
 end
 ```
 
+## Specifying a default Facter version
+
+By default, `os_supported_os` will return the facts for the version of Facter
+that it has loaded (usually this is Facter 2.5.1). This behaviour can be
+overridden by setting the `default_facter_version` RSpec setting in your
+`spec/spec_helper.rb` file.
+
+```ruby
+RSpec.configure do |c|
+  c.default_facter_version = '3.14.0'
+end
+```
+
 ## Usage
 
 Use the `on_supported_os` iterator to loop through all of your module's supported operating systems. This allows you to simplify your tests and remove a lot of duplicate code.
