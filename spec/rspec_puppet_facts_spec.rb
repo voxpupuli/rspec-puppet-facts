@@ -436,7 +436,7 @@ describe RspecPuppetFacts do
         facter_version = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{facter_version[0]}\.#{facter_version[1]}\./
+            'facterversion' => /\A#{facter_version[0]}\.#{facter_version[1]}\./
           )
         )
       end
@@ -462,7 +462,7 @@ describe RspecPuppetFacts do
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A3\.1\./
+            'facterversion' => /\A3\.1\./
           )
         )
       end
@@ -486,7 +486,7 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            facterversion: /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
+            'facterversion' => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
           )
         )
       end
@@ -513,7 +513,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(facterversion: '3.1.6')
+          'centos-7-x86_64' => include('facterversion' => '3.1.6')
         )
       end
     end
@@ -530,7 +530,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(facterversion: '3.1.6')
+          'centos-7-x86_64' => include('facterversion' => '3.1.6')
         )
       end
     end
@@ -547,7 +547,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(facterversion: '3.3.0')
+          'centos-7-x86_64' => include('facterversion' => '3.3.0')
         )
       end
     end
@@ -564,7 +564,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(facterversion: '3.3.0')
+          'centos-7-x86_64' => include('facterversion' => '3.3.0')
         )
       end
     end
@@ -605,12 +605,12 @@ describe RspecPuppetFacts do
 
       it 'returns CentOS facts from a facter version matching 3.8' do
         is_expected.to include(
-          'centos-7-x86_64' => include(facterversion: '3.8.0')
+          'centos-7-x86_64' => include('facterversion' => '3.8.0')
         )
       end
       it 'returns OpenSuSE facts from a facter version matching 3.9' do
         is_expected.to include(
-          'opensuse-42-x86_64' => include(facterversion: '3.9.2')
+          'opensuse-42-x86_64' => include('facterversion' => '3.9.2')
         )
       end
     end
@@ -639,24 +639,24 @@ describe RspecPuppetFacts do
 
     it 'adds a simple fact and value' do
       add_custom_fact 'root_home', '/root'
-      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
     end
 
     it 'confines a fact to a particular operating system' do
       add_custom_fact 'root_home', '/root', :confine => 'redhat-7-x86_64'
-      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
-      expect(subject['redhat-6-x86_64'][:root_home]).to be_nil
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-6-x86_64']['root_home']).to be_nil
     end
 
     it 'excludes a fact from a particular operating system' do
       add_custom_fact 'root_home', '/root', :exclude => 'redhat-7-x86_64'
-      expect(subject['redhat-7-x86_64'][:root_home]).to be_nil
-      expect(subject['redhat-6-x86_64'][:root_home]).to eq '/root'
+      expect(subject['redhat-7-x86_64']['root_home']).to be_nil
+      expect(subject['redhat-6-x86_64']['root_home']).to eq '/root'
     end
 
     it 'takes a proc as a value' do
       add_custom_fact 'root_home', ->(_os, _facts) { '/root' }
-      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
+      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
     end
   end
 
@@ -670,7 +670,7 @@ describe RspecPuppetFacts do
     it 'should not add "augeasversion" if Augeas is supported' do
       allow(described_class).to receive(:augeas?).and_return(false)
       RspecPuppetFacts.reset
-      expect(subject.common_facts).not_to include :augeasversion
+      expect(subject.common_facts).not_to include 'augeasversion'
     end
 
     it 'should determine the Augeas version if Augeas is supported' do
@@ -687,7 +687,7 @@ describe RspecPuppetFacts do
       allow(described_class).to receive(:augeas?).and_return(true)
       stub_const('Augeas', Augeas_stub)
       RspecPuppetFacts.reset
-      expect(subject.common_facts[:augeasversion]).to eq 'my_version'
+      expect(subject.common_facts['augeasversion']).to eq 'my_version'
     end
 
     it 'can output a warning message' do

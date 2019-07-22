@@ -155,7 +155,12 @@ module RspecPuppetFacts
       facts.merge! RspecPuppetFacts.common_facts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
-    os_facts_hash
+
+    stringify_keys(os_facts_hash)
+  end
+
+  def stringify_keys(hash)
+    Hash[hash.collect { |k,v| [k.to_s, v.is_a?(Hash) ? stringify_keys(v) : v] }]
   end
 
   # Register a custom fact that will be included in the facts hash.
@@ -186,7 +191,7 @@ module RspecPuppetFacts
   # @api private
   def self.register_custom_fact(name, value, options)
     @custom_facts ||= {}
-    @custom_facts[name.to_sym] = {:options => options, :value => value}
+    @custom_facts[name.to_s] = {:options => options, :value => value}
   end
 
   # Adds any custom facts according to the rules defined for the operating
@@ -232,14 +237,14 @@ module RspecPuppetFacts
   def self.common_facts
     return @common_facts if @common_facts
     @common_facts = {
-        :mco_version   => MCollective::VERSION,
-        :puppetversion => Puppet.version,
-        :rubysitedir   => RbConfig::CONFIG['sitelibdir'],
-        :rubyversion   => RUBY_VERSION,
+      'mco_version'   => MCollective::VERSION,
+      'puppetversion' => Puppet.version,
+      'rubysitedir'   => RbConfig::CONFIG['sitelibdir'],
+      'rubyversion'   => RUBY_VERSION,
     }
 
     if augeas?
-      @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
+      @common_facts['augeasversion'] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
     end
 
     @common_facts
