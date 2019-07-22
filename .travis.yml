@@ -5,10 +5,13 @@ script:
 - bundle exec rake spec
 - bundle exec rake build
 rvm:
-- 2.4.5
-- 2.5.3
+- 2.4
+- 2.5
 matrix:
   fast_finish: true
+  include:
+    - rvm: 2.6
+      env: COVERAGE=true
 notifications:
   email: false
 deploy:
@@ -20,4 +23,4 @@ deploy:
     tags: true
     repo: mcanevet/rspec-puppet-facts
     all_branches: true
-    rvm: 2.5.3
+    rvm: 2.6

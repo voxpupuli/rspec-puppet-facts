@@ -14,17 +14,13 @@ Gem::Specification.new do |s|
   s.licenses    = 'Apache-2.0'
 
   # see .travis.yml for the supported ruby versions
-  s.required_ruby_version = '>= 2.4.5'
+  s.required_ruby_version = '>= 2.4.0'
 
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
-  if RUBY_VERSION =~ /^1\./
-    s.add_development_dependency 'mime-types', '< 3.0'
-  else
-    s.add_development_dependency 'mime-types'
-  end
+  s.add_development_dependency 'mime-types'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
