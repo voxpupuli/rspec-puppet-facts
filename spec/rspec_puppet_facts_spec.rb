@@ -142,6 +142,30 @@ describe RspecPuppetFacts do
       end
     end
 
+    context 'When specifying a supported_os with a single release as a String' do
+      subject(:factsets) do
+        on_supported_os(
+          {
+            :supported_os => [
+              { 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => '7' },
+            ]
+          }
+        )
+      end
+
+      it 'returns a Hash' do
+        expect(factsets).to be_a(Hash)
+      end
+
+      it 'returns a single fact set' do
+        expect(factsets.size).to eq(1)
+      end
+
+      it 'returns a fact set for the specified release' do
+        expect(factsets).to include('redhat-7-x86_64' => include(:operatingsystemmajrelease => '7'))
+      end
+    end
+
     context 'When testing Ubuntu' do
       subject {
         on_supported_os(
