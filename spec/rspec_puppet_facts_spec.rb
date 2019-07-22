@@ -161,17 +161,13 @@ describe RspecPuppetFacts do
       }
 
       let(:expected_fact_sets) do
-        if Facter.version.to_f < 1.7
-          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64']
-        else
-          ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
-        end
+        ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
       end
 
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 4 elements' do
+      it 'should have 3 elements' do
         expect(subject.size).to eq(expected_fact_sets.size)
       end
       it 'should return supported OS' do
@@ -586,6 +582,36 @@ describe RspecPuppetFacts do
       it 'raises an error' do
         expect { method_call }.to raise_error(ArgumentError,
                                               /:facterversion must be in the /)
+      end
+    end
+
+    context 'Downgrades to a facter version with facts per OS' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
+            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] }
+          ],
+          facterversion: '3.9.5'
+        )
+      end
+
+      before(:each) do
+        allow(FacterDB).to receive(:get_facts).and_call_original
+        allow(FacterDB).to receive(:get_facts).with(
+          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS')
+        ).and_return([])
+      end
+
+      it 'returns CentOS facts from a facter version matching 3.8' do
+        is_expected.to include(
+          'centos-7-x86_64' => include(facterversion: '3.8.0')
+        )
+      end
+      it 'returns OpenSuSE facts from a facter version matching 3.9' do
+        is_expected.to include(
+          'opensuse-42-x86_64' => include(facterversion: '3.9.2')
+        )
       end
     end
   end
