@@ -162,7 +162,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a fact set for the specified release' do
-        expect(factsets).to include('redhat-7-x86_64' => include(:operatingsystemmajrelease => '7'))
+        expect(factsets).to include('redhat-7-x86_64' => include('operatingsystemmajrelease' => '7'))
       end
     end
 
