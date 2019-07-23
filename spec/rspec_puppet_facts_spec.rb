@@ -162,7 +162,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a fact set for the specified release' do
-        expect(factsets).to include('redhat-7-x86_64' => include(:operatingsystemmajrelease => '7'))
+        expect(factsets).to include('redhat-7-x86_64' => include('operatingsystemmajrelease' => '7'))
       end
     end
 
@@ -440,10 +440,7 @@ describe RspecPuppetFacts do
         expect(subject.size).to eq 2
       end
       it 'should return supported OS' do
-        expect(subject.keys.sort).to eq %w(
-          archlinux-3-x86_64
-          debian-8-x86_64
-        )
+        expect(subject.keys.sort).to include(a_string_matching(/\Aarchlinux-\d+-x86_64/), 'debian-8-x86_64')
       end
     end
 
@@ -716,6 +713,33 @@ describe RspecPuppetFacts do
 
     it 'can output a warning message' do
       expect { RspecPuppetFacts.warning('test') }.to output(/test/).to_stderr_from_any_process
+    end
+
+    context 'when mcollective is available' do
+      module MCollective_stub
+        VERSION = 'my_version'
+      end
+
+      before(:each) do
+        allow(described_class).to receive(:mcollective?).and_return(true)
+        stub_const('MCollective', MCollective_stub)
+        described_class.reset
+      end
+
+      it 'includes an "mco_version" fact' do
+        expect(subject.common_facts).to include('mco_version' => 'my_version')
+      end
+    end
+
+    context 'when mcollective is not available' do
+      before(:each) do
+        allow(described_class).to receive(:mcollective?).and_return(false)
+        described_class.reset
+      end
+
+      it 'does not include an "mco_version" fact' do
+        expect(subject.common_facts).not_to include('mco_version')
+      end
     end
   end
 

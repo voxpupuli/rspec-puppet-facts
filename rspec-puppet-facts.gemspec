@@ -33,5 +33,4 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'facter'
   s.add_runtime_dependency 'facterdb', '>= 0.5.0'
-  s.add_runtime_dependency 'mcollective-client'
 end
