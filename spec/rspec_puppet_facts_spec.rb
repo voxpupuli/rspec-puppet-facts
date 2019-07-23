@@ -440,10 +440,7 @@ describe RspecPuppetFacts do
         expect(subject.size).to eq 2
       end
       it 'should return supported OS' do
-        expect(subject.keys.sort).to eq %w(
-          archlinux-3-x86_64
-          debian-8-x86_64
-        )
+        expect(subject.keys.sort).to include(a_string_matching(/\Aarchlinux-\d+-x86_64/), 'debian-8-x86_64')
       end
     end
 
