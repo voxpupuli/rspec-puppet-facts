@@ -56,7 +56,7 @@ module RspecPuppetFacts
     filter = []
     opts[:supported_os].map do |os_sup|
       if os_sup['operatingsystemrelease']
-        os_sup['operatingsystemrelease'].map do |operatingsystemmajrelease|
+        Array(os_sup['operatingsystemrelease']).map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
 
             os_release_filter = "/^#{operatingsystemmajrelease.split(' ')[0]}/"
