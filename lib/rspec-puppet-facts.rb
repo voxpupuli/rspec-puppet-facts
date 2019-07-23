@@ -2,7 +2,6 @@ require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
-require 'mcollective'
 
 RSpec.configure do |c|
   c.add_setting :default_facter_version, :default => Facter.version
@@ -237,11 +236,12 @@ module RspecPuppetFacts
   def self.common_facts
     return @common_facts if @common_facts
     @common_facts = {
-      'mco_version'   => MCollective::VERSION,
       'puppetversion' => Puppet.version,
       'rubysitedir'   => RbConfig::CONFIG['sitelibdir'],
       'rubyversion'   => RUBY_VERSION,
     }
+
+    @common_facts['mco_version'] = MCollective::VERSION if mcollective?
 
     if augeas?
       @common_facts['augeasversion'] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
@@ -253,6 +253,7 @@ module RspecPuppetFacts
   # Determine if the Augeas gem is available.
   # @api private
   # @return [Boolean] true if the augeas gem could be loaded.
+  # :nocov:
   def self.augeas?
     require 'augeas'
     true
@@ -260,6 +261,19 @@ module RspecPuppetFacts
     RspecPuppetFacts.warning "Failed to retrieve Augeas version: #{e}"
     false
   end
+  # :nocov:
+
+  # Determine if the mcollective gem is available
+  # @api private
+  # @return [Boolean] true if the mcollective gem could be loaded.
+  # :nocov:
+  def self.mcollective?
+    require 'mcollective'
+    true
+  rescue LoadError
+    false
+  end
+  # :nocov:
 
   # Get the "operatingsystem_support" structure from
   # the parsed metadata.json file

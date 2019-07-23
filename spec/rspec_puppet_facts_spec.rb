@@ -717,6 +717,33 @@ describe RspecPuppetFacts do
     it 'can output a warning message' do
       expect { RspecPuppetFacts.warning('test') }.to output(/test/).to_stderr_from_any_process
     end
+
+    context 'when mcollective is available' do
+      module MCollective_stub
+        VERSION = 'my_version'
+      end
+
+      before(:each) do
+        allow(described_class).to receive(:mcollective?).and_return(true)
+        stub_const('MCollective', MCollective_stub)
+        described_class.reset
+      end
+
+      it 'includes an "mco_version" fact' do
+        expect(subject.common_facts).to include('mco_version' => 'my_version')
+      end
+    end
+
+    context 'when mcollective is not available' do
+      before(:each) do
+        allow(described_class).to receive(:mcollective?).and_return(false)
+        described_class.reset
+      end
+
+      it 'does not include an "mco_version" fact' do
+        expect(subject.common_facts).not_to include('mco_version')
+      end
+    end
   end
 
   describe '.facter_version_to_filter' do
