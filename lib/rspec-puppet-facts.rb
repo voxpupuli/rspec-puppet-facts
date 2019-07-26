@@ -5,6 +5,7 @@ require 'json'
 
 RSpec.configure do |c|
   c.add_setting :default_facter_version, :default => Facter.version
+  c.add_setting :facterdb_string_keys, :default => false
 end
 
 # The purpose of this module is to simplify the Puppet
@@ -155,7 +156,9 @@ module RspecPuppetFacts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
 
-    stringify_keys(os_facts_hash)
+    return stringify_keys(os_facts_hash) if RSpec.configuration.facterdb_string_keys
+
+    os_facts_hash
   end
 
   def stringify_keys(hash)
@@ -236,15 +239,15 @@ module RspecPuppetFacts
   def self.common_facts
     return @common_facts if @common_facts
     @common_facts = {
-      'puppetversion' => Puppet.version,
-      'rubysitedir'   => RbConfig::CONFIG['sitelibdir'],
-      'rubyversion'   => RUBY_VERSION,
+      :puppetversion => Puppet.version,
+      :rubysitedir   => RbConfig::CONFIG['sitelibdir'],
+      :rubyversion   => RUBY_VERSION,
     }
 
-    @common_facts['mco_version'] = MCollective::VERSION if mcollective?
+    @common_facts[:mco_version] = MCollective::VERSION if mcollective?
 
     if augeas?
-      @common_facts['augeasversion'] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
+      @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
     end
 
     @common_facts

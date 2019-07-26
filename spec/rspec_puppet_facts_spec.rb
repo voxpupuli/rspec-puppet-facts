@@ -7,6 +7,48 @@ describe RspecPuppetFacts do
   end
 
   describe '#on_supported_os' do
+    context 'With RSpec.configuration.facterdb_string_keys' do
+      subject(:result) do
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem"        => "Debian",
+                "operatingsystemrelease" => ['7'],
+              },
+            ],
+          }
+        )
+      end
+
+      let(:get_keys) do
+        proc { |r| r.keys + r.select { |_,v| v.is_a?(Hash) }.map { |_,v| get_keys.call(v) }.flatten }
+      end
+
+      context 'set to true' do
+        before(:each) do
+          RSpec.configuration.facterdb_string_keys = true
+        end
+
+        after(:each) do
+          RSpec.configuration.facterdb_string_keys = false
+        end
+
+        it 'returns a fact set with all the keys as Strings' do
+          expect(get_keys.call(result['debian-7-x86_64'])).to all(be_a(String))
+        end
+      end
+
+      context 'set to false' do
+        before(:each) do
+          RSpec.configuration.facterdb_string_keys = false
+        end
+
+        it 'returns a fact set with all the keys as Symbols or Strings' do
+          expect(get_keys.call(result['debian-7-x86_64'])).to all(be_a(Symbol).or(be_a(String)))
+        end
+      end
+    end
 
     context 'Without specifying supported_os' do
       subject { on_supported_os }
@@ -162,7 +204,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a fact set for the specified release' do
-        expect(factsets).to include('redhat-7-x86_64' => include('operatingsystemmajrelease' => '7'))
+        expect(factsets).to include('redhat-7-x86_64' => include(:operatingsystemmajrelease => '7'))
       end
     end
 
@@ -457,7 +499,7 @@ describe RspecPuppetFacts do
         facter_version = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            'facterversion' => /\A#{facter_version[0]}\.#{facter_version[1]}\./
+            :facterversion => /\A#{facter_version[0]}\.#{facter_version[1]}\./
           )
         )
       end
@@ -483,7 +525,7 @@ describe RspecPuppetFacts do
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            'facterversion' => /\A3\.1\./
+            :facterversion => /\A3\.1\./
           )
         )
       end
@@ -507,7 +549,7 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            'facterversion' => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
+            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
           )
         )
       end
@@ -534,7 +576,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include('facterversion' => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6')
         )
       end
     end
@@ -551,7 +593,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include('facterversion' => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6')
         )
       end
     end
@@ -568,7 +610,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include('facterversion' => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0')
         )
       end
     end
@@ -585,7 +627,7 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include('facterversion' => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0')
         )
       end
     end
@@ -626,12 +668,12 @@ describe RspecPuppetFacts do
 
       it 'returns CentOS facts from a facter version matching 3.8' do
         is_expected.to include(
-          'centos-7-x86_64' => include('facterversion' => '3.8.0')
+          'centos-7-x86_64' => include(:facterversion => '3.8.0')
         )
       end
       it 'returns OpenSuSE facts from a facter version matching 3.9' do
         is_expected.to include(
-          'opensuse-42-x86_64' => include('facterversion' => '3.9.2')
+          'opensuse-42-x86_64' => include(:facterversion => '3.9.2')
         )
       end
     end
@@ -691,7 +733,7 @@ describe RspecPuppetFacts do
     it 'should not add "augeasversion" if Augeas is supported' do
       allow(described_class).to receive(:augeas?).and_return(false)
       RspecPuppetFacts.reset
-      expect(subject.common_facts).not_to include 'augeasversion'
+      expect(subject.common_facts).not_to include(:augeasversion)
     end
 
     it 'should determine the Augeas version if Augeas is supported' do
@@ -708,7 +750,7 @@ describe RspecPuppetFacts do
       allow(described_class).to receive(:augeas?).and_return(true)
       stub_const('Augeas', Augeas_stub)
       RspecPuppetFacts.reset
-      expect(subject.common_facts['augeasversion']).to eq 'my_version'
+      expect(subject.common_facts[:augeasversion]).to eq 'my_version'
     end
 
     it 'can output a warning message' do
@@ -727,7 +769,7 @@ describe RspecPuppetFacts do
       end
 
       it 'includes an "mco_version" fact' do
-        expect(subject.common_facts).to include('mco_version' => 'my_version')
+        expect(subject.common_facts).to include(:mco_version => 'my_version')
       end
     end
 
@@ -738,7 +780,7 @@ describe RspecPuppetFacts do
       end
 
       it 'does not include an "mco_version" fact' do
-        expect(subject.common_facts).not_to include('mco_version')
+        expect(subject.common_facts).not_to include(:mco_version)
       end
     end
   end
