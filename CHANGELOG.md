@@ -1,3 +1,15 @@
+## 2019-07-29 - Release 1.9.5
+- The default version of Facter to search for is now configurable with
+  `RSpec.configuration.default_facter_version`.
+- When passing a `:supported_os` hash to `on_supported_os()`, single
+  `operatingsystemrelease` values can now be specified as a String rather than
+  an Array with a single String.
+- Dependency on the `mcollective-client` gem removed. The `mco_version` fact
+  will now optionally be set if the gem is installed.
+- The fact names can now be provided to tests as Strings instead of Symbols by
+  setting `RSpec.configuration.facterdb_string_keys` to `true`.
+- Dropped support for Ruby < 2.1.0
+
 ## 2019-03-22 - Release 1.9.4
 - Take two on getting rubygems autodeploy going. So much for docs,
     looking at other projects for this one.
