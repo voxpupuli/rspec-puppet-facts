@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.licenses    = 'Apache-2.0'
 
   # see .travis.yml for the supported ruby versions
-  s.required_ruby_version = '>= 2.4.0'
+  s.required_ruby_version = '>= 2.1.0'
 
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
