@@ -260,8 +260,7 @@ module RspecPuppetFacts
   def self.augeas?
     require 'augeas'
     true
-  rescue LoadError => e
-    RspecPuppetFacts.warning "Failed to retrieve Augeas version: #{e}"
+  rescue LoadError
     false
   end
   # :nocov:
