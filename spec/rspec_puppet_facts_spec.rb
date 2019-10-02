@@ -450,7 +450,31 @@ describe RspecPuppetFacts do
       }
 
       it 'should output warning message' do
-        expect(RspecPuppetFacts).to receive(:warning).with(/No facts were found in the FacterDB/)
+        expect(RspecPuppetFacts).to receive(:warning).with(/^SKIPPING/)
+        expect(RspecPuppetFacts).to receive(:warning).with(/^No facts were found in the FacterDB for ANY of the OSes/)
+        subject
+      end
+    end
+
+    context 'When specifying one correct and one wrong supported_os' do
+      subject {
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                "operatingsystem" => "Debian",
+                "operatingsystemrelease" => [
+                  "4",
+                  "8",
+                ],
+              },
+            ]
+          }
+        )
+      }
+
+      it 'should output warning message' do
+        expect(RspecPuppetFacts).to receive(:warning).with(/^SKIPPING {:operatingsystem=>\"Debian\", :operatingsystemrelease=>\"\/\^4\/\", :hardwaremodel=>\"x86_64\"}\. Couldn't find any facts to use for this OS/)
         subject
       end
     end
