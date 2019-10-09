@@ -37,17 +37,6 @@ module RspecPuppetFacts
         "'n.n.n' (n is numeric), not '#{facterversion}'"
     end
 
-    facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
-    db = FacterDB.get_facts({ :facterversion =>  facter_version_filter })
-
-    version = facterversion
-    while db.empty? && version !~ /\d+\.0\.\d+/
-      version = RspecPuppetFacts.down_facter_version(version)
-      facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
-      db = FacterDB.get_facts({ :facterversion =>  facter_version_filter})
-    end
-
-
     filter = []
     opts[:supported_os].map do |os_sup|
       if os_sup['operatingsystemrelease']
@@ -67,14 +56,14 @@ module RspecPuppetFacts
                                     "/^#{operatingsystemmajrelease}-/"
                                   end
             elsif os_sup['operatingsystem'] =~ /Windows/i
-              hardwaremodel = version =~ /^[12]\./ ? 'x64' : 'x86_64'
+              hardwaremodel = facterversion =~ /^[12]\./ ? 'x64' : 'x86_64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
 
               # force quoting because windows releases can contain spaces
               os_release_filter = "\"#{operatingsystemmajrelease}\""
 
-              if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(version, '3.4') < 0
+              if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(facterversion, '3.4') < 0
                 os_release_filter = '/^10\\.0\\./'
               end
             end
@@ -103,19 +92,20 @@ module RspecPuppetFacts
       facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
       db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
 
-      version = facterversion
-      while db.empty? && version !~ /\A\d+\.0($|\.\d+)/
-        version = RspecPuppetFacts.down_facter_version(version)
-        facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
-        db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
-      end
-
-      next if db.empty?
-
-      unless version == facterversion
+      if db.empty?
         if RspecPuppetFacts.spec_facts_strict?
           raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
-        else
+        end
+
+        facterversion_obj = Gem::Version.new(facterversion)
+
+        version = FacterDB.get_facts(filter_spec).map { |facts| Gem::Version.new(facts[:facterversion]) }.sort.reverse.detect { |v| v <= facterversion_obj }
+
+        next unless version
+        version = version.to_s
+        facter_version_filter = "/\\A#{Regexp.escape(version)}/"
+
+        unless version == facterversion
           RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
         end
       end
@@ -330,18 +320,6 @@ module RspecPuppetFacts
   def self.facter_version_to_filter(version)
     major, minor = version.split('.')
     "/\\A#{major}\\.#{minor}\\./"
-  end
-  # Subtracts from the minor version passed and returns a string representing
-  # the next minor version down
-  # @return [String] next version below
-  # @param version [String] the Facter version
-  # @param minor_subtractor [int] the value which to subtract by
-  # @api private
-  def self.down_facter_version(version, minor_subtractor = 1)
-    major, minor, z = version.split('.')
-    z = '0' if z.nil?
-    minor = (minor.to_i - minor_subtractor).to_s
-    "#{major}.#{minor}.#{z}"
   end
 
   def self.facter_version_for_puppet_version(puppet_version)
