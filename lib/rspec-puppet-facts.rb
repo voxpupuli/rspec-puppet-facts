@@ -343,8 +343,9 @@ module RspecPuppetFacts
   # @param minor_subtractor [int] the value which to subtract by
   # @api private
   def self.down_facter_version(version, minor_subtractor = 1)
-      major, minor, z = version.split('.')
-      minor = (minor.to_i - minor_subtractor).to_s
-      "#{major}.#{minor}.#{z}"
+    major, minor, z = version.split('.')
+    z = '0' if z.nil?
+    minor = (minor.to_i - minor_subtractor).to_s
+    "#{major}.#{minor}.#{z}"
   end
 end
