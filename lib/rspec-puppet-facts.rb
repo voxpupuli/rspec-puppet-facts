@@ -109,7 +109,7 @@ module RspecPuppetFacts
       db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
 
       version = facterversion
-      while db.empty? && version !~ /\d+\.0($|\.\d+)/
+      while db.empty? && version !~ /\A\d+\.0($|\.\d+)/
         version = RspecPuppetFacts.down_facter_version(version)
         facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
         db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
