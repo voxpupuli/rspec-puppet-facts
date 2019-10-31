@@ -59,7 +59,7 @@ module RspecPuppetFacts
         Array(os_sup['operatingsystemrelease']).map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
 
-            os_release_filter = "/^#{operatingsystemmajrelease.split(' ')[0]}/"
+            os_release_filter = "/^#{Regexp.escape(operatingsystemmajrelease.split(' ')[0])}/"
             if os_sup['operatingsystem'] =~ /BSD/i
               hardwaremodel = 'amd64'
             elsif os_sup['operatingsystem'] =~ /Solaris/i

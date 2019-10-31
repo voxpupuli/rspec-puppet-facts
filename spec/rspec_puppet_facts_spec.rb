@@ -486,6 +486,43 @@ describe RspecPuppetFacts do
       end
     end
 
+    context 'When the operatingsystemrelease contains parens' do
+      subject do
+        on_supported_os(
+          {
+            :supported_os => [
+              {
+                'operatingsystem'        => 'IOS',
+                'operatingsystemrelease' => ['12.2(25)EWA9'],
+              }
+            ],
+          }
+        )
+      end
+
+      before(:each) do
+        allow(RspecPuppetFacts).to receive(:warning).with(a_string_matching(/no facts were found/i))
+        allow(FacterDB).to receive(:get_facts).and_call_original
+      end
+
+      it 'escapes the parens in the filter' do
+        filter = [
+          include(
+            :operatingsystem        => "IOS",
+            :operatingsystemrelease => "/^12\\.2\\(25\\)EWA9/",
+            :hardwaremodel          => "x86_64",
+          ),
+        ]
+
+        expect(FacterDB).to receive(:get_facts).with(filter)
+        subject
+      end
+
+      it 'does not raise an error' do
+        expect { subject }.not_to raise_error
+      end
+    end
+
     context 'Without a custom facterversion in the options hash' do
       subject do
         on_supported_os(
