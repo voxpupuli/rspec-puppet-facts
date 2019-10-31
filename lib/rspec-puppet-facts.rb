@@ -109,7 +109,7 @@ module RspecPuppetFacts
       db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
 
       version = facterversion
-      while db.empty? && version !~ /\d+\.0($|\.\d+)/
+      while db.empty? && version !~ /\A\d+\.0($|\.\d+)/
         version = RspecPuppetFacts.down_facter_version(version)
         facter_version_filter = RspecPuppetFacts.facter_version_to_filter(version)
         db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
@@ -344,8 +344,9 @@ module RspecPuppetFacts
   # @param minor_subtractor [int] the value which to subtract by
   # @api private
   def self.down_facter_version(version, minor_subtractor = 1)
-      major, minor, z = version.split('.')
-      minor = (minor.to_i - minor_subtractor).to_s
-      "#{major}.#{minor}.#{z}"
+    major, minor, z = version.split('.')
+    z = '0' if z.nil?
+    minor = (minor.to_i - minor_subtractor).to_s
+    "#{major}.#{minor}.#{z}"
   end
 end

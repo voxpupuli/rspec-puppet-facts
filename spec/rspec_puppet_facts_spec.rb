@@ -887,4 +887,17 @@ describe RspecPuppetFacts do
       end
     end
   end
+
+  describe '.down_facter_version' do
+    context 'with MAJOR.MINOR.PATCH version' do
+      it 'decrements MINOR version' do
+        expect(RspecPuppetFacts.down_facter_version('3.5.5')).to eq '3.4.5'
+      end
+    end
+    context 'with MAJOR.MINOR version' do
+      it 'decrements MINOR version and sets PATCH to \'0\'' do
+        expect(RspecPuppetFacts.down_facter_version('3.5')).to eq '3.4.0'
+      end
+    end
+  end
 end
