@@ -790,10 +790,6 @@ describe RspecPuppetFacts do
       expect(subject.common_facts[:augeasversion]).to eq 'my_version'
     end
 
-    it 'can output a warning message' do
-      expect { RspecPuppetFacts.warning('test') }.to output(/test/).to_stderr_from_any_process
-    end
-
     context 'when mcollective is available' do
       module MCollective_stub
         VERSION = 'my_version'
