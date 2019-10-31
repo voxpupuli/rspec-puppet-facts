@@ -1,3 +1,11 @@
+## 2019-07-31 - Release 1.9.6
+- Suppress the warning message generated when the Augeas gem is not available.
+- Searching through older Facter releases for a fact set that does not exist no
+  longer causes it to hang indefinitely.
+- The `operatingsystemrelease` values are now correctly escaped when building
+  the FacterDB filters, allowing the use of `operatingsystemrelease` values
+  that contain special regular expression characters like parentheses.
+
 ## 2019-07-29 - Release 1.9.5
 - The default version of Facter to search for is now configurable with
   `RSpec.configuration.default_facter_version`.
