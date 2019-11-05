@@ -139,17 +139,17 @@ require 'spec_helper'
 
 describe 'myclass' do
 
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        facts
+        os_facts
       end
 
       it { is_expected.to compile.with_all_deps }
       ...
 
       # If you need any to specify any operating system specific tests
-      case facts[:osfamily]
+      case os_facts[:osfamily]
       when 'Debian'
         ...
       else
@@ -207,17 +207,17 @@ require 'spec_helper'
 
 describe 'mytype' do
 
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        facts
+        os_facts
       end
 
       it { should be_valid_type }
       ...
 
       # If you need to specify any operating system specific tests
-      case facts[:osfamily]
+      case os_facts[:osfamily]
       when 'Debian'
         ...
       else
@@ -275,10 +275,10 @@ require 'spec_helper'
 
 describe 'myfunction' do
 
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        facts
+        os_facts
       end
 
       it { should run.with_params('something').and_return('a value') }
@@ -307,12 +307,12 @@ To override fact values and include additional facts in your tests, merge values
 require 'spec_helper'
 
 describe 'myclass' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
 
       # Add the 'foo' fact with the value 'bar' to the tests
       let(:facts) do
-        facts.merge({
+        os_facts.merge({
           :foo => 'bar',
         })
       end
@@ -368,9 +368,9 @@ To do this, pass a lambda as the value for the custom fact. The lambda is passed
 add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']}" }
 ```
 
-### Suppling Custom External Facts through FacterDB
+### Supplying Custom External Facts through FacterDB
 Rspec-puppet-facts uses a gem called facterdb that contains many fact sets of various combinations that are pre generated.  Rspec-puppet-facts queries
-facterdb to pull out a specific fact set to use when testing. 
+facterdb to pull out a specific fact set to use when testing.
 
 The default facts are great for many things but there will be times when you need to have custom
 fact sets that only make sense in your environment or might contain sensitive information.
@@ -379,7 +379,7 @@ To supply external facts to facterdb just set the `FACTERDB_SEARCH_PATHS` enviro
 paths to your facts.
 
 When separating paths please use the default path separator character supported by your OS.  
-* Unix/Linux/OSX = `:` 
+* Unix/Linux/OSX = `:`
 * Windows = `;`
 
 This means you will need to supply your own fact sets in addition to the ones contained in facterdb.
@@ -435,7 +435,7 @@ ENV['FACTERDB_SEARCH_PATHS'] = custom_facts
 ```
 ## Running your tests
 
-For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.
+For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.  If you are developing a module using the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk_install.html), `pdk test unit` will run all your tests against the supported operating systems listed in `metadata.json`.
 
 If you want to run the tests against the facts for specific operating systems, you can provide a filter in the `SPEC_FACTS_OS` environment variable and only the supported operating systems whose name starts with the specified filter will be used.
 
