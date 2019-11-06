@@ -64,8 +64,27 @@ describe 'myclass::debian' do
     ],
   }
 
-  on_supported_os(test_on).each do |os, facts|
-    let (:facts) { facts }
+  on_supported_os(test_on).each do |os, os_facts|
+    let (:facts) { os_facts }
+    it { is_expected.to compile.with_all_deps }
+  end
+end
+```
+Ruby 1.9 and later:
+```ruby
+require 'spec_helper'
+
+describe 'myclass::raspbian' do
+  test_on = {
+    supported_os: [
+      {
+        'operatingsystem'        => 'Debian',
+        'operatingsystemrelease' => ['10', '9', '8'],
+      },
+    ],
+  }
+  on_supported_os(test_on).each do |os, os_facts|
+    let(:facts) { os_facts }
     it { is_expected.to compile.with_all_deps }
   end
 end
@@ -154,6 +173,56 @@ describe 'myclass' do
         ...
       else
         ...
+      end
+    end
+  end
+end
+```
+
+When using roles and profiles to manage a heterogeneous IT estate, you can test a profile that supports several OSes with many `let(:facts)` as long as each is in its own context:
+```ruby
+require 'spec_helper'
+
+describe 'profiles::packagerepos' do
+  context 'Raspbian tests' do # We manage hundreds of desk-mounted Pis
+    raspbian = {
+      hardwaremodels: ['armv7l'],
+      supported_os: [
+        {
+          'operatingsystem'        => 'Debian',
+          'operatingsystemrelease' => ['10', '9', '8'],
+        },
+      ],
+    }
+    on_supported_os(raspbian).each do |os, os_facts|
+      let(:facts) do
+        os_facts
+      end
+
+      context "#{os} with defaults" do
+        it { is_expected.to compile }
+        # more tests ...
+      end
+    end
+  end
+  context 'Ubuntu tests' do # And also a fleet of Ubuntu desktops
+    ubuntu = {
+      supported_os: [
+        {
+          'operatingsystem'        => 'Ubuntu',
+          'operatingsystemrelease' => ['18.04', '16.04'],
+        },
+      ],
+    }
+
+    on_supported_os(ubuntu).each do |os, os_facts|
+      let(:facts) do
+        os_facts
+      end
+
+      context "#{os} with defaults" do
+        it { is_expected.to compile }
+        # more tests ...
       end
     end
   end
