@@ -3,6 +3,7 @@ sudo: false
 cache: bundler
 script:
 - bundle exec rake spec
+- bundle exec rake puppet_versions:test
 - bundle exec rake build
 rvm:
 - 2.4

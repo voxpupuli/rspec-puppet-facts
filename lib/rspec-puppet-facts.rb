@@ -3,11 +3,6 @@ require 'facter'
 require 'facterdb'
 require 'json'
 
-RSpec.configure do |c|
-  c.add_setting :default_facter_version, :default => Facter.version
-  c.add_setting :facterdb_string_keys, :default => false
-end
-
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported
 # OS'es and their facts data which is received from the FacterDB.
@@ -348,4 +343,45 @@ module RspecPuppetFacts
     minor = (minor.to_i - minor_subtractor).to_s
     "#{major}.#{minor}.#{z}"
   end
+
+  def self.facter_version_for_puppet_version(puppet_version)
+    return Facter.version if puppet_version.nil?
+
+    json_path = File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_components.json'))
+    unless File.file?(json_path) && File.readable?(json_path)
+      warning "#{json_path} does not exist or is not readable, defaulting to Facter #{Facter.version}"
+      return Facter.version
+    end
+
+    fd = File.open(json_path, 'rb:UTF-8')
+    data = JSON.parse(fd.read)
+
+    version_map = data.map { |_, versions|
+      if versions['puppet'].nil? || versions['facter'].nil?
+        nil
+      else
+        [Gem::Version.new(versions['puppet']), versions['facter']]
+      end
+    }.compact
+
+    puppet_gem_version = Gem::Version.new(puppet_version)
+    applicable_versions = version_map.select { |p, _| puppet_gem_version >= p }
+    if applicable_versions.empty?
+      warning "Unable to find Puppet #{puppet_version} in #{json_path}, defaulting to Facter #{Facter.version}"
+      return Facter.version
+    end
+
+    applicable_versions.sort { |a, b| b.first <=> a.first }.first.last
+  rescue JSON::ParserError
+    warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
+    Facter.version
+  ensure
+    fd.close if fd
+  end
+end
+
+RSpec.configure do |c|
+  c.add_setting :default_facter_version,
+    :default => RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
+  c.add_setting :facterdb_string_keys, :default => false
 end
