@@ -1,9 +1,131 @@
 require 'spec_helper'
 require 'json'
+require 'stringio'
 
 describe RspecPuppetFacts do
   let(:metadata_file) do
     'spec/fixtures/metadata.json'
+  end
+
+  describe '.facter_version_for_puppet_version' do
+    subject(:facter_version) do
+      described_class.facter_version_for_puppet_version(puppet_version)
+    end
+
+    let(:component_json_path) do
+      File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_components.json'))
+    end
+
+    let(:puppet_version) { Puppet.version }
+
+    context 'when the component JSON file does not exist' do
+      before(:each) do
+        allow(File).to receive(:file?).with(component_json_path).and_return(false)
+        allow(described_class).to receive(:warning)
+      end
+
+      it 'defaults to the currently installed Facter version' do
+        expect(facter_version).to eq(Facter.version)
+      end
+
+      it 'warns the user' do
+        msg = /does not exist or is not readable, defaulting to/i
+        expect(described_class).to receive(:warning).with(a_string_matching(msg))
+        facter_version
+      end
+    end
+
+    context 'when the component JSON file is unreadable' do
+      before(:each) do
+        allow(File).to receive(:readable?).with(component_json_path).and_return(false)
+        allow(described_class).to receive(:warning)
+      end
+
+      it 'defaults to the currently installed Facter version' do
+        expect(facter_version).to eq(Facter.version)
+      end
+
+      it 'warns the user' do
+        msg = /does not exist or is not readable, defaulting to/i
+        expect(described_class).to receive(:warning).with(a_string_matching(msg))
+        facter_version
+      end
+    end
+
+    context 'when the component JSON file is unparseable' do
+      before(:each) do
+        io = StringIO.new('this is not JSON!')
+        allow(File).to receive(:open).with(component_json_path, anything).and_return(io)
+        allow(described_class).to receive(:warning)
+      end
+
+      it 'defaults to the currently installed Facter version' do
+        expect(facter_version).to eq(Facter.version)
+      end
+
+      it 'warns the user' do
+        msg = /contains invalid json, defaulting to/i
+        expect(described_class).to receive(:warning).with(a_string_matching(msg))
+        facter_version
+      end
+    end
+
+    context 'when the passed puppet_version is nil' do
+      let(:puppet_version) { nil }
+
+      it 'defaults to the currently installed Facter version' do
+        expect(facter_version).to eq(Facter.version)
+      end
+    end
+
+    context 'when passed a Puppet version greater than any known version' do
+      let(:puppet_version) { '999.0.0' }
+
+      it 'returns the Facter version for the highest known Puppet version' do
+        known_facter_versions = JSON.parse(File.read(component_json_path)).map do |_, r|
+          r['facter']
+        end
+        sorted_facter_versions = known_facter_versions.compact.sort do |a, b|
+          Gem::Version.new(b) <=> Gem::Version.new(a)
+        end
+
+        expect(facter_version).to eq(sorted_facter_versions.first)
+      end
+    end
+
+    context 'when passed a known Puppet version' do
+      let(:puppet_version) { '5.2.0' }
+
+      it 'returns the Facter version for that Puppet version' do
+        expect(facter_version).to eq('3.9.0')
+      end
+    end
+
+    context 'when passed a Puppet version between two known versions' do
+      let(:puppet_version) { '5.2.5' }
+
+      it 'returns the Facter version for the lower Puppet version' do
+        expect(facter_version).to eq('3.9.0')
+      end
+    end
+
+    context 'when passed a Puppet version lower than any known version' do
+      let(:puppet_version) { '1.0.0' }
+
+      before(:each) do
+        allow(described_class).to receive(:warning)
+      end
+
+      it 'returns the currently installed Facter version' do
+        expect(facter_version).to eq(Facter.version)
+      end
+
+      it 'warns the user' do
+        msg = /unable to find puppet #{Regexp.escape(puppet_version)}.+?, defaulting to/i
+        expect(described_class).to receive(:warning).with(a_string_matching(msg))
+        facter_version
+      end
+    end
   end
 
   describe '#on_supported_os' do
@@ -368,16 +490,19 @@ describe RspecPuppetFacts do
                 'operatingsystemrelease' => release,
               }
             ],
+            :facterversion => facterversion,
           }
         )
       end
+
+      let(:facterversion) { '3.8.0' }
 
       context 'with a standard release' do
         let(:release) { ['7'] }
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-7-x64' => an_instance_of(Hash)) }
+        it { is_expected.to include('windows-7-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a revision release' do
@@ -385,7 +510,7 @@ describe RspecPuppetFacts do
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2012 R2-x64' => an_instance_of(Hash)) }
+        it { is_expected.to include('windows-2012 R2-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a Server prefixed release' do
@@ -393,7 +518,7 @@ describe RspecPuppetFacts do
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2012-x64' => an_instance_of(Hash)) }
+        it { is_expected.to include('windows-2012-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a 2016 release' do
@@ -401,7 +526,18 @@ describe RspecPuppetFacts do
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2016-x64' => an_instance_of(Hash)) }
+        it { is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash)) }
+      end
+
+      context 'with a 2016 release and Facter < 3.4' do
+        let(:release) { ['2016'] }
+        let(:facterversion) { '3.3.0' }
+
+        it { is_expected.to be_a(Hash) }
+        it { is_expected.to have_attributes(:size => 1) }
+        it 'munges the operatingsystemmajrelease to 2016' do
+          is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash))
+        end
       end
     end
 
@@ -520,25 +656,6 @@ describe RspecPuppetFacts do
 
       it 'does not raise an error' do
         expect { subject }.not_to raise_error
-      end
-    end
-
-    context 'Without a custom facterversion in the options hash' do
-      subject do
-        on_supported_os(
-          supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
-          ]
-        )
-      end
-
-      it 'returns facts from the loaded facter version' do
-        facter_version = Facter.version.split('.')
-        is_expected.to match(
-          'centos-7-x86_64' => include(
-            :facterversion => /\A#{facter_version[0]}\.#{facter_version[1]}\./
-          )
-        )
       end
     end
 
