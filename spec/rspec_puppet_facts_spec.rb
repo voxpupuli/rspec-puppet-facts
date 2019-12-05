@@ -669,6 +669,23 @@ describe RspecPuppetFacts do
       end
     end
 
+    context 'When querying a fact set that does not have an operatingsystemmajrelease fact' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] }
+          ],
+          facterversion: '2.1.0'
+        )
+      end
+
+      it 'splits the operatingsystemrelease fact value to get the major release' do
+        is_expected.to match(
+          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3')
+        )
+      end
+    end
+
     context 'With an invalid facterversion in the options hash' do
       let(:method_call) do
         on_supported_os(
