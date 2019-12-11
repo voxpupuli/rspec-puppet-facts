@@ -1,3 +1,9 @@
+## 2019-12-11 - Release 1.10.0
+- Automatically select the default Facter version based on the Puppet version.
+  The available Puppet version is matched against a mapping of Puppet and
+  Facter versions included in the `puppet-agent` all-in-one packages to find
+  the most suitable Facter version.
+
 ## 2019-07-31 - Release 1.9.6
 - Suppress the warning message generated when the Augeas gem is not available.
 - Searching through older Facter releases for a fact set that does not exist no
