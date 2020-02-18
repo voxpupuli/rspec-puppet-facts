@@ -66,6 +66,9 @@ module RspecPuppetFacts
               if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(facterversion, '3.4') < 0
                 os_release_filter = '/^10\\.0\\./'
               end
+            elsif os_sup['operatingsystem'] =~ /Amazon/i
+              # Tighten the regex for Amazon Linux 2 so that we don't pick up Amazon Linux 2016 or 2017 facts
+              os_release_filter = "/^2$/" if operatingsystemmajrelease == '2'
             end
 
             filter << {
