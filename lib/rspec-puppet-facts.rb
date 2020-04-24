@@ -94,7 +94,7 @@ module RspecPuppetFacts
 
       if db.empty?
         if RspecPuppetFacts.spec_facts_strict?
-          raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion}, aborting"
+          raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, aborting"
         end
 
         facterversion_obj = Gem::Version.new(facterversion)
@@ -106,7 +106,7 @@ module RspecPuppetFacts
         facter_version_filter = "/\\A#{Regexp.escape(version)}/"
 
         unless version == facterversion
-          RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion}, using v#{version} instead"
+          RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, using v#{version} instead"
         end
       end
 
