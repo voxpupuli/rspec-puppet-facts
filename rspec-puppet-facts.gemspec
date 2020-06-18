@@ -1,6 +1,6 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
 require 'rspec-puppet-facts/version'
 
 Gem::Specification.new do |s|
@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'yard'
   s.add_runtime_dependency 'puppet'
-  s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'facter'
   s.add_runtime_dependency 'facterdb', '>= 0.5.0'
 end
