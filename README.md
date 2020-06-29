@@ -7,7 +7,7 @@ rspec-puppet-facts
 [![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
 
-Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb). This simplifies unit testing because you don't need to specify the facts yourself.
+Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb)). This simplifies unit testing because you don't need to specify the facts yourself.
 
 ## Installation
 
