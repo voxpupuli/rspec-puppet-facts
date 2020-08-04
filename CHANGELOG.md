@@ -1,3 +1,14 @@
+## 2020-08-04 - Release 2.0.0
+
+- Require Ruby >= 2.4
+- Automatically find the latest facter version in the database. Previously a
+  very slow and undeterministic approach was taken when an exact match of the
+  Facter version wasn't found.. The new approach is to take the closest version
+  that is still older than the specified version.
+- Fix Amazon Linux 2 fact lookup
+- Log which facts could not be found
+- Remove json as a dependency
+
 ## 2019-12-11 - Release 1.10.0
 - Automatically select the default Facter version based on the Puppet version.
   The available Puppet version is matched against a mapping of Puppet and
