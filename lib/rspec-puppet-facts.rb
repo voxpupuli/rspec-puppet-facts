@@ -7,6 +7,8 @@ require 'json'
 # module's RSpec tests by looping through all supported
 # OS'es and their facts data which is received from the FacterDB.
 module RspecPuppetFacts
+  FACTS_CACHE = {}
+
   # Use the provided options or the data from the metadata.json file
   # to find a set of matching facts in the FacterDB.
   # OS names and facts can be used in the Puppet RSpec tests
@@ -32,6 +34,28 @@ module RspecPuppetFacts
     opts[:supported_os] ||= RspecPuppetFacts.meta_supported_os
     opts[:facterversion] ||= RSpec.configuration.default_facter_version
 
+    # This should list all variables that on_supported_os_implementation uses
+    cache_key = [
+      opts.to_s,
+      RspecPuppetFacts.custom_facts.to_s,
+      RspecPuppetFacts.spec_facts_os_filter,
+      RspecPuppetFacts.spec_facts_strict?,
+    ]
+
+    result = FACTS_CACHE[cache_key] ||= on_supported_os_implementation(opts)
+
+    # Marshalling is used to get unique instances which is needed for test
+    # isolation when facts are overridden.
+    Marshal.load(Marshal.dump(result))
+  end
+
+  # The real implementation of on_supported_os.
+  #
+  # Generating facts is slow - this allows memoization of the facts between
+  # multiple calls.
+  #
+  # @api private
+  def on_supported_os_implementation(opts = {})
     unless (facterversion = opts[:facterversion]) =~ /\A\d+\.\d+(?:\.\d+)*\z/
       raise ArgumentError, ":facterversion must be in the format 'n.n' or " \
         "'n.n.n' (n is numeric), not '#{facterversion}'"
@@ -201,6 +225,13 @@ module RspecPuppetFacts
     end
 
     facts
+  end
+
+  # Get custom facts
+  # @return [nil,Hash]
+  # @api private
+  def self.custom_facts
+    @custom_facts
   end
 
   # If provided this filter can be used to limit the set
