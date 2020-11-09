@@ -689,7 +689,7 @@ describe RspecPuppetFacts do
       end
 
       before do
-        RSpec.configuration.default_facter_version = '3.1.0'
+        RSpec.configuration.default_facter_version = '3.1.6'
       end
 
       after do
@@ -721,11 +721,10 @@ describe RspecPuppetFacts do
       end
 
 
-      it 'returns facts from a facter version matching future and below' do
-        major, minor = Facter.version.split('.')
+      it 'returns facts from a facter version matching version and below' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./,
+            :facterversion => /\A2\.[0-6]\./,
           ),
         )
       end
@@ -856,8 +855,10 @@ describe RspecPuppetFacts do
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS'),
-        ).and_return([])
+          {:operatingsystem=>"CentOS", :operatingsystemrelease=>"/^7/", :hardwaremodel=>"x86_64"},
+        ).and_wrap_original do |m, *args|
+          m.call(*args).reject { |facts| facts[:facterversion].start_with?('3.9.') }
+        end
       end
 
       it 'returns CentOS facts from a facter version matching 3.8' do
@@ -976,69 +977,145 @@ describe RspecPuppetFacts do
     end
   end
 
-  describe '.facter_version_to_filter' do
-    context 'when passed a version that is major.minor (1)' do
-      subject { described_class.facter_version_to_filter('1.2') }
+  describe '.facter_version_to_strict_requirement' do
+    subject { described_class.facter_version_to_strict_requirement(version) }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A1\.2\./')
-      end
+    context 'when passed a version that is a complex requirement' do
+      let(:version) { '~> 2.4' }
+
+      it { is_expected.to be_instance_of(Gem::Requirement) }
+    end
+
+    context 'when passed a version that is major' do
+      let(:version) { '1' }
+
+      it { is_expected.to be_instance_of(Gem::Requirement) }
+    end
+  end
+
+  describe '.facter_version_to_strict_requirement_string' do
+    subject { described_class.facter_version_to_strict_requirement_string(version) }
+
+    context 'when passed a version that is a complex requirement' do
+      let(:version) { '~> 2.4' }
+
+      it { is_expected.to eq('~> 2.4') }
+    end
+
+    context 'when passed a version that is major' do
+      let(:version) { '1' }
+
+      it { is_expected.to eq('~> 1.0') }
+    end
+
+    context 'when passed a version that is major.minor' do
+      let(:version) { '1.2' }
+
+      it { is_expected.to eq('~> 1.2.0') }
+    end
+
+    context 'when passed a version that is major.minor.patch' do
+      let(:version) { '1.2.3' }
+
+      it { is_expected.to eq('~> 1.2.3.0') }
+    end
+  end
+
+  describe '.facter_version_to_loose_requirement' do
+    subject { described_class.facter_version_to_loose_requirement(version) }
+
+    context 'when passed a version that is a complex requirement' do
+      let(:version) { '~> 2.4' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when passed a version that is major' do
+      let(:version) { '1' }
+
+      it { is_expected.to be_instance_of(Gem::Requirement) }
+    end
+  end
+
+  describe '.facter_version_to_loose_requirement_string' do
+    subject { described_class.facter_version_to_loose_requirement_string(version) }
+
+    context 'when passed a version that is a complex requirement (1)' do
+      let(:version) { '~> 2.4' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when passed a version that is a complex requirement (2)' do
+      let(:version) { '>= 3 < 5' }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when passed a version that is major (1)' do
+      let(:version) { '1' }
+
+      it { is_expected.to eq('< 2') }
+    end
+
+    context 'when passed a version that is major (2)' do
+      let(:version) { '9' }
+
+      it { is_expected.to eq('< 10') }
+    end
+
+    context 'when passed a version that is major (3)' do
+      let(:version) { '10' }
+
+      it { is_expected.to eq('< 11') }
+    end
+
+    context 'when passed a version that is major.minor (1)' do
+      let(:version) { '1.2' }
+
+      it { is_expected.to eq('< 1.3') }
     end
 
     context 'when passed a version that is major.minor (2)' do
-      subject { described_class.facter_version_to_filter('10.2') }
+      let(:version) { '10.2' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A10\.2\./')
-      end
+      it { is_expected.to eq('< 10.3') }
     end
 
     context 'when passed a version that is major.minor (3)' do
-      subject { described_class.facter_version_to_filter('1.20') }
+      let(:version) { '1.20' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A1\.20\./')
-      end
+      it { is_expected.to eq('< 1.21') }
     end
 
     context 'when passed a version that is major.minor (4)' do
-      subject { described_class.facter_version_to_filter('10.20') }
+      let(:version) { '10.20' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A10\.20\./')
-      end
+      it { is_expected.to eq('< 10.21') }
     end
 
     context 'when passed a version that is major.minor.patch (1)' do
-      subject { described_class.facter_version_to_filter('1.2.3') }
+      let(:version) { '1.2.3' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A1\.2\./')
-      end
+      it { is_expected.to eq('< 1.3') }
     end
 
     context 'when passed a version that is major.minor.patch (2)' do
-      subject { described_class.facter_version_to_filter('10.2.3') }
+      let(:version) { '10.2.3' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A10\.2\./')
-      end
+      it { is_expected.to eq('< 10.3') }
     end
 
     context 'when passed a version that is major.minor.patch (3)' do
-      subject { described_class.facter_version_to_filter('1.20.3') }
+      let(:version) { '1.20.3' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A1\.20\./')
-      end
+      it { is_expected.to eq('< 1.21') }
     end
 
     context 'when passed a version that is major.minor.patch (4)' do
-      subject { described_class.facter_version_to_filter('10.20.3') }
+      let(:version) { '10.20.3' }
 
-      it 'returns the correct JGrep statement expression' do
-        is_expected.to eq('/\A10\.20\./')
-      end
+      it { is_expected.to eq('< 10.21') }
     end
   end
 end
