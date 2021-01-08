@@ -1,3 +1,8 @@
+## 2021-01-08 - Release 2.0.1
+
+- Cache results from `on_supported_os` to reduce facterdb lookup times on
+  full test suite runs.
+
 ## 2020-08-04 - Release 2.0.0
 
 - Require Ruby >= 2.4
