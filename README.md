@@ -6,6 +6,7 @@ rspec-puppet-facts
 [![Gem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
+[![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb)). This simplifies unit testing because you don't need to specify the facts yourself.
 
@@ -513,3 +514,12 @@ SPEC_FACTS_OS='ubuntu-14' rake spec
 ```
 
 When no facts are available for the specific facter/operating system combination, the library will fall back to facts from earlier versions of the requested operating system, to allow testing to continue when new versions of facter are released. Set `SPEC_FACTS_STRICT=yes` to instead trigger a failure.
+
+
+## Transfer Notice
+
+This plugin was originally authored by [Camptocamp](http://www.camptocamp.com).
+The maintainer preferred that Puppet Community take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Camptocamp.
+
+Previously: https://github.com/mcanevet/rspec-puppet-facts
