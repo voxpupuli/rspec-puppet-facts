@@ -1,14 +1,19 @@
 rspec-puppet-facts
 ==================
 
-[![Build Status](https://img.shields.io/travis/mcanevet/rspec-puppet-facts/master.svg)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
-[![Code Climate](https://img.shields.io/codeclimate/github/mcanevet/rspec-puppet-facts.svg)](https://codeclimate.com/github/mcanevet/rspec-puppet-facts)
-[![Gem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
-[![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
-[![Coverage Status](https://img.shields.io/coveralls/mcanevet/rspec-puppet-facts.svg)](https://coveralls.io/r/mcanevet/rspec-puppet-facts?branch=master)
+[![License](https://img.shields.io/github/license/voxpupuli/rspec-puppet-facts.svg)](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/LICENSE)
+[![Test](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/voxpupuli/rspec-puppet-facts/branch/master/graph/badge.svg?token=Mypkl78hvK)](https://codecov.io/gh/voxpupuli/rspec-puppet-facts)
+[![Release](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
-Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/), this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet) tests against the facts for all your supported operating systems (provided by [facterdb](https://github.com/camptocamp/facterdb)). This simplifies unit testing because you don't need to specify the facts yourself.
+Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
+this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet)
+tests against the facts for all your supported operating systems (provided by
+[facterdb](https://github.com/voxpupuli/facterdb)).
+This simplifies unit testing because you don't need to specify the facts yourself.
 
 ## Installation
 
@@ -515,6 +520,16 @@ SPEC_FACTS_OS='ubuntu-14' rake spec
 
 When no facts are available for the specific facter/operating system combination, the library will fall back to facts from earlier versions of the requested operating system, to allow testing to continue when new versions of facter are released. Set `SPEC_FACTS_STRICT=yes` to instead trigger a failure.
 
+## Maintenance
+
+This gem uses information about puppet AIO component versions to build/test.
+They are vendored at `ext/puppet_agent_components.json`. If they are outdated,
+the `puppet_versions:test` rake task will fail and they need to be updated.
+This is as easy as running: `bundle exec rake puppet_versions:update`
+
+## License
+
+This project is licensed under the [Apache-2 license](./LICENSE).
 
 ## Transfer Notice
 
@@ -523,3 +538,12 @@ The maintainer preferred that Puppet Community take ownership of the module for 
 Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Camptocamp.
 
 Previously: https://github.com/mcanevet/rspec-puppet-facts
+
+## Release information
+
+To make a new release, please do:
+* Update the version in the `lib/rspec-puppet-facts/version.rb` file
+* Install gems with `bundle install --with release --path .vendor`
+* generate the changelog with `bundle exec rake changelog`
+* Create a PR with it
+* After it got merged, push a tag. A github workflow will do the actual release
