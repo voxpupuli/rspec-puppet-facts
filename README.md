@@ -3,7 +3,7 @@ rspec-puppet-facts
 
 [![License](https://img.shields.io/github/license/voxpupuli/rspec-puppet-facts.svg)](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/LICENSE)
 [![Test](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/voxpupuli/rspec-puppet-facts/branch/master/graph/badge.svg?token=Mypkl78hvK)](https://codecov.io/gh/voxpupuli/rspec-puppet-facts)
+[![codecov](https://codecov.io/gh/voxpupuli/rspec-puppet-facts/branch/master/graph/badge.svg)](https://codecov.io/gh/voxpupuli/rspec-puppet-facts)
 [![Release](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml)
 [![RubyGem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![RubyGem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
