@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
   s.add_development_dependency 'mime-types'
-  s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'yard'

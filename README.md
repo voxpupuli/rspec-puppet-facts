@@ -1,9 +1,12 @@
 rspec-puppet-facts
 ==================
 
-[![Build Status](https://img.shields.io/travis/mcanevet/rspec-puppet-facts/master.svg)](https://travis-ci.org/mcanevet/rspec-puppet-facts)
-[![Gem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
-[![Gem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
+[![License](https://img.shields.io/github/license/voxpupuli/rspec-puppet-facts.svg)](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/LICENSE)
+[![Test](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/voxpupuli/rspec-puppet-facts/branch/master/graph/badge.svg?token=Mypkl78hvK)](https://codecov.io/gh/voxpupuli/rspec-puppet-facts)
+[![Release](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/release.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
