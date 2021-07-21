@@ -6,9 +6,9 @@ require 'rspec-puppet-facts/version'
 Gem::Specification.new do |s|
   s.name        = 'rspec-puppet-facts'
   s.version     = RspecPuppetFacts::Version::STRING
-  s.authors     = ['Mickaël Canévet']
-  s.email       = ['mickael.canevet@camptocamp.com']
-  s.homepage    = 'http://github.com/mcanevet/rspec-puppet-facts'
+  s.authors     = ['Vox Pupuli']
+  s.email       = ['voxpupuli@groups.io']
+  s.homepage    = 'http://github.com/voxpupuli/rspec-puppet-facts'
   s.summary     = 'Standard facts fixtures for Puppet'
   s.description = 'Contains facts from many Facter version on many Operating Systems'
   s.licenses    = 'Apache-2.0'
