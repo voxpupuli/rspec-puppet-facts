@@ -185,6 +185,23 @@ describe 'myclass' do
 end
 ```
 
+```ruby
+require 'spec_helper'
+
+describe_on_supported_os 'myclass' do
+  it { is_expected.to compile.with_all_deps }
+  ...
+
+  # If you need any to specify any operating system specific tests
+  case metadata[:os_facts][:osfamily]
+  when 'Debian'
+    ...
+  else
+    ...
+  end
+end
+```
+
 When using roles and profiles to manage a heterogeneous IT estate, you can test a profile that supports several OSes with many `let(:facts)` as long as each is in its own context:
 ```ruby
 require 'spec_helper'
