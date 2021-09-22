@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.3) (2021-09-22)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.2...2.0.3)
+
+**Merged pull requests:**
+
+- regenerate puppet\_agent\_components.json [\#133](https://github.com/voxpupuli/rspec-puppet-facts/pull/133) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.0.2](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.2) (2021-07-21)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.1...2.0.2)
