@@ -158,6 +158,8 @@ module RspecPuppetFacts
         operatingsystemmajrelease = '2016'
       elsif facts.dig(:os, 'release', 'major')
         operatingsystemmajrelease = facts[:os]['release']['major']
+      elsif facts.dig(:os, 'distro', 'release', 'major')
+        operatingsystemmajrelease = facts[:os]['distro']['release']['major']
       else
         if facts[:operatingsystemmajrelease].nil?
           operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0]
