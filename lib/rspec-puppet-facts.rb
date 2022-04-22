@@ -149,12 +149,15 @@ module RspecPuppetFacts
     os_facts_hash = {}
     received_facts.map do |facts|
       # Fix facter bug
+      # Todo: refactor the whole block to rely on structured facts and use legacy facts as fallback
       if facts[:operatingsystem] == 'Ubuntu'
         operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0..1].join('.')
       elsif facts[:operatingsystem] == 'OpenBSD'
         operatingsystemmajrelease = facts[:operatingsystemrelease]
       elsif facts[:operatingsystem] == 'windows' && facts[:operatingsystemrelease].start_with?('10.0.')
         operatingsystemmajrelease = '2016'
+      elsif facts.dig(:os, 'release', 'major')
+        operatingsystemmajrelease = facts[:os]['release']['major']
       else
         if facts[:operatingsystemmajrelease].nil?
           operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0]
