@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.4](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.4) (2022-04-22)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.3...2.0.4)
+
+**Fixed bugs:**
+
+- Use structured facts to detect OS version [\#136](https://github.com/voxpupuli/rspec-puppet-facts/pull/136) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Add Ruby 3.1 to CI [\#138](https://github.com/voxpupuli/rspec-puppet-facts/pull/138) ([bastelfreak](https://github.com/bastelfreak))
+- Update puppet components hash [\#137](https://github.com/voxpupuli/rspec-puppet-facts/pull/137) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.0.3](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.3) (2021-09-22)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.2...2.0.3)
