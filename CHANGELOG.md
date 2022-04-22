@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.5](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.5) (2022-04-22)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.4...2.0.5)
+
+**Fixed bugs:**
+
+- fallback to lsb facts if structured facts are nil [\#140](https://github.com/voxpupuli/rspec-puppet-facts/pull/140) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.0.4](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.4) (2022-04-22)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.3...2.0.4)
