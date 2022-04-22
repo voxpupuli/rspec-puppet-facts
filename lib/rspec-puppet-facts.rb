@@ -156,7 +156,7 @@ module RspecPuppetFacts
         operatingsystemmajrelease = facts[:operatingsystemrelease]
       elsif facts[:operatingsystem] == 'windows' && facts[:operatingsystemrelease].start_with?('10.0.')
         operatingsystemmajrelease = '2016'
-      elsif !facts.dig(:os, 'release', 'major').nil?
+      elsif facts.dig(:os, 'release', 'major')
         operatingsystemmajrelease = facts[:os]['release']['major']
       else
         if facts[:operatingsystemmajrelease].nil?
