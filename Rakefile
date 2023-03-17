@@ -61,3 +61,18 @@ begin
   end
 rescue LoadError
 end
+
+begin
+  require 'rubocop/rake_task'
+rescue LoadError
+  # RuboCop is an optional group
+else
+  RuboCop::RakeTask.new(:rubocop) do |task|
+    # These make the rubocop experience maybe slightly less terrible
+    task.options = ['--display-cop-names', '--display-style-guide', '--extra-details']
+    # Use Rubocop's Github Actions formatter if possible
+    if ENV['GITHUB_ACTIONS'] == 'true'
+      task.formatters << 'github'
+    end
+  end
+end
