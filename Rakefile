@@ -8,6 +8,7 @@ begin
     RSpec::Core::RakeTask.new(:spec)
     YARD::Rake::YardocTask.new
 rescue LoadError
+  # yard is optional
 end
 
 desc 'Produce Commit history since last tag'
@@ -60,4 +61,5 @@ begin
     config.future_release = gem_version
   end
 rescue LoadError
+  # Changelog generator is optional
 end
