@@ -13,11 +13,9 @@ Gem::Specification.new do |s|
   s.description = 'Contains facts from many Facter version on many Operating Systems'
   s.licenses    = 'Apache-2.0'
 
-  # see .travis.yml for the supported ruby versions
-  s.required_ruby_version = '>= 2.4.0'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.files       = `git ls-files`.split("\n")
-  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
   s.add_development_dependency 'mime-types'
@@ -25,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'yard'
 
-  s.add_development_dependency 'rubocop', '~> 1.12.0'
+  s.add_development_dependency 'rubocop', '~> 1.48.1'
   s.add_development_dependency 'rubocop-performance'
   s.add_development_dependency 'rubocop-rake'
   s.add_development_dependency 'rubocop-rspec'
