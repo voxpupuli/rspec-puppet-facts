@@ -687,6 +687,7 @@ describe RspecPuppetFacts do
           ]
         )
       end
+
       before do
         RSpec.configuration.default_facter_version = '3.1.0'
       end
@@ -714,6 +715,7 @@ describe RspecPuppetFacts do
           facterversion: "2.6"
         )
       end
+
       before do
         allow(Facter).to receive(:version).and_return('2.4.5')
       end
