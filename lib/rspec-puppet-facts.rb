@@ -56,7 +56,7 @@ module RspecPuppetFacts
   #
   # @api private
   def on_supported_os_implementation(opts = {})
-    unless (facterversion = opts[:facterversion]) =~ /\A\d+\.\d+(?:\.\d+)*\z/
+    unless /\A\d+\.\d+(?:\.\d+)*\z/.match?((facterversion = opts[:facterversion]))
       raise ArgumentError, ":facterversion must be in the format 'n.n' or " \
         "'n.n.n' (n is numeric), not '#{facterversion}'"
     end
@@ -81,7 +81,7 @@ module RspecPuppetFacts
                                     "/^#{operatingsystemmajrelease}-/"
                                   end
             when /Windows/i
-              hardwaremodel = facterversion =~ /^[12]\./ ? 'x64' : 'x86_64'
+              hardwaremodel = /^[12]\./.match?(facterversion) ? 'x64' : 'x86_64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
 
