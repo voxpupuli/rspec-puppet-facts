@@ -185,10 +185,10 @@ describe RspecPuppetFacts do
 
       context 'With a metadata.json' do
         it 'can load the metadata file' do
-          allow(RspecPuppetFacts).to receive(:metadata_file).and_return(metadata_file)
-          RspecPuppetFacts.reset
-          expect(RspecPuppetFacts.metadata).to be_a Hash
-          expect(RspecPuppetFacts.metadata['name']).to eq 'mcanevet-mymodule'
+          allow(described_class).to receive(:metadata_file).and_return(metadata_file)
+          described_class.reset
+          expect(described_class.metadata).to be_a Hash
+          expect(described_class.metadata['name']).to eq 'mcanevet-mymodule'
         end
 
         context 'With a valid metadata.json' do
@@ -198,7 +198,7 @@ describe RspecPuppetFacts do
           end
 
           before :each do
-            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+            allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
           it 'should return a hash' do
@@ -220,7 +220,7 @@ describe RspecPuppetFacts do
           end
 
           it 'should be able to filter the received OS facts' do
-            allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+            allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
             expect(subject.keys.sort).to eq %w(
               redhat-5-x86_64
               redhat-6-x86_64
@@ -231,7 +231,7 @@ describe RspecPuppetFacts do
 
         context 'With a broken metadata.json' do
           before :each do
-            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+            allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
           context 'With a missing operatingsystem_support section' do
@@ -298,7 +298,7 @@ describe RspecPuppetFacts do
       end
 
       it 'should be able to filter the received OS facts' do
-        allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+        allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
         expect(subject.keys.sort).to eq %w(
           redhat-5-x86_64
           redhat-6-x86_64
@@ -586,7 +586,7 @@ describe RspecPuppetFacts do
       }
 
       it 'should output warning message' do
-        expect(RspecPuppetFacts).to receive(:warning).with(/No facts were found in the FacterDB/)
+        expect(described_class).to receive(:warning).with(/No facts were found in the FacterDB/)
         subject
       end
     end
@@ -637,7 +637,7 @@ describe RspecPuppetFacts do
       end
 
       before(:each) do
-        allow(RspecPuppetFacts).to receive(:warning).with(a_string_matching(/no facts were found/i))
+        allow(described_class).to receive(:warning).with(a_string_matching(/no facts were found/i))
         allow(FacterDB).to receive(:get_facts).and_call_original
       end
 
@@ -710,7 +710,7 @@ describe RspecPuppetFacts do
 
       context 'With SPEC_FACTS_STRICT set to `yes`' do
         before(:each) do
-          allow(RspecPuppetFacts).to receive(:spec_facts_strict?).and_return(true)
+          allow(described_class).to receive(:spec_facts_strict?).and_return(true)
         end
         it 'errors' do
           expect { subject }.to raise_error ArgumentError, /No facts were found in the FacterDB.*aborting/
@@ -868,7 +868,7 @@ describe RspecPuppetFacts do
     }
 
     before(:each) do
-      RspecPuppetFacts.reset
+      described_class.reset
     end
 
     it 'adds a simple fact and value' do
@@ -896,14 +896,14 @@ describe RspecPuppetFacts do
 
   describe '#misc' do
     it 'should have a common facts structure' do
-      RspecPuppetFacts.reset
+      described_class.reset
       expect(subject.common_facts).to be_a Hash
       expect(subject.common_facts).not_to be_empty
     end
 
     it 'should not add "augeasversion" if Augeas is supported' do
       allow(described_class).to receive(:augeas?).and_return(false)
-      RspecPuppetFacts.reset
+      described_class.reset
       expect(subject.common_facts).not_to include(:augeasversion)
     end
 
@@ -920,7 +920,7 @@ describe RspecPuppetFacts do
 
       allow(described_class).to receive(:augeas?).and_return(true)
       stub_const('Augeas', AugeasStub)
-      RspecPuppetFacts.reset
+      described_class.reset
       expect(subject.common_facts[:augeasversion]).to eq 'my_version'
     end
 
@@ -954,7 +954,7 @@ describe RspecPuppetFacts do
 
   describe '.facter_version_to_filter' do
     context 'when passed a version that is major.minor (1)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.2') }
+      subject { described_class.facter_version_to_filter('1.2') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.2\./')
@@ -962,7 +962,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (2)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.2') }
+      subject { described_class.facter_version_to_filter('10.2') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.2\./')
@@ -970,7 +970,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (3)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.20') }
+      subject { described_class.facter_version_to_filter('1.20') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.20\./')
@@ -978,7 +978,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (4)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.20') }
+      subject { described_class.facter_version_to_filter('10.20') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.20\./')
@@ -986,7 +986,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (1)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.2.3') }
+      subject { described_class.facter_version_to_filter('1.2.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.2\./')
@@ -994,7 +994,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (2)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.2.3') }
+      subject { described_class.facter_version_to_filter('10.2.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.2\./')
@@ -1002,7 +1002,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (3)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.20.3') }
+      subject { described_class.facter_version_to_filter('1.20.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.20\./')
@@ -1010,7 +1010,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (4)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.20.3') }
+      subject { described_class.facter_version_to_filter('10.20.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.20\./')
