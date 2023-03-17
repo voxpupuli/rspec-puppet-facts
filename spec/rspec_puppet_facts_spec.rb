@@ -272,9 +272,9 @@ describe RspecPuppetFacts do
                 "operatingsystem" => "RedHat",
                 "operatingsystemrelease" => [
                   "5",
-                  "6"
+                  "6",
                 ]
-              }
+              },
             ]
           },
         )
@@ -468,7 +468,7 @@ describe RspecPuppetFacts do
                     {
                         "operatingsystem" => "AIX",
                         "operatingsystemrelease" => [
-                            "7.1", "7100"
+                            "7.1", "7100",
                         ],
                     },
                 ],
@@ -502,7 +502,7 @@ describe RspecPuppetFacts do
               {
                 'operatingsystem'        => 'Windows',
                 'operatingsystemrelease' => release,
-              }
+              },
             ],
             :facterversion => facterversion,
           },
@@ -564,9 +564,9 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "SLES",
                 "operatingsystemrelease" => [
-                  "11 SP1"
+                  "11 SP1",
                 ]
-              }
+              },
             ]
           },
         )
@@ -650,7 +650,7 @@ describe RspecPuppetFacts do
               {
                 'operatingsystem'        => 'IOS',
                 'operatingsystemrelease' => ['12.2(25)EWA9'],
-              }
+              },
             ],
           },
         )
@@ -683,7 +683,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
         )
       end
@@ -710,7 +710,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: "2.6",
         )
@@ -745,7 +745,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: '3.1',
         )
@@ -762,7 +762,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: '3.1.2',
         )
@@ -779,7 +779,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: '3.3',
         )
@@ -796,7 +796,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: '3.3.2',
         )
@@ -813,7 +813,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] }
+            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] },
           ],
           facterversion: '2.1.0',
         )
@@ -830,7 +830,7 @@ describe RspecPuppetFacts do
       let(:method_call) do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
           facterversion: '3',
         )
@@ -847,7 +847,7 @@ describe RspecPuppetFacts do
         on_supported_os(
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
-            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] }
+            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] },
           ],
           facterversion: '3.9.5',
         )
@@ -883,9 +883,9 @@ describe RspecPuppetFacts do
               "operatingsystem" => "RedHat",
               "operatingsystemrelease" => [
                 "6",
-                "7"
+                "7",
               ]
-            }
+            },
           ]
         },
       )
