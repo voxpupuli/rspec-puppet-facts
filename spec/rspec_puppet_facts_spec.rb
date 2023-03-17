@@ -680,6 +680,13 @@ describe RspecPuppetFacts do
     end
 
     context 'With a default Facter version specified in the RSpec configuration' do
+      subject do
+        on_supported_os(
+          supported_os: [
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+          ]
+        )
+      end
       before do
         RSpec.configuration.default_facter_version = '3.1.0'
       end
@@ -688,13 +695,6 @@ describe RspecPuppetFacts do
         RSpec.configuration.default_facter_version = Facter.version
       end
 
-      subject do
-        on_supported_os(
-          supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
-          ]
-        )
-      end
 
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
@@ -706,10 +706,6 @@ describe RspecPuppetFacts do
     end
 
     context 'With a version that is above the current gem' do
-      before do
-        allow(Facter).to receive(:version).and_return('2.4.5')
-      end
-
       subject do
         on_supported_os(
           supported_os: [
@@ -718,6 +714,10 @@ describe RspecPuppetFacts do
           facterversion: "2.6"
         )
       end
+      before do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
+
 
       it 'returns facts from a facter version matching future and below' do
         major, minor = Facter.version.split('.')
