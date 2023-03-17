@@ -381,6 +381,7 @@ describe RspecPuppetFacts do
           }
         )
       }
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
@@ -412,6 +413,7 @@ describe RspecPuppetFacts do
           }
         )
       }
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
@@ -442,6 +444,7 @@ describe RspecPuppetFacts do
             }
         )
       }
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
@@ -473,6 +476,7 @@ describe RspecPuppetFacts do
             }
         )
       }
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
@@ -567,6 +571,7 @@ describe RspecPuppetFacts do
           }
         )
       }
+
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
