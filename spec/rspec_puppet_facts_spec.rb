@@ -19,7 +19,7 @@ describe RspecPuppetFacts do
     let(:puppet_version) { Puppet.version }
 
     context 'when the component JSON file does not exist' do
-      before(:each) do
+      before do
         allow(File).to receive(:file?).with(component_json_path).and_return(false)
         allow(described_class).to receive(:warning)
       end
@@ -36,7 +36,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when the component JSON file is unreadable' do
-      before(:each) do
+      before do
         allow(File).to receive(:readable?).with(component_json_path).and_return(false)
         allow(described_class).to receive(:warning)
       end
@@ -53,7 +53,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when the component JSON file is unparseable' do
-      before(:each) do
+      before do
         io = StringIO.new('this is not JSON!')
         allow(File).to receive(:open).with(component_json_path, anything).and_return(io)
         allow(described_class).to receive(:warning)
@@ -112,7 +112,7 @@ describe RspecPuppetFacts do
     context 'when passed a Puppet version lower than any known version' do
       let(:puppet_version) { '1.0.0' }
 
-      before(:each) do
+      before do
         allow(described_class).to receive(:warning)
       end
 
@@ -148,11 +148,11 @@ describe RspecPuppetFacts do
       end
 
       context 'set to true' do
-        before(:each) do
+        before do
           RSpec.configuration.facterdb_string_keys = true
         end
 
-        after(:each) do
+        after do
           RSpec.configuration.facterdb_string_keys = false
         end
 
@@ -162,7 +162,7 @@ describe RspecPuppetFacts do
       end
 
       context 'set to false' do
-        before(:each) do
+        before do
           RSpec.configuration.facterdb_string_keys = false
         end
 
@@ -176,7 +176,7 @@ describe RspecPuppetFacts do
       subject { on_supported_os }
 
       context 'Without metadata.json' do
-        before(:each) do
+        before do
           expect(File).to receive(:file?).with('metadata.json').and_return false
         end
 
@@ -197,7 +197,7 @@ describe RspecPuppetFacts do
             JSON.parse fixture
           end
 
-          before :each do
+          before do
             allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
@@ -230,7 +230,7 @@ describe RspecPuppetFacts do
         end
 
         context 'With a broken metadata.json' do
-          before :each do
+          before do
             allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
@@ -656,7 +656,7 @@ describe RspecPuppetFacts do
         )
       end
 
-      before(:each) do
+      before do
         allow(described_class).to receive(:warning).with(a_string_matching(/no facts were found/i))
         allow(FacterDB).to receive(:get_facts).and_call_original
       end
@@ -680,11 +680,11 @@ describe RspecPuppetFacts do
     end
 
     context 'With a default Facter version specified in the RSpec configuration' do
-      before(:each) do
+      before do
         RSpec.configuration.default_facter_version = '3.1.0'
       end
 
-      after(:each) do
+      after do
         RSpec.configuration.default_facter_version = Facter.version
       end
 
@@ -706,7 +706,7 @@ describe RspecPuppetFacts do
     end
 
     context 'With a version that is above the current gem' do
-      before(:each) do
+      before do
         allow(Facter).to receive(:version).and_return('2.4.5')
       end
 
@@ -729,7 +729,7 @@ describe RspecPuppetFacts do
       end
 
       context 'With SPEC_FACTS_STRICT set to `yes`' do
-        before(:each) do
+        before do
           allow(described_class).to receive(:spec_facts_strict?).and_return(true)
         end
 
@@ -851,7 +851,7 @@ describe RspecPuppetFacts do
         )
       end
 
-      before(:each) do
+      before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
           a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS')
@@ -889,7 +889,7 @@ describe RspecPuppetFacts do
       )
     }
 
-    before(:each) do
+    before do
       described_class.reset
     end
 
@@ -951,7 +951,7 @@ describe RspecPuppetFacts do
         VERSION = 'my_version'
       end
 
-      before(:each) do
+      before do
         allow(described_class).to receive(:mcollective?).and_return(true)
         stub_const('MCollective', MCollectiveStub)
         described_class.reset
@@ -963,7 +963,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when mcollective is not available' do
-      before(:each) do
+      before do
         allow(described_class).to receive(:mcollective?).and_return(false)
         described_class.reset
       end
