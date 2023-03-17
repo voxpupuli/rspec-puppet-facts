@@ -19,7 +19,7 @@ describe RspecPuppetFacts do
     let(:puppet_version) { Puppet.version }
 
     context 'when the component JSON file does not exist' do
-      before(:each) do
+      before do
         allow(File).to receive(:file?).with(component_json_path).and_return(false)
         allow(described_class).to receive(:warning)
       end
@@ -36,7 +36,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when the component JSON file is unreadable' do
-      before(:each) do
+      before do
         allow(File).to receive(:readable?).with(component_json_path).and_return(false)
         allow(described_class).to receive(:warning)
       end
@@ -53,7 +53,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when the component JSON file is unparseable' do
-      before(:each) do
+      before do
         io = StringIO.new('this is not JSON!')
         allow(File).to receive(:open).with(component_json_path, anything).and_return(io)
         allow(described_class).to receive(:warning)
@@ -112,7 +112,7 @@ describe RspecPuppetFacts do
     context 'when passed a Puppet version lower than any known version' do
       let(:puppet_version) { '1.0.0' }
 
-      before(:each) do
+      before do
         allow(described_class).to receive(:warning)
       end
 
@@ -139,7 +139,7 @@ describe RspecPuppetFacts do
                 "operatingsystemrelease" => ['7'],
               },
             ],
-          }
+          },
         )
       end
 
@@ -148,11 +148,11 @@ describe RspecPuppetFacts do
       end
 
       context 'set to true' do
-        before(:each) do
+        before do
           RSpec.configuration.facterdb_string_keys = true
         end
 
-        after(:each) do
+        after do
           RSpec.configuration.facterdb_string_keys = false
         end
 
@@ -162,7 +162,7 @@ describe RspecPuppetFacts do
       end
 
       context 'set to false' do
-        before(:each) do
+        before do
           RSpec.configuration.facterdb_string_keys = false
         end
 
@@ -176,7 +176,7 @@ describe RspecPuppetFacts do
       subject { on_supported_os }
 
       context 'Without metadata.json' do
-        before(:each) do
+        before do
           expect(File).to receive(:file?).with('metadata.json').and_return false
         end
 
@@ -185,10 +185,10 @@ describe RspecPuppetFacts do
 
       context 'With a metadata.json' do
         it 'can load the metadata file' do
-          allow(RspecPuppetFacts).to receive(:metadata_file).and_return(metadata_file)
-          RspecPuppetFacts.reset
-          expect(RspecPuppetFacts.metadata).to be_a Hash
-          expect(RspecPuppetFacts.metadata['name']).to eq 'mcanevet-mymodule'
+          allow(described_class).to receive(:metadata_file).and_return(metadata_file)
+          described_class.reset
+          expect(described_class.metadata).to be_a Hash
+          expect(described_class.metadata['name']).to eq 'mcanevet-mymodule'
         end
 
         context 'With a valid metadata.json' do
@@ -197,19 +197,19 @@ describe RspecPuppetFacts do
             JSON.parse fixture
           end
 
-          before :each do
-            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+          before do
+            allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
-          it 'should return a hash' do
+          it 'returns a hash' do
             is_expected.to be_a Hash
           end
 
-          it 'should have 5 elements' do
+          it 'has 5 elements' do
             expect(subject.size).to eq 5
           end
 
-          it 'should return supported OS' do
+          it 'returns supported OS' do
             expect(subject.keys.sort).to eq %w(
               debian-7-x86_64
               debian-8-x86_64
@@ -219,8 +219,8 @@ describe RspecPuppetFacts do
             )
           end
 
-          it 'should be able to filter the received OS facts' do
-            allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+          it 'is able to filter the received OS facts' do
+            allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
             expect(subject.keys.sort).to eq %w(
               redhat-5-x86_64
               redhat-6-x86_64
@@ -230,8 +230,8 @@ describe RspecPuppetFacts do
         end
 
         context 'With a broken metadata.json' do
-          before :each do
-            allow(RspecPuppetFacts).to receive(:metadata).and_return(metadata)
+          before do
+            allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
           context 'With a missing operatingsystem_support section' do
@@ -266,29 +266,29 @@ describe RspecPuppetFacts do
                 "operatingsystemrelease" => [
                   "7",
                   "8",
-                ]
+                ],
               },
               {
                 "operatingsystem" => "RedHat",
                 "operatingsystemrelease" => [
                   "5",
-                  "6"
-                ]
-              }
-            ]
-          }
+                  "6",
+                ],
+              },
+            ],
+          },
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         is_expected.to be_a Hash
       end
 
-      it 'should have 4 elements' do
+      it 'has 4 elements' do
         expect(subject.size).to eq 4
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq %w(
           debian-7-x86_64
           debian-8-x86_64
@@ -297,8 +297,8 @@ describe RspecPuppetFacts do
         )
       end
 
-      it 'should be able to filter the received OS facts' do
-        allow(RspecPuppetFacts).to receive(:spec_facts_os_filter).and_return('redhat')
+      it 'is able to filter the received OS facts' do
+        allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
         expect(subject.keys.sort).to eq %w(
           redhat-5-x86_64
           redhat-6-x86_64
@@ -312,8 +312,8 @@ describe RspecPuppetFacts do
           {
             :supported_os => [
               { 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => '7' },
-            ]
-          }
+            ],
+          },
         )
       end
 
@@ -344,7 +344,7 @@ describe RspecPuppetFacts do
                 ],
               },
             ],
-          }
+          },
         )
       }
 
@@ -352,13 +352,15 @@ describe RspecPuppetFacts do
         ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
       end
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 3 elements' do
+
+      it 'has 3 elements' do
         expect(subject.size).to eq(expected_fact_sets.size)
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq(expected_fact_sets)
       end
     end
@@ -376,16 +378,19 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
-      it 'should return a hash' do
+
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
+
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'freebsd-10-amd64',
         ]
@@ -405,16 +410,19 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
-      it 'should return a hash' do
+
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
+
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'openbsd-5.7-amd64',
         ]
@@ -433,16 +441,19 @@ describe RspecPuppetFacts do
                         ],
                     },
                 ],
-            }
+            },
         )
       }
-      it 'should return a hash' do
+
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
+
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq %w(
           solaris-11-i86pc
         )
@@ -457,21 +468,24 @@ describe RspecPuppetFacts do
                     {
                         "operatingsystem" => "AIX",
                         "operatingsystemrelease" => [
-                            "7.1", "7100"
+                            "7.1", "7100",
                         ],
                     },
                 ],
-                :facterversion => '3.9'
-            }
+                :facterversion => '3.9',
+            },
         )
       }
-      it 'should return a hash' do
+
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
+
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         # NOTE: See FACT-1827 for details on the IBM,8284-22A part
         # That has to match whatever hardware generated the facts file.
         expect(subject.keys.sort).to eq %w(
@@ -488,10 +502,10 @@ describe RspecPuppetFacts do
               {
                 'operatingsystem'        => 'Windows',
                 'operatingsystemrelease' => release,
-              }
+              },
             ],
             :facterversion => facterversion,
-          }
+          },
         )
       end
 
@@ -535,6 +549,7 @@ describe RspecPuppetFacts do
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
+
         it 'munges the operatingsystemmajrelease to 2016' do
           is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash))
         end
@@ -549,20 +564,23 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "SLES",
                 "operatingsystemrelease" => [
-                  "11 SP1"
-                ]
-              }
-            ]
-          }
+                  "11 SP1",
+                ],
+              },
+            ],
+          },
         )
       }
-      it 'should return a hash' do
+
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 1 elements' do
+
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'sles-11-x86_64',
         ]
@@ -580,13 +598,13 @@ describe RspecPuppetFacts do
                   "4",
                 ],
               },
-            ]
-          }
+            ],
+          },
         )
       }
 
-      it 'should output warning message' do
-        expect(RspecPuppetFacts).to receive(:warning).with(/No facts were found in the FacterDB/)
+      it 'outputs warning message' do
+        expect(described_class).to receive(:warning).with(/No facts were found in the FacterDB/)
         subject
       end
     end
@@ -607,17 +625,19 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
-      it 'should have 2 elements' do
+
+      it 'has 2 elements' do
         expect(subject.size).to eq 2
       end
-      it 'should return supported OS' do
+
+      it 'returns supported OS' do
         expect(subject.keys.sort).to include(a_string_matching(/\Aarchlinux-\d+-x86_64/), 'debian-8-x86_64')
       end
     end
@@ -630,14 +650,14 @@ describe RspecPuppetFacts do
               {
                 'operatingsystem'        => 'IOS',
                 'operatingsystemrelease' => ['12.2(25)EWA9'],
-              }
+              },
             ],
-          }
+          },
         )
       end
 
-      before(:each) do
-        allow(RspecPuppetFacts).to receive(:warning).with(a_string_matching(/no facts were found/i))
+      before do
+        allow(described_class).to receive(:warning).with(a_string_matching(/no facts were found/i))
         allow(FacterDB).to receive(:get_facts).and_call_original
       end
 
@@ -660,58 +680,61 @@ describe RspecPuppetFacts do
     end
 
     context 'With a default Facter version specified in the RSpec configuration' do
-      before(:each) do
-        RSpec.configuration.default_facter_version = '3.1.0'
-      end
-
-      after(:each) do
-        RSpec.configuration.default_facter_version = Facter.version
-      end
-
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
-          ]
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
+          ],
         )
       end
+
+      before do
+        RSpec.configuration.default_facter_version = '3.1.0'
+      end
+
+      after do
+        RSpec.configuration.default_facter_version = Facter.version
+      end
+
 
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A3\.1\./
-          )
+            :facterversion => /\A3\.1\./,
+          ),
         )
       end
     end
 
     context 'With a version that is above the current gem' do
-      before(:each) do
-        allow(Facter).to receive(:version).and_return('2.4.5')
-      end
-
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: "2.6"
+          facterversion: "2.6",
         )
       end
+
+      before do
+        allow(Facter).to receive(:version).and_return('2.4.5')
+      end
+
 
       it 'returns facts from a facter version matching future and below' do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
-          )
+            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./,
+          ),
         )
       end
 
       context 'With SPEC_FACTS_STRICT set to `yes`' do
-        before(:each) do
-          allow(RspecPuppetFacts).to receive(:spec_facts_strict?).and_return(true)
+        before do
+          allow(described_class).to receive(:spec_facts_strict?).and_return(true)
         end
+
         it 'errors' do
           expect { subject }.to raise_error ArgumentError, /No facts were found in the FacterDB.*aborting/
         end
@@ -722,15 +745,15 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: '3.1'
+          facterversion: '3.1',
         )
       end
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6'),
         )
       end
     end
@@ -739,15 +762,15 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: '3.1.2'
+          facterversion: '3.1.2',
         )
       end
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6'),
         )
       end
     end
@@ -756,15 +779,15 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: '3.3'
+          facterversion: '3.3',
         )
       end
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0'),
         )
       end
     end
@@ -773,15 +796,15 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: '3.3.2'
+          facterversion: '3.3.2',
         )
       end
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0'),
         )
       end
     end
@@ -790,15 +813,15 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] }
+            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] },
           ],
-          facterversion: '2.1.0'
+          facterversion: '2.1.0',
         )
       end
 
       it 'splits the operatingsystemrelease fact value to get the major release' do
         is_expected.to match(
-          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3')
+          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3'),
         )
       end
     end
@@ -807,9 +830,9 @@ describe RspecPuppetFacts do
       let(:method_call) do
         on_supported_os(
           supported_os: [
-            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
+            { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: '3'
+          facterversion: '3',
         )
       end
 
@@ -824,33 +847,34 @@ describe RspecPuppetFacts do
         on_supported_os(
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
-            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] }
+            { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] },
           ],
-          facterversion: '3.9.5'
+          facterversion: '3.9.5',
         )
       end
 
-      before(:each) do
+      before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS')
+          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS'),
         ).and_return([])
       end
 
       it 'returns CentOS facts from a facter version matching 3.8' do
         is_expected.to include(
-          'centos-7-x86_64' => include(:facterversion => '3.8.0')
+          'centos-7-x86_64' => include(:facterversion => '3.8.0'),
         )
       end
+
       it 'returns OpenSuSE facts from a facter version matching 3.9' do
         is_expected.to include(
-          'opensuse-42-x86_64' => include(:facterversion => '3.9.2')
+          'opensuse-42-x86_64' => include(:facterversion => '3.9.2'),
         )
       end
     end
   end
 
-  context '#add_custom_fact' do
+  describe '#add_custom_fact' do
     subject {
       on_supported_os(
         {
@@ -859,16 +883,16 @@ describe RspecPuppetFacts do
               "operatingsystem" => "RedHat",
               "operatingsystemrelease" => [
                 "6",
-                "7"
-              ]
-            }
-          ]
-        }
+                "7",
+              ],
+            },
+          ],
+        },
       )
     }
 
-    before(:each) do
-      RspecPuppetFacts.reset
+    before do
+      described_class.reset
     end
 
     it 'adds a simple fact and value' do
@@ -894,21 +918,21 @@ describe RspecPuppetFacts do
     end
   end
 
-  context '#misc' do
-    it 'should have a common facts structure' do
-      RspecPuppetFacts.reset
+  describe '#misc' do
+    it 'has a common facts structure' do
+      described_class.reset
       expect(subject.common_facts).to be_a Hash
       expect(subject.common_facts).not_to be_empty
     end
 
-    it 'should not add "augeasversion" if Augeas is supported' do
+    it 'does not add "augeasversion" if Augeas is supported' do
       allow(described_class).to receive(:augeas?).and_return(false)
-      RspecPuppetFacts.reset
+      described_class.reset
       expect(subject.common_facts).not_to include(:augeasversion)
     end
 
-    it 'should determine the Augeas version if Augeas is supported' do
-      module Augeas_stub
+    it 'determines the Augeas version if Augeas is supported' do
+      module AugeasStub # rubocop:todo Lint/ConstantDefinitionInBlock
         NO_MODL_AUTOLOAD = true
         def self.open(*_args)
           self
@@ -919,19 +943,19 @@ describe RspecPuppetFacts do
       end
 
       allow(described_class).to receive(:augeas?).and_return(true)
-      stub_const('Augeas', Augeas_stub)
-      RspecPuppetFacts.reset
+      stub_const('Augeas', AugeasStub)
+      described_class.reset
       expect(subject.common_facts[:augeasversion]).to eq 'my_version'
     end
 
     context 'when mcollective is available' do
-      module MCollective_stub
+      module MCollectiveStub # rubocop:todo Lint/ConstantDefinitionInBlock
         VERSION = 'my_version'
       end
 
-      before(:each) do
+      before do
         allow(described_class).to receive(:mcollective?).and_return(true)
-        stub_const('MCollective', MCollective_stub)
+        stub_const('MCollective', MCollectiveStub)
         described_class.reset
       end
 
@@ -941,7 +965,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when mcollective is not available' do
-      before(:each) do
+      before do
         allow(described_class).to receive(:mcollective?).and_return(false)
         described_class.reset
       end
@@ -954,7 +978,7 @@ describe RspecPuppetFacts do
 
   describe '.facter_version_to_filter' do
     context 'when passed a version that is major.minor (1)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.2') }
+      subject { described_class.facter_version_to_filter('1.2') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.2\./')
@@ -962,7 +986,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (2)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.2') }
+      subject { described_class.facter_version_to_filter('10.2') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.2\./')
@@ -970,7 +994,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (3)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.20') }
+      subject { described_class.facter_version_to_filter('1.20') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.20\./')
@@ -978,7 +1002,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor (4)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.20') }
+      subject { described_class.facter_version_to_filter('10.20') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.20\./')
@@ -986,7 +1010,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (1)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.2.3') }
+      subject { described_class.facter_version_to_filter('1.2.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.2\./')
@@ -994,7 +1018,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (2)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.2.3') }
+      subject { described_class.facter_version_to_filter('10.2.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.2\./')
@@ -1002,7 +1026,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (3)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('1.20.3') }
+      subject { described_class.facter_version_to_filter('1.20.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A1\.20\./')
@@ -1010,7 +1034,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a version that is major.minor.patch (4)' do
-      subject { RspecPuppetFacts.facter_version_to_filter('10.20.3') }
+      subject { described_class.facter_version_to_filter('10.20.3') }
 
       it 'returns the correct JGrep statement expression' do
         is_expected.to eq('/\A10\.20\./')

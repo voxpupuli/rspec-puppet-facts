@@ -8,6 +8,7 @@ begin
     RSpec::Core::RakeTask.new(:spec)
     YARD::Rake::YardocTask.new
 rescue LoadError
+  # yard is optional
 end
 
 desc 'Produce Commit history since last tag'
@@ -60,4 +61,20 @@ begin
     config.future_release = gem_version
   end
 rescue LoadError
+  # Changelog generator is optional
+end
+
+begin
+  require 'rubocop/rake_task'
+rescue LoadError
+  # RuboCop is an optional group
+else
+  RuboCop::RakeTask.new(:rubocop) do |task|
+    # These make the rubocop experience maybe slightly less terrible
+    task.options = ['--display-cop-names', '--display-style-guide', '--extra-details']
+    # Use Rubocop's Github Actions formatter if possible
+    if ENV['GITHUB_ACTIONS'] == 'true'
+      task.formatters << 'github'
+    end
+  end
 end
