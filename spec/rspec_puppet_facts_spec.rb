@@ -850,7 +850,7 @@ describe RspecPuppetFacts do
     end
   end
 
-  context '#add_custom_fact' do
+  describe '#add_custom_fact' do
     subject {
       on_supported_os(
         {
@@ -894,7 +894,7 @@ describe RspecPuppetFacts do
     end
   end
 
-  context '#misc' do
+  describe '#misc' do
     it 'should have a common facts structure' do
       RspecPuppetFacts.reset
       expect(subject.common_facts).to be_a Hash
