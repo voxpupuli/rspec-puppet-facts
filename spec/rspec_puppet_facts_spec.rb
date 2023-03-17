@@ -908,7 +908,7 @@ describe RspecPuppetFacts do
     end
 
     it 'should determine the Augeas version if Augeas is supported' do
-      module Augeas_stub
+      module Augeas_stub # rubocop:todo Lint/ConstantDefinitionInBlock
         NO_MODL_AUTOLOAD = true
         def self.open(*_args)
           self
@@ -925,7 +925,7 @@ describe RspecPuppetFacts do
     end
 
     context 'when mcollective is available' do
-      module MCollective_stub
+      module MCollective_stub # rubocop:todo Lint/ConstantDefinitionInBlock
         VERSION = 'my_version'
       end
 
