@@ -727,6 +727,7 @@ describe RspecPuppetFacts do
         before(:each) do
           allow(described_class).to receive(:spec_facts_strict?).and_return(true)
         end
+
         it 'errors' do
           expect { subject }.to raise_error ArgumentError, /No facts were found in the FacterDB.*aborting/
         end
