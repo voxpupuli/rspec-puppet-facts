@@ -1,0 +1,37 @@
+---
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: '2.4'
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: True
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: True
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArguments:
+  Enabled: True
+  EnforcedStyleForMultiline: comma
+
+Metrics:
+  Enabled: false
+
+Style:
+  Enabled: false
+
+Layout:
+  Enabled: false
+
+# To match the gem name
+Naming/FileName:
+  Exclude:
+    - 'lib/rspec-puppet-facts.rb'
