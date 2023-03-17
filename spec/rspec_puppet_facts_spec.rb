@@ -139,7 +139,7 @@ describe RspecPuppetFacts do
                 "operatingsystemrelease" => ['7'],
               },
             ],
-          }
+          },
         )
       end
 
@@ -276,7 +276,7 @@ describe RspecPuppetFacts do
                 ]
               }
             ]
-          }
+          },
         )
       }
 
@@ -313,7 +313,7 @@ describe RspecPuppetFacts do
             :supported_os => [
               { 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => '7' },
             ]
-          }
+          },
         )
       end
 
@@ -344,7 +344,7 @@ describe RspecPuppetFacts do
                 ],
               },
             ],
-          }
+          },
         )
       }
 
@@ -378,7 +378,7 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
 
@@ -410,7 +410,7 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
 
@@ -441,7 +441,7 @@ describe RspecPuppetFacts do
                         ],
                     },
                 ],
-            }
+            },
         )
       }
 
@@ -473,7 +473,7 @@ describe RspecPuppetFacts do
                     },
                 ],
                 :facterversion => '3.9'
-            }
+            },
         )
       }
 
@@ -505,7 +505,7 @@ describe RspecPuppetFacts do
               }
             ],
             :facterversion => facterversion,
-          }
+          },
         )
       end
 
@@ -568,7 +568,7 @@ describe RspecPuppetFacts do
                 ]
               }
             ]
-          }
+          },
         )
       }
 
@@ -599,7 +599,7 @@ describe RspecPuppetFacts do
                 ],
               },
             ]
-          }
+          },
         )
       }
 
@@ -625,7 +625,7 @@ describe RspecPuppetFacts do
               },
             ],
             :facterversion => '2.4',
-          }
+          },
         )
       }
 
@@ -652,7 +652,7 @@ describe RspecPuppetFacts do
                 'operatingsystemrelease' => ['12.2(25)EWA9'],
               }
             ],
-          }
+          },
         )
       end
 
@@ -684,7 +684,7 @@ describe RspecPuppetFacts do
         on_supported_os(
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
-          ]
+          ],
         )
       end
 
@@ -700,8 +700,8 @@ describe RspecPuppetFacts do
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A3\.1\./
-          )
+            :facterversion => /\A3\.1\./,
+          ),
         )
       end
     end
@@ -712,7 +712,7 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: "2.6"
+          facterversion: "2.6",
         )
       end
 
@@ -725,8 +725,8 @@ describe RspecPuppetFacts do
         major, minor = Facter.version.split('.')
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./
-          )
+            :facterversion => /\A#{major}\.[#{minor}#{minor.to_i + 1}]\./,
+          ),
         )
       end
 
@@ -747,13 +747,13 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: '3.1'
+          facterversion: '3.1',
         )
       end
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6'),
         )
       end
     end
@@ -764,13 +764,13 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: '3.1.2'
+          facterversion: '3.1.2',
         )
       end
 
       it 'returns facts from a facter version matching 3.1' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.1.6')
+          'centos-7-x86_64' => include(:facterversion => '3.1.6'),
         )
       end
     end
@@ -781,13 +781,13 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: '3.3'
+          facterversion: '3.3',
         )
       end
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0'),
         )
       end
     end
@@ -798,13 +798,13 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: '3.3.2'
+          facterversion: '3.3.2',
         )
       end
 
       it 'returns facts from a facter version matching 3.3' do
         is_expected.to match(
-          'centos-7-x86_64' => include(:facterversion => '3.3.0')
+          'centos-7-x86_64' => include(:facterversion => '3.3.0'),
         )
       end
     end
@@ -815,13 +815,13 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] }
           ],
-          facterversion: '2.1.0'
+          facterversion: '2.1.0',
         )
       end
 
       it 'splits the operatingsystemrelease fact value to get the major release' do
         is_expected.to match(
-          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3')
+          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3'),
         )
       end
     end
@@ -832,7 +832,7 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] }
           ],
-          facterversion: '3'
+          facterversion: '3',
         )
       end
 
@@ -849,26 +849,26 @@ describe RspecPuppetFacts do
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
             { 'operatingsystem' => 'OpenSuSE', 'operatingsystemrelease' => %w[42] }
           ],
-          facterversion: '3.9.5'
+          facterversion: '3.9.5',
         )
       end
 
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS')
+          a_hash_including(facterversion: "/\\A3\\.9\\./", operatingsystem: 'CentOS'),
         ).and_return([])
       end
 
       it 'returns CentOS facts from a facter version matching 3.8' do
         is_expected.to include(
-          'centos-7-x86_64' => include(:facterversion => '3.8.0')
+          'centos-7-x86_64' => include(:facterversion => '3.8.0'),
         )
       end
 
       it 'returns OpenSuSE facts from a facter version matching 3.9' do
         is_expected.to include(
-          'opensuse-42-x86_64' => include(:facterversion => '3.9.2')
+          'opensuse-42-x86_64' => include(:facterversion => '3.9.2'),
         )
       end
     end
@@ -887,7 +887,7 @@ describe RspecPuppetFacts do
               ]
             }
           ]
-        }
+        },
       )
     }
 
