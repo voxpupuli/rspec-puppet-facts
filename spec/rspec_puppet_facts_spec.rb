@@ -266,16 +266,16 @@ describe RspecPuppetFacts do
                 "operatingsystemrelease" => [
                   "7",
                   "8",
-                ]
+                ],
               },
               {
                 "operatingsystem" => "RedHat",
                 "operatingsystemrelease" => [
                   "5",
                   "6",
-                ]
+                ],
               },
-            ]
+            ],
           },
         )
       }
@@ -312,7 +312,7 @@ describe RspecPuppetFacts do
           {
             :supported_os => [
               { 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => '7' },
-            ]
+            ],
           },
         )
       end
@@ -472,7 +472,7 @@ describe RspecPuppetFacts do
                         ],
                     },
                 ],
-                :facterversion => '3.9'
+                :facterversion => '3.9',
             },
         )
       }
@@ -565,9 +565,9 @@ describe RspecPuppetFacts do
                 "operatingsystem" => "SLES",
                 "operatingsystemrelease" => [
                   "11 SP1",
-                ]
+                ],
               },
-            ]
+            ],
           },
         )
       }
@@ -598,7 +598,7 @@ describe RspecPuppetFacts do
                   "4",
                 ],
               },
-            ]
+            ],
           },
         )
       }
@@ -884,9 +884,9 @@ describe RspecPuppetFacts do
               "operatingsystemrelease" => [
                 "6",
                 "7",
-              ]
+              ],
             },
-          ]
+          ],
         },
       )
     }
