@@ -908,7 +908,7 @@ describe RspecPuppetFacts do
     end
 
     it 'should determine the Augeas version if Augeas is supported' do
-      module Augeas_stub # rubocop:todo Lint/ConstantDefinitionInBlock
+      module AugeasStub # rubocop:todo Lint/ConstantDefinitionInBlock
         NO_MODL_AUTOLOAD = true
         def self.open(*_args)
           self
@@ -919,19 +919,19 @@ describe RspecPuppetFacts do
       end
 
       allow(described_class).to receive(:augeas?).and_return(true)
-      stub_const('Augeas', Augeas_stub)
+      stub_const('Augeas', AugeasStub)
       RspecPuppetFacts.reset
       expect(subject.common_facts[:augeasversion]).to eq 'my_version'
     end
 
     context 'when mcollective is available' do
-      module MCollective_stub # rubocop:todo Lint/ConstantDefinitionInBlock
+      module MCollectiveStub # rubocop:todo Lint/ConstantDefinitionInBlock
         VERSION = 'my_version'
       end
 
       before(:each) do
         allow(described_class).to receive(:mcollective?).and_return(true)
-        stub_const('MCollective', MCollective_stub)
+        stub_const('MCollective', MCollectiveStub)
         described_class.reset
       end
 
