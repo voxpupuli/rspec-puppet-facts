@@ -201,15 +201,15 @@ describe RspecPuppetFacts do
             allow(described_class).to receive(:metadata).and_return(metadata)
           end
 
-          it 'should return a hash' do
+          it 'returns a hash' do
             is_expected.to be_a Hash
           end
 
-          it 'should have 5 elements' do
+          it 'has 5 elements' do
             expect(subject.size).to eq 5
           end
 
-          it 'should return supported OS' do
+          it 'returns supported OS' do
             expect(subject.keys.sort).to eq %w(
               debian-7-x86_64
               debian-8-x86_64
@@ -219,7 +219,7 @@ describe RspecPuppetFacts do
             )
           end
 
-          it 'should be able to filter the received OS facts' do
+          it 'is able to filter the received OS facts' do
             allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
             expect(subject.keys.sort).to eq %w(
               redhat-5-x86_64
@@ -280,15 +280,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         is_expected.to be_a Hash
       end
 
-      it 'should have 4 elements' do
+      it 'has 4 elements' do
         expect(subject.size).to eq 4
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq %w(
           debian-7-x86_64
           debian-8-x86_64
@@ -297,7 +297,7 @@ describe RspecPuppetFacts do
         )
       end
 
-      it 'should be able to filter the received OS facts' do
+      it 'is able to filter the received OS facts' do
         allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
         expect(subject.keys.sort).to eq %w(
           redhat-5-x86_64
@@ -352,15 +352,15 @@ describe RspecPuppetFacts do
         ['ubuntu-12.04-x86_64', 'ubuntu-14.04-x86_64', 'ubuntu-16.04-x86_64']
       end
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 3 elements' do
+      it 'has 3 elements' do
         expect(subject.size).to eq(expected_fact_sets.size)
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq(expected_fact_sets)
       end
     end
@@ -382,15 +382,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 1 elements' do
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'freebsd-10-amd64',
         ]
@@ -414,15 +414,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 1 elements' do
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'openbsd-5.7-amd64',
         ]
@@ -445,15 +445,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 1 elements' do
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq %w(
           solaris-11-i86pc
         )
@@ -477,15 +477,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 1 elements' do
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         # NOTE: See FACT-1827 for details on the IBM,8284-22A part
         # That has to match whatever hardware generated the facts file.
         expect(subject.keys.sort).to eq %w(
@@ -572,15 +572,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 1 elements' do
+      it 'has 1 elements' do
         expect(subject.size).to eq 1
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
           'sles-11-x86_64',
         ]
@@ -603,7 +603,7 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should output warning message' do
+      it 'outputs warning message' do
         expect(described_class).to receive(:warning).with(/No facts were found in the FacterDB/)
         subject
       end
@@ -629,15 +629,15 @@ describe RspecPuppetFacts do
         )
       }
 
-      it 'should return a hash' do
+      it 'returns a hash' do
         expect(subject.class).to eq Hash
       end
 
-      it 'should have 2 elements' do
+      it 'has 2 elements' do
         expect(subject.size).to eq 2
       end
 
-      it 'should return supported OS' do
+      it 'returns supported OS' do
         expect(subject.keys.sort).to include(a_string_matching(/\Aarchlinux-\d+-x86_64/), 'debian-8-x86_64')
       end
     end
@@ -917,19 +917,19 @@ describe RspecPuppetFacts do
   end
 
   describe '#misc' do
-    it 'should have a common facts structure' do
+    it 'has a common facts structure' do
       described_class.reset
       expect(subject.common_facts).to be_a Hash
       expect(subject.common_facts).not_to be_empty
     end
 
-    it 'should not add "augeasversion" if Augeas is supported' do
+    it 'does not add "augeasversion" if Augeas is supported' do
       allow(described_class).to receive(:augeas?).and_return(false)
       described_class.reset
       expect(subject.common_facts).not_to include(:augeasversion)
     end
 
-    it 'should determine the Augeas version if Augeas is supported' do
+    it 'determines the Augeas version if Augeas is supported' do
       module AugeasStub # rubocop:todo Lint/ConstantDefinitionInBlock
         NO_MODL_AUTOLOAD = true
         def self.open(*_args)
