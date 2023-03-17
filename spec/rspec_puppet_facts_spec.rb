@@ -355,9 +355,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 3 elements' do
         expect(subject.size).to eq(expected_fact_sets.size)
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq(expected_fact_sets)
       end
@@ -382,9 +384,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 1 elements' do
         expect(subject.size).to eq 1
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq [
           'freebsd-10-amd64',
@@ -411,9 +415,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 1 elements' do
         expect(subject.size).to eq 1
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq [
           'openbsd-5.7-amd64',
@@ -439,9 +445,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 1 elements' do
         expect(subject.size).to eq 1
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq %w(
           solaris-11-i86pc
@@ -468,9 +476,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 1 elements' do
         expect(subject.size).to eq 1
       end
+
       it 'should return supported OS' do
         # NOTE: See FACT-1827 for details on the IBM,8284-22A part
         # That has to match whatever hardware generated the facts file.
@@ -535,6 +545,7 @@ describe RspecPuppetFacts do
 
         it { is_expected.to be_a(Hash) }
         it { is_expected.to have_attributes(:size => 1) }
+
         it 'munges the operatingsystemmajrelease to 2016' do
           is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash))
         end
@@ -559,9 +570,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 1 elements' do
         expect(subject.size).to eq 1
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to eq [
           'sles-11-x86_64',
@@ -614,9 +627,11 @@ describe RspecPuppetFacts do
       it 'should return a hash' do
         expect(subject.class).to eq Hash
       end
+
       it 'should have 2 elements' do
         expect(subject.size).to eq 2
       end
+
       it 'should return supported OS' do
         expect(subject.keys.sort).to include(a_string_matching(/\Aarchlinux-\d+-x86_64/), 'debian-8-x86_64')
       end
@@ -842,6 +857,7 @@ describe RspecPuppetFacts do
           'centos-7-x86_64' => include(:facterversion => '3.8.0')
         )
       end
+
       it 'returns OpenSuSE facts from a facter version matching 3.9' do
         is_expected.to include(
           'opensuse-42-x86_64' => include(:facterversion => '3.9.2')
