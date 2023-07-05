@@ -179,8 +179,9 @@ module RspecPuppetFacts
     os_facts_hash
   end
 
+  # @api private
   def stringify_keys(hash)
-    Hash[hash.collect { |k,v| [k.to_s, v.is_a?(Hash) ? stringify_keys(v) : v] }]
+    hash.to_h { |k, v| [k.to_s, v.is_a?(Hash) ? stringify_keys(v) : v] }
   end
 
   # Register a custom fact that will be included in the facts hash.

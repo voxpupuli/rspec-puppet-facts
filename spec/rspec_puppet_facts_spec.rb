@@ -7,6 +7,10 @@ describe RspecPuppetFacts do
     'spec/fixtures/metadata.json'
   end
 
+  describe '.stringify_keys' do
+    it { expect(described_class.stringify_keys({ os: { family: 'RedHat' } })).to eq({ 'os' => { 'family' => 'RedHat' } }) }
+  end
+
   describe '.facter_version_for_puppet_version' do
     subject(:facter_version) do
       described_class.facter_version_for_puppet_version(puppet_version)
