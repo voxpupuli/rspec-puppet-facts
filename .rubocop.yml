@@ -8,7 +8,13 @@ require:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: '2.4'
+  TargetRubyVersion: '2.7'
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false
 
 Style/TrailingCommaInHashLiteral:
   Enabled: True
