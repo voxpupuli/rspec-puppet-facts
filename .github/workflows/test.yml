@@ -23,6 +23,7 @@ jobs:
           bundler-cache: true
       - name: Run Rubocop
         run: bundle exec rake rubocop
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -49,3 +50,12 @@ jobs:
         run: bundle exec rake puppet_versions:test
       - name: Test gem build
         run: bundle exec rake build
+
+  tests:
+    needs:
+      - rubocop
+      - test
+    runs-on: ubuntu-latest
+    name: Test suite
+    steps:
+      - run: echo Test suite completed
