@@ -2,6 +2,7 @@ require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
+require 'deep_merge'
 
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported

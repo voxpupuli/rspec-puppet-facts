@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'voxpupuli-rubocop', '~> 2.4.0'
 
+  s.add_runtime_dependency 'deep_merge', '~> 1.2'
   s.add_runtime_dependency 'facter', '< 5'
   s.add_runtime_dependency 'facterdb', '>= 0.5.0', '< 2'
   s.add_runtime_dependency 'puppet', '>= 7', '< 9'
