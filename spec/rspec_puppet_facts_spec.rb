@@ -901,24 +901,29 @@ describe RspecPuppetFacts do
 
     it 'adds a simple fact and value' do
       add_custom_fact 'root_home', '/root'
-      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
     end
 
     it 'confines a fact to a particular operating system' do
       add_custom_fact 'root_home', '/root', :confine => 'redhat-7-x86_64'
-      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
-      expect(subject['redhat-6-x86_64']['root_home']).to be_nil
+      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
+      expect(subject['redhat-6-x86_64'][:root_home]).to be_nil
     end
 
     it 'excludes a fact from a particular operating system' do
       add_custom_fact 'root_home', '/root', :exclude => 'redhat-7-x86_64'
-      expect(subject['redhat-7-x86_64']['root_home']).to be_nil
-      expect(subject['redhat-6-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-7-x86_64'][:root_home]).to be_nil
+      expect(subject['redhat-6-x86_64'][:root_home]).to eq '/root'
     end
 
     it 'takes a proc as a value' do
       add_custom_fact 'root_home', ->(_os, _facts) { '/root' }
-      expect(subject['redhat-7-x86_64']['root_home']).to eq '/root'
+      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
+    end
+
+    it 'accepts sym fact key and stores fact key as sym' do
+      add_custom_fact :root_home, ->(_os, _facts) { '/root' }
+      expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
     end
   end
 

@@ -212,7 +212,8 @@ module RspecPuppetFacts
   # @api private
   def self.register_custom_fact(name, value, options)
     @custom_facts ||= {}
-    @custom_facts[name.to_s] = {:options => options, :value => value}
+    name = RSpec.configuration.facterdb_string_keys ? name.to_s : name.to_sym
+    @custom_facts[name] = {:options => options, :value => value}
   end
 
   # Adds any custom facts according to the rules defined for the operating
