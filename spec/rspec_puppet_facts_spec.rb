@@ -610,13 +610,13 @@ describe RspecPuppetFacts do
       end
 
       it 'escapes the parens in the filter' do
-        filter = {
+        filter = [{
           'os.name' => 'IOS',
           'os.release.full' => '/^12\\.2\\(25\\)EWA9/',
           'os.hardware' => 'x86_64',
-        }
+        }]
 
-        expect(FacterDB).to receive(:get_facts).with(filter, symbolize_keys: true).once
+        expect(FacterDB).to receive(:get_facts).with(filter, symbolize_keys: false).once.and_return([])
         subject
       end
 
@@ -742,11 +742,14 @@ describe RspecPuppetFacts do
       end
 
       before do
-        allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          { 'os.name' => 'CentOS', 'os.release.full' => '/^9/', 'os.hardware' => 'x86_64' }, symbolize_keys: true
-        ).and_wrap_original do |m, *args|
-          m.call(*args).reject { |facts| facts[:facterversion].start_with?('4.6.') }
+          [
+            { 'os.name' => 'CentOS', 'os.release.full' => '/^9/', 'os.hardware' => 'x86_64' },
+            { 'os.name' => 'Debian', 'os.release.full' => '/^12/', 'os.hardware' => 'x86_64' },
+          ],
+          symbolize_keys: false,
+        ).and_wrap_original do |m, *args, **kwargs|
+          m.call(*args, **kwargs).reject { |facts| facts.dig('os', 'name') == 'CentOS' && facts['facterversion'].start_with?('4.6.') }
         end
       end
 
