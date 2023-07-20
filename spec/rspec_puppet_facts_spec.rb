@@ -662,19 +662,16 @@ describe RspecPuppetFacts do
 
       before do
         allow(described_class).to receive(:warning).with(a_string_matching(/no facts were found/i))
-        allow(FacterDB).to receive(:get_facts).and_call_original
       end
 
       it 'escapes the parens in the filter' do
-        filter = [
-          include(
-            :operatingsystem        => "IOS",
-            :operatingsystemrelease => "/^12\\.2\\(25\\)EWA9/",
-            :hardwaremodel          => "x86_64",
-          ),
-        ]
+        filter = {
+          :operatingsystem        => "IOS",
+          :operatingsystemrelease => "/^12\\.2\\(25\\)EWA9/",
+          :hardwaremodel          => "x86_64",
+        }
 
-        expect(FacterDB).to receive(:get_facts).with(filter)
+        expect(FacterDB).to receive(:get_facts).with(filter).once
         subject
       end
 
