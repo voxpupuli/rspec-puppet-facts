@@ -854,11 +854,13 @@ describe RspecPuppetFacts do
       end
 
       before do
-        allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          {:operatingsystem=>"CentOS", :operatingsystemrelease=>"/^7/", :hardwaremodel=>"x86_64"},
+          [
+            {:operatingsystem=>"CentOS", :operatingsystemrelease=>"/^7/", :hardwaremodel=>"x86_64"},
+            {:operatingsystem=>"OpenSuSE", :operatingsystemrelease=>"/^42/", :hardwaremodel=>"x86_64"},
+          ],
         ).and_wrap_original do |m, *args|
-          m.call(*args).reject { |facts| facts[:facterversion].start_with?('3.9.') }
+          m.call(*args).reject { |facts| facts[:operatingsystem] == 'CentOS' && facts[:facterversion].start_with?('3.9.') }
         end
       end
 
