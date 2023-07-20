@@ -113,32 +113,31 @@ module RspecPuppetFacts
       end
     end
 
-    facterversion_obj = Gem::Version.new(facterversion)
+    strict_requirement = RspecPuppetFacts::facter_version_to_strict_requirement(facterversion)
+
+    loose_requirement = RspecPuppetFacts::facter_version_to_loose_requirement(facterversion)
 
     # FacterDB may have newer versions of facter data for which it contains a subset of all possible
     # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
     # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
     filter.each do |filter_spec|
-      facter_version_filter = RspecPuppetFacts.facter_version_to_filter(facterversion)
-      db = FacterDB.get_facts(filter_spec.merge({ :facterversion =>  facter_version_filter }))
+      versions = FacterDB.get_facts(filter_spec).map { |facts| Gem::Version.new(facts[:facterversion]) }.sort.reverse
+      next unless versions.any?
 
-      if db.empty?
+      version = versions.detect { |v| strict_requirement =~ v }
+
+      unless version
+        version = versions.detect { |v| loose_requirement =~ v } if loose_requirement
+        next unless version
+
         if RspecPuppetFacts.spec_facts_strict?
           raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, aborting"
         end
 
-        version = FacterDB.get_facts(filter_spec).map { |facts| Gem::Version.new(facts[:facterversion]) }.sort.reverse.detect { |v| v <= facterversion_obj }
-
-        next unless version
-        version = version.to_s
-        facter_version_filter = "/\\A#{Regexp.escape(version)}/"
-
-        unless version == facterversion
-          RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, using v#{version} instead"
-        end
+        RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, using v#{version} instead"
       end
 
-      filter_spec[:facterversion] = facter_version_filter
+      filter_spec[:facterversion] = "/\\A#{Regexp.escape(version.to_s)}\\Z/"
     end
 
     received_facts = FacterDB::get_facts(filter)
@@ -354,13 +353,47 @@ module RspecPuppetFacts
     @metadata = nil
   end
 
-  # Generates a JGrep statement expression for a specific facter version
-  # @return [String] JGrep statement expression
-  # @param version [String] the Facter version
+  # Construct the strict facter version requirement
+  # @return [Gem::Requirement] The version requirement to match
   # @api private
-  def self.facter_version_to_filter(version)
-    major, minor = version.split('.')
-    "/\\A#{major}\\.#{minor}\\./"
+  def self.facter_version_to_strict_requirement(version)
+    Gem::Requirement.new(facter_version_to_strict_requirement_string(version))
+  end
+
+  # Construct the strict facter version requirement string
+  # @return [String] The version requirement to match
+  # @api private
+  def self.facter_version_to_strict_requirement_string(version)
+    if /\A[0-9]+(\.[0-9]+)*\Z/.match?(version)
+      # Interpret 3 as ~> 3.0
+      "~> #{version}.0"
+    else
+      version
+    end
+  end
+
+  # Construct the loose facter version requirement
+  # @return [Optional[Gem::Requirement]] The version requirement to match
+  # @api private
+  def self.facter_version_to_loose_requirement(version)
+    string = facter_version_to_loose_requirement_string(version)
+    Gem::Requirement.new(string) if string
+  end
+
+  # Construct the facter version requirement string
+  # @return [String] The version requirement to match
+  # @api private
+  def self.facter_version_to_loose_requirement_string(version)
+    if (m = /\A(?<major>[0-9]+)\.(?<minor>[0-9]+)(?:\.(?<patch>[0-9]+))?\Z/.match(version))
+      # Interpret 3.1 as < 3.2 and 3.2.1 as < 3.3
+      "< #{m[:major]}.#{m[:minor].to_i + 1}"
+    elsif /\A[0-9]+\Z/.match?(version)
+      # Interpret 3 as < 4
+      "< #{version.to_i + 1}"
+    else
+      # This would be the same as the strict requirement
+      nil
+    end
   end
 
   def self.facter_version_for_puppet_version(puppet_version)
