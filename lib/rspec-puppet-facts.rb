@@ -128,11 +128,7 @@ module RspecPuppetFacts
     # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
     # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
     filter.each do |filter_spec|
-      versions = JGrep.jgrep(db.to_json, FacterDB.generate_filter_str(filter_spec)) \
-        .to_h do |facts|
-          result = facts.to_h { |k, v| [k.to_sym, v] }
-          [Gem::Version.new(result[:facterversion]), result]
-        end
+      versions = FacterDB.filter_results(db, filter_spec).to_h { |facts| [Gem::Version.new(facts[:facterversion]), facts] }
 
       version, facts = versions.select { |v, _f| strict_requirement =~ v }.max_by { |v, _f| v }
 
