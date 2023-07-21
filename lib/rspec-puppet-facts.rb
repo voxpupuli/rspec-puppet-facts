@@ -122,9 +122,8 @@ module RspecPuppetFacts
     # FacterDB may have newer versions of facter data for which it contains a subset of all possible
     # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
     # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
-    json_db = db.to_json
     filter.each do |filter_spec|
-      versions = JGrep.jgrep(json_db, FacterDB.generate_filter_str(filter_spec)).to_h do |facts|
+      versions = FacterDB.filter_results(db, filter_spec).to_h do |facts|
         result = RSpec.configuration.facterdb_string_keys ? facts : facts.transform_keys(&:to_sym)
         [Gem::Version.new(facts['facterversion']), result]
       end
