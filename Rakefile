@@ -50,9 +50,11 @@ namespace :puppet_versions do
 end
 
 begin
-  require 'rubygems'
   require 'github_changelog_generator/task'
-
+rescue LoadError
+  # github_changelog_generator is an optional group
+else
+  require 'rubygems'
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
     config.exclude_labels = %w{duplicate question invalid wontfix wont-fix skip-changelog}
     config.user = 'voxpupuli'
@@ -60,8 +62,6 @@ begin
     gem_version = Gem::Specification.load("#{config.project}.gemspec").version
     config.future_release = gem_version
   end
-rescue LoadError
-  # Changelog generator is optional
 end
 
 begin
