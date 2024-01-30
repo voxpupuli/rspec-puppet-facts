@@ -1,5 +1,3 @@
-require 'bundler/gem_tasks'
-
 PUPPET_VERSIONS_PATH = File.join(__dir__, 'ext', 'puppet_agent_components.json')
 
 begin
