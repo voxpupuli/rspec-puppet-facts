@@ -18,14 +18,14 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
-  s.add_development_dependency 'mime-types'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'yard'
+  s.add_development_dependency 'mime-types', '~> 3.5', '>= 3.5.2'
+  s.add_development_dependency 'rake', '~> 13.1'
+  s.add_development_dependency 'rspec', '~> 3.12'
+  s.add_development_dependency 'yard', '~> 0.9.34'
 
   s.add_development_dependency 'voxpupuli-rubocop', '~> 2.4.0'
 
-  s.add_runtime_dependency 'facter'
-  s.add_runtime_dependency 'facterdb', '>= 0.5.0'
-  s.add_runtime_dependency 'puppet'
+  s.add_runtime_dependency 'facter', '< 5'
+  s.add_runtime_dependency 'facterdb', '>= 0.5.0', '< 2'
+  s.add_runtime_dependency 'puppet', '>= 7', '< 9'
 end
