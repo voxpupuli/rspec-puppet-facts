@@ -49,7 +49,7 @@ jobs:
       - name: Test against Puppet component versions
         run: bundle exec rake puppet_versions:test
       - name: Test gem build
-        run: bundle exec rake build
+        run: gem build --strict --verbose *.gemspec
 
   tests:
     needs:
