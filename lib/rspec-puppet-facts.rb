@@ -2,6 +2,7 @@ require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
+require 'rspec-puppet-facts/legacy_facts'
 
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported
@@ -169,6 +170,7 @@ module RspecPuppetFacts
       os = "#{facts[:operatingsystem].downcase}-#{operatingsystemmajrelease}-#{facts[:hardwaremodel]}"
       next unless os.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
       facts.merge! RspecPuppetFacts.common_facts
+      facts.delete_if { |fact, _value| RspecPuppetFacts::LegacyFacts.legacy_fact?(fact) } if RSpec.configuration.prune_legacy_facts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
 
