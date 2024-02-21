@@ -10,7 +10,7 @@ rspec-puppet-facts
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
-this gem provides a method of running your [rspec-puppet](https://github.com/rodjek/rspec-puppet)
+this gem provides a method of running your [rspec-puppet](https://github.com/puppetlabs/rspec-puppet)
 tests against the facts for all your supported operating systems (provided by
 [facterdb](https://github.com/voxpupuli/facterdb)).
 This simplifies unit testing because you don't need to specify the facts yourself.
@@ -532,7 +532,7 @@ ENV['FACTERDB_SEARCH_PATHS'] = custom_facts
 ```
 ## Running your tests
 
-For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.  If you are developing a module using the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk_install.html), `pdk test unit` will run all your tests against the supported operating systems listed in `metadata.json`.
+For most cases, there is no change to how you run your tests. Running `rake spec` will run all the tests against the facts for all the supported operating systems.  If you are developing a module using the [Puppet Development Kit](https://puppet.com/docs/pdk/3.x/pdk_install.html), `pdk test unit` will run all your tests against the supported operating systems listed in `metadata.json`.
 
 If you want to run the tests against the facts for specific operating systems, you can provide a filter in the `SPEC_FACTS_OS` environment variable and only the supported operating systems whose name starts with the specified filter will be used.
 
