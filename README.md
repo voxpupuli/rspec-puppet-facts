@@ -443,6 +443,28 @@ To do this, pass a lambda as the value for the custom fact. The lambda is passed
 add_custom_fact :root_home, lambda { |os,facts| "/tmp/#{facts['hostname']}" }
 ```
 
+#### Merge into existing facts
+
+You can also supply an optional input `:merge_facts` to the `add_custom_fact` method.
+
+This allows you to merge facts values into a fact, if the fact is already present in the facts hash as oppose to overwriting the fact value.
+
+```ruby
+add_custom_fact :identity, { 'user' => 'test_user' }, merge_facts: true
+```
+
+Will result in a hash of the identity fact like the below:
+
+```ruby
+{
+  "gid"=>0,
+  "group"=>"root",
+  "privileged"=>true,
+  "uid"=>0,
+  "user"=>"test_user"
+}
+```
+
 ### Supplying Custom External Facts through FacterDB
 Rspec-puppet-facts uses a gem called facterdb that contains many fact sets of various combinations that are pre generated.  Rspec-puppet-facts queries
 facterdb to pull out a specific fact set to use when testing.

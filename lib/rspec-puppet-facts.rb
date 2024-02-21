@@ -2,6 +2,7 @@ require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
+require 'deep_merge'
 
 # The purpose of this module is to simplify the Puppet
 # module's RSpec tests by looping through all supported
@@ -227,7 +228,13 @@ module RspecPuppetFacts
       next if fact[:options][:confine] && !fact[:options][:confine].include?(os)
       next if fact[:options][:exclude] && fact[:options][:exclude].include?(os)
 
-      facts[name] = fact[:value].respond_to?(:call) ? fact[:value].call(os, facts) : fact[:value]
+      value = fact[:value].respond_to?(:call) ? fact[:value].call(os, facts) : fact[:value]
+      # if merge_facts passed, merge supplied facts into facts hash
+      if fact[:options][:merge_facts]
+        facts.deep_merge!({name => value})
+      else
+        facts[name] = value
+      end
     end
 
     facts

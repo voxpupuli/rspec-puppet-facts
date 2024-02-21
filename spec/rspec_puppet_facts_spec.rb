@@ -902,6 +902,26 @@ describe RspecPuppetFacts do
       expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
     end
 
+    it 'merges a fact value into fact when merge_facts passed' do
+      add_custom_fact :identity, { 'user' => 'test_user' }, merge_facts: true
+      expect(subject['redhat-7-x86_64'][:identity]).to eq(
+      {
+        "gid"=>0,
+        "group"=>"root",
+        "privileged"=>true,
+        "uid"=>0,
+        "user"=>"test_user"
+      })
+    end
+
+    it 'overwrites fact' do
+      add_custom_fact :identity, { 'user' => 'other_user' }
+      expect(subject['redhat-7-x86_64'][:identity]).to eq(
+      {
+        "user"=>"other_user"
+      })
+    end
+
     it 'confines a fact to a particular operating system' do
       add_custom_fact 'root_home', '/root', :confine => 'redhat-7-x86_64'
       expect(subject['redhat-7-x86_64'][:root_home]).to eq '/root'
