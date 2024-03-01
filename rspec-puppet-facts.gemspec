@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.12'
   s.add_development_dependency 'yard', '~> 0.9.34'
 
-  s.add_development_dependency 'voxpupuli-rubocop', '~> 2.4.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 2.5.0'
 
   s.add_runtime_dependency 'deep_merge', '~> 1.2'
   s.add_runtime_dependency 'facter', '< 5'
