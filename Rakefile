@@ -54,7 +54,7 @@ rescue LoadError
 else
   require 'rubygems'
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
-    config.exclude_labels = %w{duplicate question invalid wontfix wont-fix skip-changelog}
+    config.exclude_labels = %w{duplicate question invalid wontfix wont-fix skip-changelog github_actions}
     config.user = 'voxpupuli'
     config.project = 'rspec-puppet-facts'
     gem_version = Gem::Specification.load("#{config.project}.gemspec").version
@@ -63,16 +63,7 @@ else
 end
 
 begin
-  require 'rubocop/rake_task'
+  require 'voxpupuli/rubocop/rake'
 rescue LoadError
-  # RuboCop is an optional group
-else
-  RuboCop::RakeTask.new(:rubocop) do |task|
-    # These make the rubocop experience maybe slightly less terrible
-    task.options = ['--display-cop-names', '--display-style-guide', '--extra-details']
-    # Use Rubocop's Github Actions formatter if possible
-    if ENV['GITHUB_ACTIONS'] == 'true'
-      task.formatters << 'github'
-    end
-  end
+  # the voxpupuli-rubocop gem is optional
 end

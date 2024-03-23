@@ -1,5 +1,63 @@
 # Changelog
 
+## [3.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/3.0.0) (2024-03-23)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.5...3.0.0)
+
+**symbolized facts deprecation**
+
+With the release of rspec-puppet-facts 4.0.0 we will remove support for symbolized facts. At the moment people typically use this in their unit files:
+
+```ruby
+case facts[:os]['name']
+when 'Archlinux'
+  context 'on Archlinux' do
+    it { is_expected.to contain_package('borg') }
+  end
+when 'Ubuntu'
+```
+
+For history reasons the first level of facts were symbols. You will have to update it to strings with the 4.0.0 release:
+
+```ruby
+case facts['os']['name']
+when 'Archlinux'
+  context 'on Archlinux' do
+    it { is_expected.to contain_package('borg') }
+  end
+when 'Ubuntu'
+```
+
+
+**Breaking changes:**
+
+- Use facterdb\_string\_keys configuration option for custom facts [\#157](https://github.com/voxpupuli/rspec-puppet-facts/pull/157) ([jordanbreen28](https://github.com/jordanbreen28))
+- Do not query for the exact facter version [\#151](https://github.com/voxpupuli/rspec-puppet-facts/pull/151) ([ekohl](https://github.com/ekohl))
+- Drop Ruby 2.4/2.5/2.6 support [\#149](https://github.com/voxpupuli/rspec-puppet-facts/pull/149) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ruby 3.3 support [\#169](https://github.com/voxpupuli/rspec-puppet-facts/pull/169) ([bastelfreak](https://github.com/bastelfreak))
+- gemspec: Add version constraints & CI: Build gem in strict mode [\#165](https://github.com/voxpupuli/rspec-puppet-facts/pull/165) ([bastelfreak](https://github.com/bastelfreak))
+- update puppet agent components [\#164](https://github.com/voxpupuli/rspec-puppet-facts/pull/164) ([bastelfreak](https://github.com/bastelfreak))
+- Add merge facts option to add\_custom\_fact [\#160](https://github.com/voxpupuli/rspec-puppet-facts/pull/160) ([jordanbreen28](https://github.com/jordanbreen28))
+- Collect facts iteratively [\#152](https://github.com/voxpupuli/rspec-puppet-facts/pull/152) ([ekohl](https://github.com/ekohl))
+- Use Hash.to\_h to construct a new hash [\#150](https://github.com/voxpupuli/rspec-puppet-facts/pull/150) ([ekohl](https://github.com/ekohl))
+- Add Ruby 3.2 support [\#148](https://github.com/voxpupuli/rspec-puppet-facts/pull/148) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.4.0 to ~\> 2.6.0 [\#168](https://github.com/voxpupuli/rspec-puppet-facts/pull/168) ([dependabot[bot]](https://github.com/apps/dependabot))
+- github\_changelog\_generator: Apply best practices [\#163](https://github.com/voxpupuli/rspec-puppet-facts/pull/163) ([bastelfreak](https://github.com/bastelfreak))
+- Gemfile: Add faraday as github\_changelog\_generator dep [\#162](https://github.com/voxpupuli/rspec-puppet-facts/pull/162) ([bastelfreak](https://github.com/bastelfreak))
+- voxpupuli-rubocop: Pin to patch version [\#161](https://github.com/voxpupuli/rspec-puppet-facts/pull/161) ([bastelfreak](https://github.com/bastelfreak))
+- Update voxpupuli-rubocop requirement from ~\> 1.3 to ~\> 2.0 [\#156](https://github.com/voxpupuli/rspec-puppet-facts/pull/156) ([dependabot[bot]](https://github.com/apps/dependabot))
+- CI: add dummy job to depend on [\#155](https://github.com/voxpupuli/rspec-puppet-facts/pull/155) ([bastelfreak](https://github.com/bastelfreak))
+- migrate to voxpupuli-rubocop [\#154](https://github.com/voxpupuli/rspec-puppet-facts/pull/154) ([bastelfreak](https://github.com/bastelfreak))
+- Update rubocop requirement from ~\> 1.48.1 to ~\> 1.54.1 [\#153](https://github.com/voxpupuli/rspec-puppet-facts/pull/153) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Introduce RuboCop and fix various cops [\#146](https://github.com/voxpupuli/rspec-puppet-facts/pull/146) ([ekohl](https://github.com/ekohl))
+- Update puppet agent components [\#145](https://github.com/voxpupuli/rspec-puppet-facts/pull/145) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.0.5](https://github.com/voxpupuli/rspec-puppet-facts/tree/2.0.5) (2022-04-22)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.4...2.0.5)
