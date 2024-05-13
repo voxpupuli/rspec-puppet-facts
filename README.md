@@ -98,7 +98,7 @@ end
 
 ## Specifying a default Facter version
 
-By default, `os_supported_os` will return the facts for the version of Facter
+By default, `on_supported_os` will return the facts for the version of Facter
 that it has loaded (usually this is Facter 2.5.1). This behaviour can be
 overridden by setting the `default_facter_version` RSpec setting in your
 `spec/spec_helper.rb` file.
