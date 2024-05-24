@@ -170,10 +170,9 @@ module RspecPuppetFacts
       os = "#{facts[:operatingsystem].downcase}-#{operatingsystemmajrelease}-#{facts[:hardwaremodel]}"
       next unless os.start_with? RspecPuppetFacts.spec_facts_os_filter if RspecPuppetFacts.spec_facts_os_filter
       facts.merge! RspecPuppetFacts.common_facts
+      facts = stringify_keys(facts) if RSpec.configuration.facterdb_string_keys
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
-
-    return stringify_keys(os_facts_hash) if RSpec.configuration.facterdb_string_keys
 
     os_facts_hash
   end
