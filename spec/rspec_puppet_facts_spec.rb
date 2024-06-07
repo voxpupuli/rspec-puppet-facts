@@ -662,7 +662,7 @@ describe RspecPuppetFacts do
           'os.hardware'     => "x86_64",
         }
 
-        expect(FacterDB).to receive(:get_facts).with(filter).once
+        expect(FacterDB).to receive(:get_facts).with(filter, symbolize_keys: true).once
         subject
       end
 
@@ -715,7 +715,9 @@ describe RspecPuppetFacts do
 
       it 'returns facts from a facter version matching version and below' do
         is_expected.to match(
-          'centos-9-x86_64' => include(:facterversion => /\A4\.[0-7]\./,),
+          'centos-9-x86_64' => include(
+            :facterversion => /\A4\.[0-7]\./,
+          ),
         )
       end
 
@@ -790,18 +792,18 @@ describe RspecPuppetFacts do
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          {'os.name'=>"CentOS", 'os.release.full'=>"/^9/", 'os.hardware'=>"x86_64"},
+          {'os.name'=>"CentOS", 'os.release.full'=>"/^9/", 'os.hardware'=>"x86_64"}, symbolize_keys: true,
         ).and_wrap_original do |m, *args|
           m.call(*args).reject { |facts| facts[:facterversion].start_with?('4.6.') }
         end
       end
 
       it 'returns CentOS facts from a facter version matching 4.5' do
-        is_expected.to include('centos-9-x86_64' => include(:facterversion => '4.5.2'))
+        is_expected.to include('centos-9-x86_64' => include(facterversion: '4.5.2'))
       end
 
       it 'returns Debian facts from a facter version matching 4.6.1' do
-        is_expected.to include('debian-12-x86_64' => include(:facterversion => '4.6.1'),)
+        is_expected.to include('debian-12-x86_64' => include(facterversion: '4.6.1'),)
       end
     end
   end
@@ -815,7 +817,7 @@ describe RspecPuppetFacts do
               "operatingsystem" => "RedHat",
               "operatingsystemrelease" => [
                 "8",
-                "9"
+                "9",
               ],
             },
           ],
