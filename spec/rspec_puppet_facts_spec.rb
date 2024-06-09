@@ -377,11 +377,11 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "FreeBSD",
                 "operatingsystemrelease" => [
-                  "10",
+                  "13",
                 ],
               },
             ],
-            :facterversion => '2.4',
+            :facterversion => '4.5',
           },
         )
       }
@@ -396,7 +396,7 @@ describe RspecPuppetFacts do
 
       it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
-          'freebsd-10-amd64',
+          'freebsd-13-amd64',
         ]
       end
     end
@@ -409,11 +409,11 @@ describe RspecPuppetFacts do
               {
                 "operatingsystem" => "OpenBSD",
                 "operatingsystemrelease" => [
-                  "5.7",
+                  "7.5",
                 ],
               },
             ],
-            :facterversion => '2.4',
+            :facterversion => '4.7',
           },
         )
       }
@@ -428,12 +428,12 @@ describe RspecPuppetFacts do
 
       it 'returns supported OS' do
         expect(subject.keys.sort).to eq [
-          'openbsd-5.7-amd64',
+          'openbsd-7-amd64',
         ]
       end
     end
 
-    context 'When testing Solaris 11', :if => Facter.version.to_f >= 2.0 do
+    context 'When testing Solaris 11' do
       subject {
         on_supported_os(
             {
@@ -498,7 +498,7 @@ describe RspecPuppetFacts do
       end
     end
 
-    context 'When testing Windows', :if => Facter.version.to_f >= 2.4 do
+    context 'When testing Windows' do
       subject do
         on_supported_os(
           {
@@ -616,7 +616,7 @@ describe RspecPuppetFacts do
                 "operatingsystem" => "Archlinux",
               },
             ],
-            :facterversion => '2.4',
+            :facterversion => '3.14',
           },
         )
       }
@@ -654,9 +654,9 @@ describe RspecPuppetFacts do
 
       it 'escapes the parens in the filter' do
         filter = {
-          :operatingsystem        => "IOS",
-          :operatingsystemrelease => "/^12\\.2\\(25\\)EWA9/",
-          :hardwaremodel          => "x86_64",
+          'os.name'         => "IOS",
+          'os.release.full' => "/^12\\.2\\(25\\)EWA9/",
+          'os.hardware'     => "x86_64",
         }
 
         expect(FacterDB).to receive(:get_facts).with(filter).once
@@ -701,19 +701,19 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[7] },
           ],
-          facterversion: "2.6",
+          facterversion: "3.15",
         )
       end
 
       before do
-        allow(Facter).to receive(:version).and_return('2.4.5')
+        allow(Facter).to receive(:version).and_return('3.14.1')
       end
 
 
       it 'returns facts from a facter version matching version and below' do
         is_expected.to match(
           'centos-7-x86_64' => include(
-            :facterversion => /\A2\.[0-6]\./,
+            :facterversion => /\A3\.14\./,
           ),
         )
       end
@@ -797,23 +797,6 @@ describe RspecPuppetFacts do
       end
     end
 
-    context 'When querying a fact set that does not have an operatingsystemmajrelease fact' do
-      subject do
-        on_supported_os(
-          supported_os: [
-            { 'operatingsystem' => 'SLES', 'operatingsystemrelease' => ['11'] },
-          ],
-          facterversion: '2.1.0',
-        )
-      end
-
-      it 'splits the operatingsystemrelease fact value to get the major release' do
-        is_expected.to match(
-          'sles-11-x86_64' => include(:operatingsystemrelease => '11.3'),
-        )
-      end
-    end
-
     context 'With an invalid facterversion in the options hash' do
       let(:method_call) do
         on_supported_os(
@@ -844,7 +827,7 @@ describe RspecPuppetFacts do
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          {:operatingsystem=>"CentOS", :operatingsystemrelease=>"/^7/", :hardwaremodel=>"x86_64"},
+          {'os.name'=>"CentOS", 'os.release.full'=>"/^7/", 'os.hardware'=>"x86_64"},
         ).and_wrap_original do |m, *args|
           m.call(*args).reject { |facts| facts[:facterversion].start_with?('3.9.') }
         end

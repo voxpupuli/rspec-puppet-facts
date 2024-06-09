@@ -94,17 +94,17 @@ module RspecPuppetFacts
             end
 
             filter << {
-                :operatingsystem        => os_sup['operatingsystem'],
-                :operatingsystemrelease => os_release_filter,
-                :hardwaremodel          => hardwaremodel,
+              'os.name' => os_sup['operatingsystem'],
+              'os.release.full' => os_release_filter,
+              'os.hardware' => hardwaremodel,
             }
           end
         end
       else
         opts[:hardwaremodels].each do |hardwaremodel|
           filter << {
-              :operatingsystem => os_sup['operatingsystem'],
-              :hardwaremodel   => hardwaremodel,
+            'os.name' => os_sup['operatingsystem'],
+            'os.hardware' => hardwaremodel,
           }
         end
       end
@@ -144,26 +144,13 @@ module RspecPuppetFacts
 
     os_facts_hash = {}
     received_facts.map do |facts|
-      # Fix facter bug
-      # Todo: refactor the whole block to rely on structured facts and use legacy facts as fallback
-      if facts[:operatingsystem] == 'Ubuntu'
-        operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0..1].join('.')
-      elsif facts[:operatingsystem] == 'OpenBSD'
-        operatingsystemmajrelease = facts[:operatingsystemrelease]
-      elsif facts[:operatingsystem] == 'windows' && facts[:operatingsystemrelease].start_with?('10.0.')
-        operatingsystemmajrelease = '2016'
-      elsif facts.dig(:os, 'release', 'major')
-        operatingsystemmajrelease = facts[:os]['release']['major']
-      elsif facts.dig(:os, 'distro', 'release', 'major')
-        operatingsystemmajrelease = facts[:os]['distro']['release']['major']
-      else
-        if facts[:operatingsystemmajrelease].nil?
-          operatingsystemmajrelease = facts[:operatingsystemrelease].split('.')[0]
-        else
-          operatingsystemmajrelease = facts[:operatingsystemmajrelease]
-        end
+      os_fact = facts[:os]
+      unless os_fact
+        RspecPuppetFacts.warning "No os fact was found in FacterDB for: #{facts}"
+        next
       end
-      os = "#{facts[:operatingsystem].downcase}-#{operatingsystemmajrelease}-#{facts[:hardwaremodel]}"
+
+      os = "#{os_fact['name'].downcase}-#{os_fact['release']['major']}-#{os_fact['hardware']}"
       next if RspecPuppetFacts.spec_facts_os_filter && !os.start_with?(RspecPuppetFacts.spec_facts_os_filter)
       facts.merge! RspecPuppetFacts.common_facts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
