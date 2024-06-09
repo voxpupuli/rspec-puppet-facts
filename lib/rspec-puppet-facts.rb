@@ -394,30 +394,34 @@ module RspecPuppetFacts
       return Facter.version
     end
 
-    fd = File.open(json_path, 'rb:UTF-8')
-    data = JSON.parse(fd.read)
+    data = File.open(json_path, 'rb:UTF-8') do |fd|
+      JSON.parse(fd.read)
+    rescue JSON::ParserError
+      warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
+      return Facter.version
+    end
 
-    version_map = data.map { |_, versions|
+    puppet_gem_version = Gem::Version.new(puppet_version)
+
+    applicable_versions = data.filter_map do |_, versions|
       if versions['puppet'].nil? || versions['facter'].nil?
         nil
       else
-        [Gem::Version.new(versions['puppet']), versions['facter']]
+        puppet_version = Gem::Version.new(versions['puppet'])
+        if puppet_gem_version >= puppet_version
+          [puppet_version, versions['facter']]
+        else
+          nil
+        end
       end
-    }.compact
+    end
 
-    puppet_gem_version = Gem::Version.new(puppet_version)
-    applicable_versions = version_map.select { |p, _| puppet_gem_version >= p }
     if applicable_versions.empty?
       warning "Unable to find Puppet #{puppet_version} in #{json_path}, defaulting to Facter #{Facter.version}"
       return Facter.version
     end
 
     applicable_versions.max_by { |p, _| p }.last
-  rescue JSON::ParserError
-    warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
-    Facter.version
-  ensure
-    fd.close if fd
   end
 end
 
