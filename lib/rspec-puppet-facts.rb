@@ -119,7 +119,7 @@ module RspecPuppetFacts
     # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
     # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
     filter.each do |filter_spec|
-      versions = FacterDB.get_facts(filter_spec).to_h { |facts| [Gem::Version.new(facts[:facterversion]), facts] }
+      versions = FacterDB.get_facts(filter_spec, symbolize_keys: !RSpec.configuration.facterdb_string_keys).to_h { |facts| [Gem::Version.new(facts[:facterversion]), facts] }
 
       version, facts = versions.select { |v, _f| strict_requirement =~ v }.max_by { |v, _f| v }
 
@@ -144,7 +144,7 @@ module RspecPuppetFacts
 
     os_facts_hash = {}
     received_facts.map do |facts|
-      os_fact = facts[:os]
+      os_fact = RSpec.configuration.facterdb_string_keys ? facts['os'] : facts[:os]
       unless os_fact
         RspecPuppetFacts.warning "No os fact was found in FacterDB for: #{facts}"
         next
@@ -155,8 +155,6 @@ module RspecPuppetFacts
       facts.merge! RspecPuppetFacts.common_facts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
-
-    return stringify_keys(os_facts_hash) if RSpec.configuration.facterdb_string_keys
 
     os_facts_hash
   end
@@ -264,6 +262,7 @@ module RspecPuppetFacts
     if augeas?
       @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
     end
+    @common_facts = stringify_keys(@common_facts) if RSpec.configuration.facterdb_string_keys
 
     @common_facts
   end
@@ -424,6 +423,7 @@ end
 
 RSpec.configure do |c|
   c.add_setting :default_facter_version,
-    :default => RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
-  c.add_setting :facterdb_string_keys, :default => false
+    default: RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
+  c.add_setting :facterdb_string_keys,
+    default: false
 end
