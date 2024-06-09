@@ -1,10 +1,10 @@
 PUPPET_VERSIONS_PATH = File.join(__dir__, 'ext', 'puppet_agent_components.json')
 
 begin
-    require 'rspec/core/rake_task'
-    require 'yard'
-    RSpec::Core::RakeTask.new(:spec)
-    YARD::Rake::YardocTask.new
+  require 'rspec/core/rake_task'
+  require 'yard'
+  RSpec::Core::RakeTask.new(:spec)
+  YARD::Rake::YardocTask.new
 rescue LoadError
   # yard is optional
 end

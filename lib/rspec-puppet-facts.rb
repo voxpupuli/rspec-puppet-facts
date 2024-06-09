@@ -58,8 +58,7 @@ module RspecPuppetFacts
   # @api private
   def on_supported_os_implementation(opts = {})
     unless /\A\d+\.\d+(?:\.\d+)*\z/.match?((facterversion = opts[:facterversion]))
-      raise ArgumentError, ":facterversion must be in the format 'n.n' or " \
-        "'n.n.n' (n is numeric), not '#{facterversion}'"
+      raise ArgumentError, ":facterversion must be in the format 'n.n' or 'n.n.n' (n is numeric), not '#{facterversion}'"
     end
 
     filter = []
@@ -67,7 +66,6 @@ module RspecPuppetFacts
       if os_sup['operatingsystemrelease']
         Array(os_sup['operatingsystemrelease']).map do |operatingsystemmajrelease|
           opts[:hardwaremodels].each do |hardwaremodel|
-
             os_release_filter = "/^#{Regexp.escape(operatingsystemmajrelease.split(' ')[0])}/"
             case os_sup['operatingsystem']
             when /BSD/i
@@ -119,7 +117,9 @@ module RspecPuppetFacts
     # facter data (see FacterDB 0.5.2 for Facter releases 3.8 and 3.9). In this situation we need to
     # cycle through and downgrade Facter versions per platform type until we find matching Facter data.
     filter.each do |filter_spec|
-      versions = FacterDB.get_facts(filter_spec, symbolize_keys: !RSpec.configuration.facterdb_string_keys).to_h { |facts| [Gem::Version.new(facts[:facterversion]), facts] }
+      versions = FacterDB.get_facts(filter_spec, symbolize_keys: !RSpec.configuration.facterdb_string_keys).to_h do |facts|
+        [Gem::Version.new(facts[:facterversion]), facts]
+      end
 
       version, facts = versions.select { |v, _f| strict_requirement =~ v }.max_by { |v, _f| v }
 
@@ -150,6 +150,7 @@ module RspecPuppetFacts
 
       os = "#{os_fact['name'].downcase}-#{os_fact['release']['major']}-#{os_fact['hardware']}"
       next if RspecPuppetFacts.spec_facts_os_filter && !os.start_with?(RspecPuppetFacts.spec_facts_os_filter)
+
       facts.merge! RspecPuppetFacts.common_facts
       os_facts_hash[os] = RspecPuppetFacts.with_custom_facts(os, facts)
     end
@@ -191,7 +192,7 @@ module RspecPuppetFacts
   def self.register_custom_fact(name, value, options)
     @custom_facts ||= {}
     name = RSpec.configuration.facterdb_string_keys ? name.to_s : name.to_sym
-    @custom_facts[name] = {options: options, value: value}
+    @custom_facts[name] = { options: options, value: value }
   end
 
   # Adds any custom facts according to the rules defined for the operating
@@ -210,7 +211,7 @@ module RspecPuppetFacts
       value = fact[:value].respond_to?(:call) ? fact[:value].call(os, facts) : fact[:value]
       # if merge_facts passed, merge supplied facts into facts hash
       if fact[:options][:merge_facts]
-        facts.deep_merge!({name => value})
+        facts.deep_merge!({ name => value })
       else
         facts[name] = value
       end
@@ -249,6 +250,7 @@ module RspecPuppetFacts
   # @return [Hash <Symbol => String>]
   def self.common_facts
     return @common_facts if @common_facts
+
     @common_facts = {
       puppetversion: Puppet.version,
       rubysitedir: RbConfig::CONFIG['sitelibdir'],
@@ -295,6 +297,7 @@ module RspecPuppetFacts
   # @api private
   def self.meta_supported_os
     raise StandardError, 'Unknown operatingsystem support in the metadata file!' unless metadata['operatingsystem_support'].is_a? Array
+
     metadata['operatingsystem_support']
   end
 
@@ -306,6 +309,7 @@ module RspecPuppetFacts
   def self.metadata
     return @metadata if @metadata
     raise StandardError, "Can't find metadata.json... dunno why" unless File.file? metadata_file
+
     content = File.read metadata_file
     @metadata = JSON.parse content
   end
@@ -411,8 +415,6 @@ module RspecPuppetFacts
 end
 
 RSpec.configure do |c|
-  c.add_setting :default_facter_version,
-    default: RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
-  c.add_setting :facterdb_string_keys,
-    default: false
+  c.add_setting :default_facter_version, default: RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
+  c.add_setting :facterdb_string_keys, default: false
 end

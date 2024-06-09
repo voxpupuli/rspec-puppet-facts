@@ -8,7 +8,9 @@ describe RspecPuppetFacts do
   end
 
   describe '.stringify_keys' do
-    it { expect(described_class.stringify_keys({ os: { family: 'RedHat' } })).to eq({ 'os' => { 'family' => 'RedHat' } }) }
+    it {
+      expect(described_class.stringify_keys({ os: { family: 'RedHat' } })).to eq({ 'os' => { 'family' => 'RedHat' } })
+    }
   end
 
   describe '.facter_version_for_puppet_version' do
@@ -139,7 +141,7 @@ describe RspecPuppetFacts do
           {
             supported_os: [
               {
-                'operatingsystem'        => 'Debian',
+                'operatingsystem' => 'Debian',
                 'operatingsystemrelease' => ['12'],
               },
             ],
@@ -148,7 +150,7 @@ describe RspecPuppetFacts do
       end
 
       let(:get_keys) do
-        proc { |r| r.keys + r.select { |_,v| v.is_a?(Hash) }.map { |_,v| get_keys.call(v) }.flatten }
+        proc { |r| r.keys + r.select { |_, v| v.is_a?(Hash) }.map { |_, v| get_keys.call(v) }.flatten }
       end
 
       context 'set to true' do
@@ -245,14 +247,13 @@ describe RspecPuppetFacts do
           context 'With a wrong operatingsystem_support section' do
             let(:metadata) do
               {
-                  'operatingsystem_support' => 'Ubuntu',
+                'operatingsystem_support' => 'Ubuntu',
               }
             end
 
             it { expect { subject }.to raise_error(StandardError, /Unknown operatingsystem support/) }
           end
         end
-
       end
     end
 
@@ -441,17 +442,17 @@ describe RspecPuppetFacts do
     context 'When testing AIX 7.1' do
       subject do
         on_supported_os(
-            {
-                supported_os: [
-                    {
-                        'operatingsystem' => 'AIX',
-                        'operatingsystemrelease' => [
-                            '7.1', '7100',
-                        ],
-                    },
+          {
+            supported_os: [
+              {
+                'operatingsystem' => 'AIX',
+                'operatingsystemrelease' => [
+                  '7.1', '7100',
                 ],
-                facterversion: '3.9',
-            },
+              },
+            ],
+            facterversion: '3.9',
+          },
         )
       end
 
@@ -475,7 +476,7 @@ describe RspecPuppetFacts do
           {
             supported_os: [
               {
-                'operatingsystem'        => 'Windows',
+                'operatingsystem' => 'Windows',
                 'operatingsystemrelease' => release,
               },
             ],
@@ -598,7 +599,7 @@ describe RspecPuppetFacts do
           {
             supported_os: [
               {
-                'operatingsystem'        => 'IOS',
+                'operatingsystem' => 'IOS',
                 'operatingsystemrelease' => ['12.2(25)EWA9'],
               },
             ],
@@ -612,9 +613,9 @@ describe RspecPuppetFacts do
 
       it 'escapes the parens in the filter' do
         filter = {
-          'os.name'         => 'IOS',
+          'os.name' => 'IOS',
           'os.release.full' => '/^12\\.2\\(25\\)EWA9/',
-          'os.hardware'     => 'x86_64',
+          'os.hardware' => 'x86_64',
         }
 
         expect(FacterDB).to receive(:get_facts).with(filter, symbolize_keys: true).once
@@ -643,7 +644,6 @@ describe RspecPuppetFacts do
         RSpec.configuration.default_facter_version = Facter.version
       end
 
-
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-9-x86_64' => include(
@@ -666,7 +666,6 @@ describe RspecPuppetFacts do
       before do
         allow(Facter).to receive(:version).and_return('4.6')
       end
-
 
       it 'returns facts from a facter version matching version and below' do
         is_expected.to match(
@@ -747,7 +746,7 @@ describe RspecPuppetFacts do
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          {'os.name'=>'CentOS', 'os.release.full'=>'/^9/', 'os.hardware'=>'x86_64'}, symbolize_keys: true
+          { 'os.name' => 'CentOS', 'os.release.full' => '/^9/', 'os.hardware' => 'x86_64' }, symbolize_keys: true
         ).and_wrap_original do |m, *args|
           m.call(*args).reject { |facts| facts[:facterversion].start_with?('4.6.') }
         end
@@ -792,21 +791,23 @@ describe RspecPuppetFacts do
     it 'merges a fact value into fact when merge_facts passed' do
       add_custom_fact :identity, { 'user' => 'test_user' }, merge_facts: true
       expect(subject['redhat-9-x86_64'][:identity]).to eq(
-      {
-        'gid'=>0,
-        'group'=>'root',
-        'privileged'=>true,
-        'uid'=>0,
-        'user'=>'test_user',
-      })
+        {
+          'gid' => 0,
+          'group' => 'root',
+          'privileged' => true,
+          'uid' => 0,
+          'user' => 'test_user',
+        },
+      )
     end
 
     it 'overwrites fact' do
       add_custom_fact :identity, { 'user' => 'other_user' }
       expect(subject['redhat-9-x86_64'][:identity]).to eq(
-      {
-        'user'=>'other_user',
-      })
+        {
+          'user' => 'other_user',
+        },
+      )
     end
 
     it 'confines a fact to a particular operating system' do
@@ -851,6 +852,7 @@ describe RspecPuppetFacts do
         def self.open(*_args)
           self
         end
+
         def self.get(*_args)
           'my_version'
         end
