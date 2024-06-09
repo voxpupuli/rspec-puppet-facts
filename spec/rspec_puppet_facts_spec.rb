@@ -209,26 +209,22 @@ describe RspecPuppetFacts do
             is_expected.to be_a Hash
           end
 
-          it 'has 5 elements' do
-            expect(subject.size).to eq 5
-          end
-
           it 'returns supported OS' do
-            expect(subject.keys.sort).to eq %w(
-              debian-11-x86_64
-              debian-12-x86_64
-              redhat-7-x86_64
-              redhat-8-x86_64
-              redhat-9-x86_64
+            expect(subject.keys).to contain_exactly(
+              'debian-11-x86_64',
+              'debian-12-x86_64',
+              'redhat-7-x86_64',
+              'redhat-8-x86_64',
+              'redhat-9-x86_64',
             )
           end
 
           it 'is able to filter the received OS facts' do
             allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
-            expect(subject.keys.sort).to eq %w(
-              redhat-7-x86_64
-              redhat-8-x86_64
-              redhat-9-x86_64
+            expect(subject.keys).to contain_exactly(
+              'redhat-7-x86_64',
+              'redhat-8-x86_64',
+              'redhat-9-x86_64',
             )
           end
         end
@@ -288,24 +284,20 @@ describe RspecPuppetFacts do
         is_expected.to be_a Hash
       end
 
-      it 'has 4 elements' do
-        expect(subject.size).to eq 4
-      end
-
       it 'returns supported OS' do
-        expect(subject.keys.sort).to eq %w(
-          debian-11-x86_64
-          debian-12-x86_64
-          redhat-8-x86_64
-          redhat-9-x86_64
+        expect(subject.keys).to contain_exactly(
+          'debian-11-x86_64',
+          'debian-12-x86_64',
+          'redhat-8-x86_64',
+          'redhat-9-x86_64',
         )
       end
 
       it 'is able to filter the received OS facts' do
         allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
-        expect(subject.keys.sort).to eq %w(
-          redhat-8-x86_64
-          redhat-9-x86_64
+        expect(subject.keys).to contain_exactly(
+          'redhat-8-x86_64',
+          'redhat-9-x86_64',
         )
       end
     end
@@ -325,12 +317,8 @@ describe RspecPuppetFacts do
         expect(factsets).to be_a(Hash)
       end
 
-      it 'returns a single fact set' do
-        expect(factsets.size).to eq(1)
-      end
-
       it 'returns a fact set for the specified release' do
-        expect(factsets).to include('redhat-9-x86_64' => include(:operatingsystemmajrelease => '9'))
+        expect(factsets).to match('redhat-9-x86_64' => include(:operatingsystemmajrelease => '9'))
       end
     end
 
@@ -352,20 +340,16 @@ describe RspecPuppetFacts do
         )
       }
 
-      let(:expected_fact_sets) do
-        ['ubuntu-18.04-x86_64', 'ubuntu-20.04-x86_64', 'ubuntu-22.04-x86_64']
-      end
-
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 3 elements' do
-        expect(subject.size).to eq(expected_fact_sets.size)
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
-        expect(subject.keys.sort).to eq(expected_fact_sets)
+        expect(subject.keys).to contain_exactly(
+          'ubuntu-18.04-x86_64',
+          'ubuntu-20.04-x86_64',
+          'ubuntu-22.04-x86_64',
+        )
       end
     end
 
@@ -387,17 +371,13 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 1 elements' do
-        expect(subject.size).to eq 1
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
-        expect(subject.keys.sort).to eq [
+        expect(subject.keys).to contain_exactly(
           'freebsd-13-amd64',
-        ]
+        )
       end
     end
 
@@ -419,17 +399,13 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 1 elements' do
-        expect(subject.size).to eq 1
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
-        expect(subject.keys.sort).to eq [
+        expect(subject.keys).to contain_exactly(
           'openbsd-7-amd64',
-        ]
+        )
       end
     end
 
@@ -451,17 +427,14 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 1 elements' do
-        pending('2024-06-07: we dont have a suitable solaris 11 factset in facterdb')
-        expect(subject.size).to eq 1
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
         pending('2024-06-07: we dont have a suitable solaris 11 factset in facterdb')
-        expect(subject.keys.sort).to eq %w(solaris-11-sun4v)
+        expect(subject.keys).to contain_exactly(
+          'solaris-11-i86pc',
+        )
       end
     end
 
@@ -483,19 +456,16 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 1 elements' do
-        pending('2024-06-07: we dont have a suitable AIX factset in facterdb')
-        expect(subject.size).to eq 1
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
         # NOTE: See FACT-1827 for details on the IBM,8284-22A part
         # That has to match whatever hardware generated the facts file.
         pending('2024-06-07: we dont have a suitable solaris 11 factset in facterdb')
-        expect(subject.keys.sort).to eq %w(aix-7100-IBM,8284-22A)
+        expect(subject.keys).to contain_exactly(
+          'aix-7100-IBM,8284-22A',
+        )
       end
     end
 
@@ -520,32 +490,28 @@ describe RspecPuppetFacts do
         let(:release) { ['10'] }
 
         it { is_expected.to be_a(Hash) }
-        it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-10-x86_64' => an_instance_of(Hash)) }
+        it { is_expected.to match('windows-10-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a revision release' do
         let(:release) { ['2012 R2'] }
 
         it { is_expected.to be_a(Hash) }
-        it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2012 R2-x86_64' => an_instance_of(Hash)) }
+        it { is_expected.to match('windows-2012 R2-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a Server prefixed release' do
         let(:release) { ['Server 2012'] }
 
         it { is_expected.to be_a(Hash) }
-        it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2012-x86_64' => an_instance_of(Hash)) }
+        it { is_expected.to match('windows-2012-x86_64' => an_instance_of(Hash)) }
       end
 
       context 'with a 2016 release' do
         let(:release) { ['2016'] }
 
         it { is_expected.to be_a(Hash) }
-        it { is_expected.to have_attributes(:size => 1) }
-        it { is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash)) }
+        it { is_expected.to match('windows-2016-x86_64' => an_instance_of(Hash)) }
       end
     end
 
@@ -566,19 +532,12 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 1 elements' do
-        pending('2024-06-7: facterdb has no factset with space in the system release')
-        expect(subject.size).to eq 1
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
         pending('2024-06-7: facterdb has no factset with space in the system release')
-        expect(subject.keys.sort).to eq [
-          'sles-11-x86_64',
-        ]
+        expect(subject.keys).to contain_exactly('sles-11-x86_64')
       end
     end
 
@@ -625,15 +584,11 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
-      end
-
-      it 'has 2 elements' do
-        expect(subject.size).to eq 2
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
-        expect(subject.keys.sort).to include(a_string_matching(/\Agentoo-\d+-x86_64/), 'debian-12-x86_64')
+        expect(subject.keys).to contain_exactly(a_string_matching(/\gentoo-\d+-x86_64/), 'debian-12-x86_64')
       end
     end
 
