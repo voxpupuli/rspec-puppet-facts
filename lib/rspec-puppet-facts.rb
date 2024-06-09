@@ -82,16 +82,12 @@ module RspecPuppetFacts
                                     "/^#{operatingsystemmajrelease}-/"
                                   end
             when /Windows/i
-              hardwaremodel = /^[12]\./.match?(facterversion) ? 'x64' : 'x86_64'
+              hardwaremodel = 'x86_64'
               os_sup['operatingsystem'] = os_sup['operatingsystem'].downcase
               operatingsystemmajrelease = operatingsystemmajrelease[/\A(?:Server )?(.+)/i, 1]
 
               # force quoting because windows releases can contain spaces
               os_release_filter = "\"#{operatingsystemmajrelease}\""
-
-              if operatingsystemmajrelease == '2016' && Puppet::Util::Package.versioncmp(facterversion, '3.4') < 0
-                os_release_filter = '/^10\\.0\\./'
-              end
             when /Amazon/i
               # Tighten the regex for Amazon Linux 2 so that we don't pick up Amazon Linux 2016 or 2017 facts
               os_release_filter = "/^2$/" if operatingsystemmajrelease == '2'

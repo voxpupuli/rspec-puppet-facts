@@ -546,18 +546,6 @@ describe RspecPuppetFacts do
         it { is_expected.to have_attributes(:size => 1) }
         it { is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash)) }
       end
-
-      context 'with a 2016 release and Facter < 3.4' do
-        let(:release) { ['2016'] }
-        let(:facterversion) { '3.3.0' }
-
-        it { is_expected.to be_a(Hash) }
-        it { is_expected.to have_attributes(:size => 1) }
-
-        it 'munges the operatingsystemmajrelease to 2016' do
-          is_expected.to include('windows-2016-x86_64' => an_instance_of(Hash))
-        end
-      end
     end
 
     context 'When operatingsystemrelease has space' do
