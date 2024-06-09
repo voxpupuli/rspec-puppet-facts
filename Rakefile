@@ -40,8 +40,8 @@ namespace :puppet_versions do
 
     output = `git status --porcelain #{PUPPET_VERSIONS_PATH}`
     unless output.strip.empty?
-      $stderr.puts "#{PUPPET_VERSIONS_PATH} is out of date."
-      $stderr.puts 'Run the puppet_versions:update task to update it and commit the changes.'
+      warn "#{PUPPET_VERSIONS_PATH} is out of date."
+      warn 'Run the puppet_versions:update task to update it and commit the changes.'
       raise
     end
   end
@@ -54,7 +54,7 @@ rescue LoadError
 else
   require 'rubygems'
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
-    config.exclude_labels = %w{duplicate question invalid wontfix wont-fix skip-changelog github_actions}
+    config.exclude_labels = %w[duplicate question invalid wontfix wont-fix skip-changelog github_actions]
     config.user = 'voxpupuli'
     config.project = 'rspec-puppet-facts'
     gem_version = Gem::Specification.load("#{config.project}.gemspec").version

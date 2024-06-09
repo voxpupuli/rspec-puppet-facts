@@ -90,7 +90,7 @@ module RspecPuppetFacts
               os_release_filter = "\"#{operatingsystemmajrelease}\""
             when /Amazon/i
               # Tighten the regex for Amazon Linux 2 so that we don't pick up Amazon Linux 2016 or 2017 facts
-              os_release_filter = "/^2$/" if operatingsystemmajrelease == '2'
+              os_release_filter = '/^2$/' if operatingsystemmajrelease == '2'
             end
 
             filter << {
@@ -110,9 +110,9 @@ module RspecPuppetFacts
       end
     end
 
-    strict_requirement = RspecPuppetFacts::facter_version_to_strict_requirement(facterversion)
+    strict_requirement = RspecPuppetFacts.facter_version_to_strict_requirement(facterversion)
 
-    loose_requirement = RspecPuppetFacts::facter_version_to_loose_requirement(facterversion)
+    loose_requirement = RspecPuppetFacts.facter_version_to_loose_requirement(facterversion)
     received_facts = []
 
     # FacterDB may have newer versions of facter data for which it contains a subset of all possible
@@ -127,9 +127,7 @@ module RspecPuppetFacts
         version, facts = versions.select { |v, _f| loose_requirement =~ v }.max_by { |v, _f| v } if loose_requirement
         next unless version
 
-        if RspecPuppetFacts.spec_facts_strict?
-          raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, aborting"
-        end
+        raise ArgumentError, "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, aborting" if RspecPuppetFacts.spec_facts_strict?
 
         RspecPuppetFacts.warning "No facts were found in the FacterDB for Facter v#{facterversion} on #{filter_spec}, using v#{version} instead"
       end
@@ -193,7 +191,7 @@ module RspecPuppetFacts
   def self.register_custom_fact(name, value, options)
     @custom_facts ||= {}
     name = RSpec.configuration.facterdb_string_keys ? name.to_s : name.to_sym
-    @custom_facts[name] = {:options => options, :value => value}
+    @custom_facts[name] = {options: options, value: value}
   end
 
   # Adds any custom facts according to the rules defined for the operating
@@ -235,7 +233,7 @@ module RspecPuppetFacts
   # @return [nil,String]
   # @api private
   def self.spec_facts_os_filter
-    ENV['SPEC_FACTS_OS']
+    ENV.fetch('SPEC_FACTS_OS', nil)
   end
 
   # If SPEC_FACTS_STRICT is set to `yes`, RspecPuppetFacts will error on missing FacterDB entries, instead of warning & skipping the tests, or using an older facter version.
@@ -252,16 +250,14 @@ module RspecPuppetFacts
   def self.common_facts
     return @common_facts if @common_facts
     @common_facts = {
-      :puppetversion => Puppet.version,
-      :rubysitedir   => RbConfig::CONFIG['sitelibdir'],
-      :rubyversion   => RUBY_VERSION,
+      puppetversion: Puppet.version,
+      rubysitedir: RbConfig::CONFIG['sitelibdir'],
+      rubyversion: RUBY_VERSION,
     }
 
     @common_facts[:mco_version] = MCollective::VERSION if mcollective?
 
-    if augeas?
-      @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
-    end
+    @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version') if augeas?
     @common_facts = stringify_keys(@common_facts) if RSpec.configuration.facterdb_string_keys
 
     @common_facts
@@ -298,9 +294,7 @@ module RspecPuppetFacts
   # @return [Array<Hash>]
   # @api private
   def self.meta_supported_os
-    unless metadata['operatingsystem_support'].is_a? Array
-      fail StandardError, 'Unknown operatingsystem support in the metadata file!'
-    end
+    raise StandardError, 'Unknown operatingsystem support in the metadata file!' unless metadata['operatingsystem_support'].is_a? Array
     metadata['operatingsystem_support']
   end
 
@@ -311,9 +305,7 @@ module RspecPuppetFacts
   # @api private
   def self.metadata
     return @metadata if @metadata
-    unless File.file? metadata_file
-      fail StandardError, "Can't find metadata.json... dunno why"
-    end
+    raise StandardError, "Can't find metadata.json... dunno why" unless File.file? metadata_file
     content = File.read metadata_file
     @metadata = JSON.parse content
   end
@@ -329,7 +321,7 @@ module RspecPuppetFacts
   # @param message [String]
   # @api private
   def self.warning(message)
-    STDERR.puts message
+    warn message
   end
 
   # Reset the memoization
@@ -379,9 +371,6 @@ module RspecPuppetFacts
     elsif /\A[0-9]+\Z/.match?(version)
       # Interpret 3 as < 4
       "< #{version.to_i + 1}"
-    else
-      # This would be the same as the strict requirement
-      nil
     end
   end
 
@@ -397,13 +386,13 @@ module RspecPuppetFacts
     fd = File.open(json_path, 'rb:UTF-8')
     data = JSON.parse(fd.read)
 
-    version_map = data.map { |_, versions|
+    version_map = data.map do |_, versions|
       if versions['puppet'].nil? || versions['facter'].nil?
         nil
       else
         [Gem::Version.new(versions['puppet']), versions['facter']]
       end
-    }.compact
+    end.compact
 
     puppet_gem_version = Gem::Version.new(puppet_version)
     applicable_versions = version_map.select { |p, _| puppet_gem_version >= p }

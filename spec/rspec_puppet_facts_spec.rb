@@ -137,10 +137,10 @@ describe RspecPuppetFacts do
       subject(:result) do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem"        => "Debian",
-                "operatingsystemrelease" => ['12'],
+                'operatingsystem'        => 'Debian',
+                'operatingsystemrelease' => ['12'],
               },
             ],
           },
@@ -257,28 +257,28 @@ describe RspecPuppetFacts do
     end
 
     context 'When specifying supported_os' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "Debian",
-                "operatingsystemrelease" => [
-                  "11",
-                  "12",
+                'operatingsystem' => 'Debian',
+                'operatingsystemrelease' => %w[
+                  11
+                  12
                 ],
               },
               {
-                "operatingsystem" => "RedHat",
-                "operatingsystemrelease" => [
-                  "8",
-                  "9",
+                'operatingsystem' => 'RedHat',
+                'operatingsystemrelease' => %w[
+                  8
+                  9
                 ],
               },
             ],
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         is_expected.to be_a Hash
@@ -306,7 +306,7 @@ describe RspecPuppetFacts do
       subject(:factsets) do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               { 'operatingsystem' => 'RedHat', 'operatingsystemrelease' => '9' },
             ],
           },
@@ -318,27 +318,27 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a fact set for the specified release' do
-        expect(factsets).to match('redhat-9-x86_64' => include(:operatingsystemmajrelease => '9'))
+        expect(factsets).to match('redhat-9-x86_64' => include(operatingsystemmajrelease: '9'))
       end
     end
 
     context 'When testing Ubuntu' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "Ubuntu",
-                "operatingsystemrelease" => [
-                  "18.04",
-                  "20.04",
-                  "22.04",
+                'operatingsystem' => 'Ubuntu',
+                'operatingsystemrelease' => [
+                  '18.04',
+                  '20.04',
+                  '22.04',
                 ],
               },
             ],
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -354,21 +354,21 @@ describe RspecPuppetFacts do
     end
 
     context 'When testing FreeBSD 10' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "FreeBSD",
-                "operatingsystemrelease" => [
-                  "13",
+                'operatingsystem' => 'FreeBSD',
+                'operatingsystemrelease' => [
+                  '13',
                 ],
               },
             ],
-            :facterversion => '4.5',
+            facterversion: '4.5',
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -382,21 +382,21 @@ describe RspecPuppetFacts do
     end
 
     context 'When testing OpenBSD' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "OpenBSD",
-                "operatingsystemrelease" => [
-                  "7.5",
+                'operatingsystem' => 'OpenBSD',
+                'operatingsystemrelease' => [
+                  '7.5',
                 ],
               },
             ],
-            :facterversion => '4.7',
+            facterversion: '4.7',
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -410,21 +410,21 @@ describe RspecPuppetFacts do
     end
 
     context 'When testing Solaris 11' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "Solaris",
-                "operatingsystemrelease" => [
-                  "11",
+                'operatingsystem' => 'Solaris',
+                'operatingsystemrelease' => [
+                  '11',
                 ],
               },
             ],
             facterversion: '4.0',
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -439,21 +439,21 @@ describe RspecPuppetFacts do
     end
 
     context 'When testing AIX 7.1' do
-      subject {
+      subject do
         on_supported_os(
             {
-                :supported_os => [
+                supported_os: [
                     {
-                        "operatingsystem" => "AIX",
-                        "operatingsystemrelease" => [
-                            "7.1", "7100",
+                        'operatingsystem' => 'AIX',
+                        'operatingsystemrelease' => [
+                            '7.1', '7100',
                         ],
                     },
                 ],
-                :facterversion => '3.9',
+                facterversion: '3.9',
             },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -473,13 +473,13 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
                 'operatingsystem'        => 'Windows',
                 'operatingsystemrelease' => release,
               },
             ],
-            :facterversion => facterversion,
+            facterversion: facterversion,
           },
         )
       end
@@ -516,20 +516,20 @@ describe RspecPuppetFacts do
     end
 
     context 'When operatingsystemrelease has space' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "SLES",
-                "operatingsystemrelease" => [
-                  "11 SP1",
+                'operatingsystem' => 'SLES',
+                'operatingsystemrelease' => [
+                  '11 SP1',
                 ],
               },
             ],
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
@@ -542,20 +542,20 @@ describe RspecPuppetFacts do
     end
 
     context 'When specifying wrong supported_os' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "Debian",
-                "operatingsystemrelease" => [
-                  "4",
+                'operatingsystem' => 'Debian',
+                'operatingsystemrelease' => [
+                  '4',
                 ],
               },
             ],
           },
         )
-      }
+      end
 
       it 'outputs warning message' do
         expect(described_class).to receive(:warning).with(/No facts were found in the FacterDB/)
@@ -564,31 +564,31 @@ describe RspecPuppetFacts do
     end
 
     context 'When specifying rolling release operating system' do
-      subject {
+      subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
-                "operatingsystem" => "Debian",
-                "operatingsystemrelease" => [
-                  "12",
+                'operatingsystem' => 'Debian',
+                'operatingsystemrelease' => [
+                  '12',
                 ],
               },
               {
-                "operatingsystem" => "Gentoo",
+                'operatingsystem' => 'Gentoo',
               },
             ],
             facterversion: '4.6',
           },
         )
-      }
+      end
 
       it 'returns a hash' do
         expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
-        expect(subject.keys).to contain_exactly(a_string_matching(/\gentoo-\d+-x86_64/), 'debian-12-x86_64')
+        expect(subject.keys).to contain_exactly(a_string_matching(/gentoo-\d+-x86_64/), 'debian-12-x86_64')
       end
     end
 
@@ -596,7 +596,7 @@ describe RspecPuppetFacts do
       subject do
         on_supported_os(
           {
-            :supported_os => [
+            supported_os: [
               {
                 'operatingsystem'        => 'IOS',
                 'operatingsystemrelease' => ['12.2(25)EWA9'],
@@ -612,9 +612,9 @@ describe RspecPuppetFacts do
 
       it 'escapes the parens in the filter' do
         filter = {
-          'os.name'         => "IOS",
-          'os.release.full' => "/^12\\.2\\(25\\)EWA9/",
-          'os.hardware'     => "x86_64",
+          'os.name'         => 'IOS',
+          'os.release.full' => '/^12\\.2\\(25\\)EWA9/',
+          'os.hardware'     => 'x86_64',
         }
 
         expect(FacterDB).to receive(:get_facts).with(filter, symbolize_keys: true).once
@@ -647,7 +647,7 @@ describe RspecPuppetFacts do
       it 'returns facts from the specified default Facter version' do
         is_expected.to match(
           'centos-9-x86_64' => include(
-            :facterversion => /\A4\.6\./,
+            facterversion: /\A4\.6\./,
           ),
         )
       end
@@ -659,7 +659,7 @@ describe RspecPuppetFacts do
           supported_os: [
             { 'operatingsystem' => 'CentOS', 'operatingsystemrelease' => %w[9] },
           ],
-          facterversion: "4.7.99",
+          facterversion: '4.7.99',
         )
       end
 
@@ -671,7 +671,7 @@ describe RspecPuppetFacts do
       it 'returns facts from a facter version matching version and below' do
         is_expected.to match(
           'centos-9-x86_64' => include(
-            :facterversion => /\A4\.[0-7]\./,
+            facterversion: /\A4\.[0-7]\./,
           ),
         )
       end
@@ -698,7 +698,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from a facter version matching 4.6' do
-        is_expected.to match('centos-9-x86_64' => include(:facterversion => '4.6.1'))
+        is_expected.to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
       end
     end
 
@@ -713,7 +713,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from a facter version matching 4.6.1' do
-        is_expected.to match('centos-9-x86_64' => include(:facterversion => '4.6.1'))
+        is_expected.to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
       end
     end
 
@@ -747,7 +747,7 @@ describe RspecPuppetFacts do
       before do
         allow(FacterDB).to receive(:get_facts).and_call_original
         allow(FacterDB).to receive(:get_facts).with(
-          {'os.name'=>"CentOS", 'os.release.full'=>"/^9/", 'os.hardware'=>"x86_64"}, symbolize_keys: true,
+          {'os.name'=>'CentOS', 'os.release.full'=>'/^9/', 'os.hardware'=>'x86_64'}, symbolize_keys: true
         ).and_wrap_original do |m, *args|
           m.call(*args).reject { |facts| facts[:facterversion].start_with?('4.6.') }
         end
@@ -758,27 +758,27 @@ describe RspecPuppetFacts do
       end
 
       it 'returns Debian facts from a facter version matching 4.6.1' do
-        is_expected.to include('debian-12-x86_64' => include(facterversion: '4.6.1'),)
+        is_expected.to include('debian-12-x86_64' => include(facterversion: '4.6.1'))
       end
     end
   end
 
   describe '#add_custom_fact' do
-    subject {
+    subject do
       on_supported_os(
         {
-          :supported_os => [
+          supported_os: [
             {
-              "operatingsystem" => "RedHat",
-              "operatingsystemrelease" => [
-                "8",
-                "9",
+              'operatingsystem' => 'RedHat',
+              'operatingsystemrelease' => %w[
+                8
+                9
               ],
             },
           ],
         },
       )
-    }
+    end
 
     before do
       described_class.reset
@@ -793,11 +793,11 @@ describe RspecPuppetFacts do
       add_custom_fact :identity, { 'user' => 'test_user' }, merge_facts: true
       expect(subject['redhat-9-x86_64'][:identity]).to eq(
       {
-        "gid"=>0,
-        "group"=>"root",
-        "privileged"=>true,
-        "uid"=>0,
-        "user"=>"test_user"
+        'gid'=>0,
+        'group'=>'root',
+        'privileged'=>true,
+        'uid'=>0,
+        'user'=>'test_user',
       })
     end
 
@@ -805,18 +805,18 @@ describe RspecPuppetFacts do
       add_custom_fact :identity, { 'user' => 'other_user' }
       expect(subject['redhat-9-x86_64'][:identity]).to eq(
       {
-        "user"=>"other_user"
+        'user'=>'other_user',
       })
     end
 
     it 'confines a fact to a particular operating system' do
-      add_custom_fact 'root_home', '/root', :confine => 'redhat-9-x86_64'
+      add_custom_fact 'root_home', '/root', confine: 'redhat-9-x86_64'
       expect(subject['redhat-9-x86_64'][:root_home]).to eq '/root'
       expect(subject['redhat-8-x86_64'][:root_home]).to be_nil
     end
 
     it 'excludes a fact from a particular operating system' do
-      add_custom_fact 'root_home', '/root', :exclude => 'redhat-9-x86_64'
+      add_custom_fact 'root_home', '/root', exclude: 'redhat-9-x86_64'
       expect(subject['redhat-9-x86_64'][:root_home]).to be_nil
       expect(subject['redhat-8-x86_64'][:root_home]).to eq '/root'
     end
@@ -874,7 +874,7 @@ describe RspecPuppetFacts do
       end
 
       it 'includes an "mco_version" fact' do
-        expect(subject.common_facts).to include(:mco_version => 'my_version')
+        expect(subject.common_facts).to include(mco_version: 'my_version')
       end
     end
 
