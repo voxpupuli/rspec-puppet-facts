@@ -259,7 +259,9 @@ module RspecPuppetFacts
 
     @common_facts[:mco_version] = MCollective::VERSION if mcollective?
 
-    @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version') if augeas?
+    if augeas?
+      @common_facts[:augeasversion] = Augeas.open(nil, nil, Augeas::NO_MODL_AUTOLOAD).get('/augeas/version')
+    end
     @common_facts = stringify_keys(@common_facts) if RSpec.configuration.facterdb_string_keys
 
     @common_facts
@@ -296,7 +298,9 @@ module RspecPuppetFacts
   # @return [Array<Hash>]
   # @api private
   def self.meta_supported_os
-    raise StandardError, 'Unknown operatingsystem support in the metadata file!' unless metadata['operatingsystem_support'].is_a? Array
+    unless metadata['operatingsystem_support'].is_a? Array
+      raise StandardError, 'Unknown operatingsystem support in the metadata file!'
+    end
 
     metadata['operatingsystem_support']
   end
@@ -308,7 +312,9 @@ module RspecPuppetFacts
   # @api private
   def self.metadata
     return @metadata if @metadata
-    raise StandardError, "Can't find metadata.json... dunno why" unless File.file? metadata_file
+    unless File.file? metadata_file
+      raise StandardError, "Can't find metadata.json... dunno why"
+    end
 
     content = File.read metadata_file
     @metadata = JSON.parse content
@@ -375,6 +381,9 @@ module RspecPuppetFacts
     elsif /\A[0-9]+\Z/.match?(version)
       # Interpret 3 as < 4
       "< #{version.to_i + 1}"
+    else # rubocop:disable Style/EmptyElse
+      # This would be the same as the strict requirement
+      nil
     end
   end
 
