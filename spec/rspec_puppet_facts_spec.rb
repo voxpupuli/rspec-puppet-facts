@@ -357,7 +357,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 3 elements' do
@@ -387,7 +387,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 1 elements' do
@@ -419,7 +419,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 1 elements' do
@@ -451,7 +451,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 1 elements' do
@@ -483,7 +483,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 1 elements' do
@@ -566,7 +566,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 1 elements' do
@@ -625,7 +625,7 @@ describe RspecPuppetFacts do
       }
 
       it 'returns a hash' do
-        expect(subject.class).to eq Hash
+        expect(subject).to be_a Hash
       end
 
       it 'has 2 elements' do
