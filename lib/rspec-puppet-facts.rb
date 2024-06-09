@@ -405,7 +405,7 @@ module RspecPuppetFacts
       return Facter.version
     end
 
-    applicable_versions.sort { |a, b| b.first <=> a.first }.first.last
+    applicable_versions.max_by { |p, _| p }.last
   rescue JSON::ParserError
     warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
     Facter.version
