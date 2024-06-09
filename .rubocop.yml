@@ -4,10 +4,7 @@ inherit_from: .rubocop_todo.yml
 inherit_gem:
   voxpupuli-rubocop: rubocop.yml
 
-Style:
-  Enabled: false
-
-Layout:
+Layout/LineLength:
   Enabled: false
 
 # To match the gem name
