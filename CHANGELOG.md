@@ -1,5 +1,26 @@
 # Changelog
 
+## [4.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/4.0.0) (2024-06-10)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/3.0.0...4.0.0)
+
+**Breaking changes:**
+
+- Rely on modern facts [\#178](https://github.com/voxpupuli/rspec-puppet-facts/pull/178) ([ekohl](https://github.com/ekohl))
+- Require FacterDB 2.x [\#176](https://github.com/voxpupuli/rspec-puppet-facts/pull/176) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- work with symbolized strings [\#175](https://github.com/voxpupuli/rspec-puppet-facts/pull/175) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- rubocop: Fix Layout cops [\#182](https://github.com/voxpupuli/rspec-puppet-facts/pull/182) ([bastelfreak](https://github.com/bastelfreak))
+- Use max\_by to determine the maximum value [\#181](https://github.com/voxpupuli/rspec-puppet-facts/pull/181) ([ekohl](https://github.com/ekohl))
+- rubocop: Fix Style cops [\#180](https://github.com/voxpupuli/rspec-puppet-facts/pull/180) ([bastelfreak](https://github.com/bastelfreak))
+- Use more native rspec matchers in tests [\#179](https://github.com/voxpupuli/rspec-puppet-facts/pull/179) ([ekohl](https://github.com/ekohl))
+- Update voxpupuli-rubocop requirement from ~\> 2.6.0 to ~\> 2.7.0 [\#171](https://github.com/voxpupuli/rspec-puppet-facts/pull/171) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [3.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/3.0.0) (2024-03-23)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/2.0.5...3.0.0)
