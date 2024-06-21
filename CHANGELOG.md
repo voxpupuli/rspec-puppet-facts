@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.0.0) (2024-07-04)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/4.0.0...5.0.0)
+
+**Breaking changes:**
+
+- Switch to FacterDB 3 / drop legacy facts [\#187](https://github.com/voxpupuli/rspec-puppet-facts/pull/187) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Deprecate symbolized facts [\#193](https://github.com/voxpupuli/rspec-puppet-facts/pull/193) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- handle stringified facterversion properly [\#191](https://github.com/voxpupuli/rspec-puppet-facts/pull/191) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.7.0 to ~\> 2.8.0 [\#192](https://github.com/voxpupuli/rspec-puppet-facts/pull/192) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [4.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/4.0.0) (2024-06-10)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/3.0.0...4.0.0)
@@ -27,28 +47,41 @@
 
 **symbolized facts deprecation**
 
-With the release of rspec-puppet-facts 4.0.0 we will remove support for symbolized facts. At the moment people typically use this in their unit files:
+With the release of rspec-puppet-facts 6.0.0 we will remove support for symbolized facts. At the moment people typically use this in their unit files:
 
 ```ruby
-case facts[:os]['name']
-when 'Archlinux'
-  context 'on Archlinux' do
-    it { is_expected.to contain_package('borg') }
+on_supported_os.each do |os, os_facts|
+  case os_facts[:os]['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
   end
-when 'Ubuntu'
+end
 ```
 
-For history reasons the first level of facts were symbols. You will have to update it to strings with the 4.0.0 release:
+For history reasons the first level of facts were symbols. You will have to update it to strings with the 6.0.0 release:
 
 ```ruby
-case facts['os']['name']
-when 'Archlinux'
-  context 'on Archlinux' do
-    it { is_expected.to contain_package('borg') }
+on_supported_os.each do |os, os_facts|
+  case os_facts['os']['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
   end
-when 'Ubuntu'
+end
 ```
 
+As an alternative you can configure the old behaviour:
+
+```ruby
+RSpec.configure do |c|
+  c.facterdb_string_keys = false
+end
+```
 
 **Breaking changes:**
 
