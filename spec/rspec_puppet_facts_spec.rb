@@ -215,7 +215,6 @@ describe RspecPuppetFacts do
             expect(subject.keys).to contain_exactly(
               'debian-11-x86_64',
               'debian-12-x86_64',
-              'redhat-7-x86_64',
               'redhat-8-x86_64',
               'redhat-9-x86_64',
             )
@@ -224,7 +223,6 @@ describe RspecPuppetFacts do
           it 'is able to filter the received OS facts' do
             allow(described_class).to receive(:spec_facts_os_filter).and_return('redhat')
             expect(subject.keys).to contain_exactly(
-              'redhat-7-x86_64',
               'redhat-8-x86_64',
               'redhat-9-x86_64',
             )
@@ -319,7 +317,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a fact set for the specified release' do
-        expect(factsets).to match('redhat-9-x86_64' => include(operatingsystemmajrelease: '9'))
+        expect(factsets).to a_hash_including('redhat-9-x86_64' => hash_including({ os: hash_including({ 'release' => hash_including({ 'major' => '9' }) }) }))
       end
     end
 
