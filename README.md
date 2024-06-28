@@ -22,7 +22,7 @@ If you're using Bundler to manage gems in your module repository, install `rspec
 1. Add the following line to your `Gemfile`:
 
 ```ruby
-gem 'rspec-puppet-facts', :require => false
+gem 'rspec-puppet-facts', require: false
 ```
 
 2. Run `bundle install`.
@@ -54,38 +54,18 @@ By default, `rspec-puppet-facts` provides the facts only for `x86_64` architectu
     * `'operatingsystem'`        - The name of the operating system, as a string.
     * `'operatingsystemrelease'` - An array of version numbers, as strings.
 
-This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 6 and Debian 7 on both `x86_64` _and_ `i386` architectures, you could write the following test:
+This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 12 and Debian 11 on both `x86_64` _and_ `i386` architectures, you could write the following test:
 
-```ruby
-require 'spec_helper'
-
-describe 'myclass::debian' do
-  test_on = {
-    :hardwaremodels => ['x86_64', 'i386'],
-    :supported_os   => [
-      {
-        'operatingsystem'        => 'Debian',
-        'operatingsystemrelease' => ['6', '7'],
-      },
-    ],
-  }
-
-  on_supported_os(test_on).each do |os, os_facts|
-    let (:facts) { os_facts }
-    it { is_expected.to compile.with_all_deps }
-  end
-end
-```
-Ruby 1.9 and later:
 ```ruby
 require 'spec_helper'
 
 describe 'myclass::raspbian' do
   test_on = {
+    hardwaremodels: ['x86_64', 'i386'],
     supported_os: [
       {
         'operatingsystem'        => 'Debian',
-        'operatingsystemrelease' => ['10', '9', '8'],
+        'operatingsystemrelease' => ['12', '11'],
       },
     ],
   }
