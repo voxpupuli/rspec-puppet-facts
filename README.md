@@ -1,5 +1,4 @@
-rspec-puppet-facts
-==================
+# rspec-puppet-facts
 
 [![License](https://img.shields.io/github/license/voxpupuli/rspec-puppet-facts.svg)](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/LICENSE)
 [![Test](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml)
@@ -8,6 +7,25 @@ rspec-puppet-facts
 [![RubyGem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![RubyGem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
+
+* [Installation](#installation)
+* [Specifying the supported operating systems](#specifying-the-supported-operating-systems)
+* [Specifying a default Facter version](#specifying-a-default-facter-version)
+* [Usage](#usage)
+    * [Testing a type or provider](#testing-a-type-or-provider)
+    * [Testing a function](#Testing-a-function)
+    * [Adding custom fact values](#adding-custom-fact-values)
+        * [Override and add facts](#override-and-add-facts)
+        * [Set global custom facts](#set-global-custom-facts)
+        * [Confine custom facts](#confine-custom-facts)
+        * [Create dynamic facts](#create-dynamic-facts)
+        * [Merge into existing facts](#merge-into-existing-facts)
+    * [Supplying Custom External Facts through FacterDB](#supplying-custom-external-facts-through-facterdb)
+* [Running your tests](#running-your-tests)
+* [Maintenance](#maintenance)
+* [License](#license)
+* [Transfer Notice](#transfe-notice)
+* [Release information](#release-information)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
 this gem provides a method of running your [rspec-puppet](https://github.com/puppetlabs/rspec-puppet)
