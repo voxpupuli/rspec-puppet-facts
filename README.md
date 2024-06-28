@@ -88,6 +88,54 @@ RSpec.configure do |c|
 end
 ```
 
+## Symbolized vs stringified facts
+
+For a long long time, the first level of keys in a factsets were symbols.
+This was fine before there were structured facts, but structured facts ended up as nested hashes that always had strings.
+This doesn't make sense and easy to get wrong.
+The original data contains only strings so conversion actually costs performance.
+
+The option to switch between symbolized vs stringified facts was introduced in [25634f4481f20f2fc7444e867928ca607234e33e](https://github.com/voxpupuli/rspec-puppet-facts/commit/25634f4481f20f2fc7444e867928ca607234e33e) (Release [1.9.5](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/CHANGELOG.md#2019-07-29---release-195)), but version 5.0.0 has resolved various implementation bugs.
+
+This can be configured like this:
+
+```ruby
+RSpec.configure do |c|
+  c.facterdb_string_keys = false
+end
+```
+
+In the 5.x release series of rspec-puppet-facts the default `false` is deprecated.
+With the 6.0.0 release we will flip it to `true` (https://github.com/voxpupuli/rspec-puppet-facts/pull/189).
+
+You may have the following rspec-puppet test using deprecated symbolized facts:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts[:os]['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
+With the string facts, the same test looks like:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts['os']['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
 ## Usage
 
 Use the `on_supported_os` iterator to loop through all of your module's supported operating systems. This allows you to simplify your tests and remove a lot of duplicate code.
