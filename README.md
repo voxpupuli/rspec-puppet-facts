@@ -475,7 +475,7 @@ fact sets that only make sense in your environment or might contain sensitive in
 To supply external facts to facterdb just set the `FACTERDB_SEARCH_PATHS` environment variable with one or more
 paths to your facts.
 
-When separating paths please use the default path separator character supported by your OS.  
+When separating paths please use the default path separator character supported by your OS.
 * Unix/Linux/OSX = `:`
 * Windows = `;`
 
