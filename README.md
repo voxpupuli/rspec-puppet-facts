@@ -78,10 +78,9 @@ end
 
 ## Specifying a default Facter version
 
-By default, `on_supported_os` will return the facts for the version of Facter
-that it has loaded (usually this is Facter 2.5.1). This behaviour can be
-overridden by setting the `default_facter_version` RSpec setting in your
-`spec/spec_helper.rb` file.
+By default, `on_supported_os` will return the facts for the version of Facter that it has loaded. It will check for the loaded Puppet version and maps that to the Facter version that Perforce released in the matching AIO.
+The mapping is stored in `ext/puppet_agent_components.json` (check the [maintenance](#maintenance) section for details) and computated in the `facter_version_for_puppet_version` method.
+This behaviour can be overridden by setting the `default_facter_version` RSpec setting in your `spec/spec_helper.rb` file.
 
 ```ruby
 RSpec.configure do |c|
