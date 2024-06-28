@@ -97,8 +97,9 @@ end
 ## Specifying a default Facter version
 
 By default, `on_supported_os` will return the facts for the version of Facter
-that it has loaded. It will check for the loaded Puppet version and maps that to
-the Facter version that Perforce released in the matching AIO. The mapping is
+that it has loaded.
+It will match the Facter version based on the loaded Puppet version to what the official packages provide.
+The mapping is
 stored in `ext/puppet_agent_components.json` (check the
 [maintenance](#maintenance) section for details) and computated in the
 `facter_version_for_puppet_version` method. This behaviour can be overridden by
@@ -110,6 +111,79 @@ RSpec.configure do |c|
   c.default_facter_version = '3.14.0'
 end
 ```
+
+## Symbolized vs stringified facts
+
+For a long long time, the first level of keys in a factsets were symbols. This
+was fine before there were structured facts, but structured facts ended up as
+nested hashes that always had strings. This doesn't make sense and easy to get
+wrong. The original data contains only strings so conversion actually costs
+performance.
+
+The option to switch between symbolized vs stringified facts was introduced in
+25634f4481f20f2fc7444e867928ca607234e33e (Release
+[1.9.5](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/CHANGELOG.md#2019-07-29---release-195)), but version 5.0.0 has resolved various implementation bugs.
+
+This can be configured like this:
+
+```ruby
+RSpec.configure do |c|
+  c.facterdb_string_keys = false
+end
+```
+
+In the 5.x release series of rspec-puppet-facts the default `false` is
+deprecated. With the 6.0.0 release we will flip it to `true` (https://github.com/voxpupuli/rspec-puppet-facts/pull/189).
+
+People might have the following rspec-puppet test:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts[:os]['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
+After the flip, every key in the factset will be a string:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts['os']['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
+Proper support for stringified facts was introduced in commit
+f5fcdb547da74e789b7c8237138d5285b3edb41d
+(https://github.com/voxpupuli/rspec-puppet-facts/pull/175). It was released in
+[4.0.0](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/CHANGELOG.md#400-2024-06-10)
+so you can already use and test it. It has one bug in the CI output.
+rspec-puppet-facts lets you know when it didn't find a facterset that machtes
+your exact Facter version:
+
+
+```
+No facts were found in the FacterDB for Facter v4.7.0 on {"os.name"=>"Archlinux", "os.hardware"=>"x86_64"}, using v4.5.2 instead
+```
+
+With stringified facts, the found Facter version isn't printed:
+
+```
+No facts were found in the FacterDB for Facter v4.7.0 on {"os.name"=>"Archlinux", "os.hardware"=>"x86_64"}, using v instead
+```
+
+This is fixed in [edb710b6f5d95d86631d05075d098a2ceea10e95](https://github.com/voxpupuli/rspec-puppet-facts/commit/edb710b6f5d95d86631d05075d098a2ceea10e95)
+and released in 5.0.0.
 
 ## Usage
 
