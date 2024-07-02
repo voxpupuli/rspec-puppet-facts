@@ -1,5 +1,4 @@
-rspec-puppet-facts
-==================
+# rspec-puppet-facts
 
 [![License](https://img.shields.io/github/license/voxpupuli/rspec-puppet-facts.svg)](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/LICENSE)
 [![Test](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/rspec-puppet-facts/actions/workflows/test.yml)
@@ -8,6 +7,25 @@ rspec-puppet-facts
 [![RubyGem Version](https://img.shields.io/gem/v/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![RubyGem Downloads](https://img.shields.io/gem/dt/rspec-puppet-facts.svg)](https://rubygems.org/gems/rspec-puppet-facts)
 [![Donated by Camptocamp](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
+
+* [Installation](#installation)
+* [Specifying the supported operating systems](#specifying-the-supported-operating-systems)
+* [Specifying a default Facter version](#specifying-a-default-facter-version)
+* [Usage](#usage)
+    * [Testing a type or provider](#testing-a-type-or-provider)
+    * [Testing a function](#Testing-a-function)
+    * [Adding custom fact values](#adding-custom-fact-values)
+        * [Override and add facts](#override-and-add-facts)
+        * [Set global custom facts](#set-global-custom-facts)
+        * [Confine custom facts](#confine-custom-facts)
+        * [Create dynamic facts](#create-dynamic-facts)
+        * [Merge into existing facts](#merge-into-existing-facts)
+    * [Supplying Custom External Facts through FacterDB](#supplying-custom-external-facts-through-facterdb)
+* [Running your tests](#running-your-tests)
+* [Maintenance](#maintenance)
+* [License](#license)
+* [Transfer Notice](#transfe-notice)
+* [Release information](#release-information)
 
 Based on an original idea from [apenney](https://github.com/apenney/puppet_facts/),
 this gem provides a method of running your [rspec-puppet](https://github.com/puppetlabs/rspec-puppet)
@@ -22,7 +40,7 @@ If you're using Bundler to manage gems in your module repository, install `rspec
 1. Add the following line to your `Gemfile`:
 
 ```ruby
-gem 'rspec-puppet-facts', :require => false
+gem 'rspec-puppet-facts', require: false
 ```
 
 2. Run `bundle install`.
@@ -54,38 +72,18 @@ By default, `rspec-puppet-facts` provides the facts only for `x86_64` architectu
     * `'operatingsystem'`        - The name of the operating system, as a string.
     * `'operatingsystemrelease'` - An array of version numbers, as strings.
 
-This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 6 and Debian 7 on both `x86_64` _and_ `i386` architectures, you could write the following test:
+This is particularly useful if your module is split into operating system subclasses. For example, if you had a class called `myclass::debian` that you wanted to test against Debian 12 and Debian 11 on both `x86_64` _and_ `i386` architectures, you could write the following test:
 
-```ruby
-require 'spec_helper'
-
-describe 'myclass::debian' do
-  test_on = {
-    :hardwaremodels => ['x86_64', 'i386'],
-    :supported_os   => [
-      {
-        'operatingsystem'        => 'Debian',
-        'operatingsystemrelease' => ['6', '7'],
-      },
-    ],
-  }
-
-  on_supported_os(test_on).each do |os, os_facts|
-    let (:facts) { os_facts }
-    it { is_expected.to compile.with_all_deps }
-  end
-end
-```
-Ruby 1.9 and later:
 ```ruby
 require 'spec_helper'
 
 describe 'myclass::raspbian' do
   test_on = {
+    hardwaremodels: ['x86_64', 'i386'],
     supported_os: [
       {
         'operatingsystem'        => 'Debian',
-        'operatingsystemrelease' => ['10', '9', '8'],
+        'operatingsystemrelease' => ['12', '11'],
       },
     ],
   }
@@ -99,15 +97,93 @@ end
 ## Specifying a default Facter version
 
 By default, `on_supported_os` will return the facts for the version of Facter
-that it has loaded (usually this is Facter 2.5.1). This behaviour can be
-overridden by setting the `default_facter_version` RSpec setting in your
-`spec/spec_helper.rb` file.
+that it has loaded.
+It will match the Facter version based on the loaded Puppet version to what the official packages provide.
+The mapping is
+stored in `ext/puppet_agent_components.json` (check the
+[maintenance](#maintenance) section for details) and computated in the
+`facter_version_for_puppet_version` method. This behaviour can be overridden by
+setting the `default_facter_version` RSpec setting in your `spec/spec_helper.rb`
+file.
 
 ```ruby
 RSpec.configure do |c|
   c.default_facter_version = '3.14.0'
 end
 ```
+
+## Symbolized vs stringified facts
+
+For a long long time, the first level of keys in a factsets were symbols. This
+was fine before there were structured facts, but structured facts ended up as
+nested hashes that always had strings. This doesn't make sense and easy to get
+wrong. The original data contains only strings so conversion actually costs
+performance.
+
+The option to switch between symbolized vs stringified facts was introduced in
+25634f4481f20f2fc7444e867928ca607234e33e (Release
+[1.9.5](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/CHANGELOG.md#2019-07-29---release-195)), but version 5.0.0 has resolved various implementation bugs.
+
+This can be configured like this:
+
+```ruby
+RSpec.configure do |c|
+  c.facterdb_string_keys = false
+end
+```
+
+In the 5.x release series of rspec-puppet-facts the default `false` is
+deprecated. With the 6.0.0 release we will flip it to `true` (https://github.com/voxpupuli/rspec-puppet-facts/pull/189).
+
+People might have the following rspec-puppet test:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts[:os]['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
+After the flip, every key in the factset will be a string:
+
+```ruby
+on_supported_os.each do |os, os_facts|
+  case os_facts['os']['name']
+  when 'Archlinux'
+    context 'on Archlinux' do
+      it { is_expected.to contain_package('borg') }
+    end
+  when 'Ubuntu'
+  end
+end
+```
+
+Proper support for stringified facts was introduced in commit
+f5fcdb547da74e789b7c8237138d5285b3edb41d
+(https://github.com/voxpupuli/rspec-puppet-facts/pull/175). It was released in
+[4.0.0](https://github.com/voxpupuli/rspec-puppet-facts/blob/master/CHANGELOG.md#400-2024-06-10)
+so you can already use and test it. It has one bug in the CI output.
+rspec-puppet-facts lets you know when it didn't find a facterset that machtes
+your exact Facter version:
+
+
+```
+No facts were found in the FacterDB for Facter v4.7.0 on {"os.name"=>"Archlinux", "os.hardware"=>"x86_64"}, using v4.5.2 instead
+```
+
+With stringified facts, the found Facter version isn't printed:
+
+```
+No facts were found in the FacterDB for Facter v4.7.0 on {"os.name"=>"Archlinux", "os.hardware"=>"x86_64"}, using v instead
+```
+
+This is fixed in [edb710b6f5d95d86631d05075d098a2ceea10e95](https://github.com/voxpupuli/rspec-puppet-facts/commit/edb710b6f5d95d86631d05075d098a2ceea10e95)
+and released in 5.0.0.
 
 ## Usage
 
@@ -475,7 +551,7 @@ fact sets that only make sense in your environment or might contain sensitive in
 To supply external facts to facterdb just set the `FACTERDB_SEARCH_PATHS` environment variable with one or more
 paths to your facts.
 
-When separating paths please use the default path separator character supported by your OS.  
+When separating paths please use the default path separator character supported by your OS.
 * Unix/Linux/OSX = `:`
 * Windows = `;`
 
