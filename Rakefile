@@ -21,6 +21,7 @@ namespace :puppet_versions do
     require 'net/http'
     require 'net/https'
     require 'uri'
+    require 'json'
 
     uri = URI.parse('https://forgeapi.puppet.com/private/versions/puppet-agent')
     http = Net::HTTP.new(uri.host, uri.port)
@@ -31,7 +32,7 @@ namespace :puppet_versions do
     raise unless response.is_a?(Net::HTTPSuccess)
 
     File.open(PUPPET_VERSIONS_PATH, 'wb:UTF-8') do |fd|
-      fd.write(response.body)
+      fd.write(JSON.pretty_generate(JSON.parse(response.body)))
     end
   end
 
