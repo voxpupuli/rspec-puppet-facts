@@ -1,6 +1,19 @@
 # Changelog
 
-## [5.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.0.0) (2024-07-04)
+## [5.1.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.1.0) (2024-08-13)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.0.0...5.1.0)
+
+**Implemented enhancements:**
+
+- Update components.json with Puppet 8.8.1 [\#197](https://github.com/voxpupuli/rspec-puppet-facts/pull/197) ([bastelfreak](https://github.com/bastelfreak))
+- Update components.json with Puppet 8.7.0 [\#195](https://github.com/voxpupuli/rspec-puppet-facts/pull/195) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Generate a pretty `ext/puppet_agent_components.json` file [\#196](https://github.com/voxpupuli/rspec-puppet-facts/pull/196) ([smortex](https://github.com/smortex))
+
+## [5.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.0.0) (2024-07-08)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/4.0.0...5.0.0)
 
