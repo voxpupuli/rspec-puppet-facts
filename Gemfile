@@ -13,3 +13,5 @@ group :coverage, optional: ENV['COVERAGE'] != 'yes' do
   gem 'codecov', require: false
   gem 'simplecov-console', require: false
 end
+
+gem 'facterdb', github: 'ekohl/facterdb', branch: 'filter-results'
