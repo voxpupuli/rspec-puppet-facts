@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.2.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.2.0) (2024-10-30)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.1.0...5.2.0)
+
+**Implemented enhancements:**
+
+- Update components.json with Puppet 8.10.0 [\#200](https://github.com/voxpupuli/rspec-puppet-facts/pull/200) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.8.0 to ~\> 3.0.0 [\#199](https://github.com/voxpupuli/rspec-puppet-facts/pull/199) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [5.1.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.1.0) (2024-08-13)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.0.0...5.1.0)
