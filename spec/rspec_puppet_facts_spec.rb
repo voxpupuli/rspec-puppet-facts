@@ -87,12 +87,11 @@ describe RspecPuppetFacts do
       let(:puppet_version) { '999.0.0' }
 
       it 'returns the Facter version for the highest known Puppet version' do
-        known_facter_versions = JSON.parse(File.read(component_json_path)).values
-        sorted_facter_versions = known_facter_versions.compact.sort do |a, b|
-          Gem::Version.new(b) <=> Gem::Version.new(a)
+        expected = JSON.parse(File.read(component_json_path)).values.max_by do |version|
+          Gem::Version.new(version)
         end
 
-        expect(facter_version).to eq(sorted_facter_versions.first)
+        expect(facter_version).to eq(expected)
       end
     end
 
