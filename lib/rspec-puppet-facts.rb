@@ -391,22 +391,15 @@ module RspecPuppetFacts
   def self.facter_version_for_puppet_version(puppet_version)
     return Facter.version if puppet_version.nil?
 
-    json_path = File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_components.json'))
+    json_path = File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_facter_versions.json'))
     unless File.file?(json_path) && File.readable?(json_path)
       warning "#{json_path} does not exist or is not readable, defaulting to Facter #{Facter.version}"
       return Facter.version
     end
 
-    fd = File.open(json_path, 'rb:UTF-8')
-    data = JSON.parse(fd.read)
-
-    version_map = data.map do |_, versions|
-      if versions['puppet'].nil? || versions['facter'].nil?
-        nil
-      else
-        [Gem::Version.new(versions['puppet']), versions['facter']]
-      end
-    end.compact
+    version_map = JSON.load_file(json_path).map do |puppet, facter|
+      [Gem::Version.new(puppet), facter]
+    end
 
     puppet_gem_version = Gem::Version.new(puppet_version)
     applicable_versions = version_map.select { |p, _| puppet_gem_version >= p }
@@ -419,8 +412,6 @@ module RspecPuppetFacts
   rescue JSON::ParserError
     warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
     Facter.version
-  ensure
-    fd.close if fd
   end
 end
 
