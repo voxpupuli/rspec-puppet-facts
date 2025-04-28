@@ -60,7 +60,7 @@ describe RspecPuppetFacts do
 
     context 'when the component JSON file is unparseable' do
       before do
-        allow(JSON).to receive(:load_file).with(component_json_path).and_raise(JSON::ParserError)
+        allow(File).to receive(:read).with(component_json_path).and_return('not json')
         allow(described_class).to receive(:warning)
       end
 

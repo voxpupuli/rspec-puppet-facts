@@ -397,7 +397,7 @@ module RspecPuppetFacts
       return Facter.version
     end
 
-    version_map = JSON.load_file(json_path).map do |puppet, facter|
+    version_map = JSON.parse(File.read(json_path)).map do |puppet, facter|
       [Gem::Version.new(puppet), facter]
     end
 
