@@ -57,7 +57,7 @@ module RspecPuppetFacts
   #
   # @api private
   def on_supported_os_implementation(opts = {})
-    unless /\A\d+\.\d+(?:\.\d+)*\z/.match?((facterversion = opts[:facterversion]))
+    unless /\A\d+\.\d+(?:\.\d+)*\z/.match?(facterversion = opts[:facterversion])
       raise ArgumentError, ":facterversion must be in the format 'n.n' or 'n.n.n' (n is numeric), not '#{facterversion}'"
     end
 
