@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.3.1](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.3.1) (2025-04-28)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.3.0...5.3.1)
+
+**Fixed bugs:**
+
+- Fix compatibility with Ruby 2.7 [\#207](https://github.com/voxpupuli/rspec-puppet-facts/pull/207) ([silug](https://github.com/silug))
+
 ## [5.3.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.3.0) (2025-04-28)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.2.0...5.3.0)
