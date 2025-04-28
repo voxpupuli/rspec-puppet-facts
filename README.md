@@ -572,7 +572,7 @@ When no facts are available for the specific facter/operating system combination
 ## Maintenance
 
 This gem uses information about puppet AIO component versions to build/test.
-They are vendored at `ext/puppet_agent_components.json`. If they are outdated,
+They are stored at `ext/puppet_agent_facter_versions.json`. If they are outdated,
 the `puppet_versions:test` rake task will fail and they need to be updated.
 This is as easy as running: `bundle exec rake puppet_versions:update`
 

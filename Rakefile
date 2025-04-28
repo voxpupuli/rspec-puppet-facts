@@ -1,4 +1,4 @@
-PUPPET_VERSIONS_PATH = File.join(__dir__, 'ext', 'puppet_agent_components.json')
+PUPPET_VERSIONS_PATH = File.join(__dir__, 'ext', 'puppet_agent_facter_versions.json')
 
 begin
   require 'rspec/core/rake_task'
@@ -31,9 +31,14 @@ namespace :puppet_versions do
     response = http.request(request)
     raise unless response.is_a?(Net::HTTPSuccess)
 
-    File.open(PUPPET_VERSIONS_PATH, 'wb:UTF-8') do |fd|
-      fd.write(JSON.pretty_generate(JSON.parse(response.body)))
+    data = JSON.parse(response.body).filter_map do |_, versions|
+      if !versions['puppet'].nil? && !versions['facter'].nil?
+        [versions['puppet'], versions['facter']]
+      end
     end
+    data.sort_by! { |puppet, _facter| Gem::Version.new(puppet) }.reverse!
+
+    File.write(PUPPET_VERSIONS_PATH, "#{JSON.pretty_generate(data.to_h)}\n")
   end
 
   task :test do

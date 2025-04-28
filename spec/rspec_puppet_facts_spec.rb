@@ -19,7 +19,7 @@ describe RspecPuppetFacts do
     end
 
     let(:component_json_path) do
-      File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_components.json'))
+      File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_facter_versions.json'))
     end
 
     let(:puppet_version) { Puppet.version }
@@ -60,8 +60,7 @@ describe RspecPuppetFacts do
 
     context 'when the component JSON file is unparseable' do
       before do
-        io = StringIO.new('this is not JSON!')
-        allow(File).to receive(:open).with(component_json_path, anything).and_return(io)
+        allow(JSON).to receive(:load_file).with(component_json_path).and_raise(JSON::ParserError)
         allow(described_class).to receive(:warning)
       end
 
@@ -88,14 +87,11 @@ describe RspecPuppetFacts do
       let(:puppet_version) { '999.0.0' }
 
       it 'returns the Facter version for the highest known Puppet version' do
-        known_facter_versions = JSON.parse(File.read(component_json_path)).map do |_, r|
-          r['facter']
-        end
-        sorted_facter_versions = known_facter_versions.compact.sort do |a, b|
-          Gem::Version.new(b) <=> Gem::Version.new(a)
+        expected = JSON.parse(File.read(component_json_path)).values.max_by do |version|
+          Gem::Version.new(version)
         end
 
-        expect(facter_version).to eq(sorted_facter_versions.first)
+        expect(facter_version).to eq(expected)
       end
     end
 
