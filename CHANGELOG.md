@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.3.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.3.0) (2025-04-28)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.2.0...5.3.0)
+
+**Implemented enhancements:**
+
+- Add Puppet 8.12 / Facter 4.12 [\#204](https://github.com/voxpupuli/rspec-puppet-facts/pull/204) ([bastelfreak](https://github.com/bastelfreak))
+- Only store facter versions in JSON [\#203](https://github.com/voxpupuli/rspec-puppet-facts/pull/203) ([ekohl](https://github.com/ekohl))
+
 ## [5.2.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.2.0) (2024-10-30)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.1.0...5.2.0)
