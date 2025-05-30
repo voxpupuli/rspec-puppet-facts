@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 require 'stringio'
@@ -204,7 +206,7 @@ describe RspecPuppetFacts do
           end
 
           it 'returns a hash' do
-            is_expected.to be_a Hash
+            expect(subject).to be_a Hash
           end
 
           it 'returns supported OS' do
@@ -276,7 +278,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns a hash' do
-        is_expected.to be_a Hash
+        expect(subject).to be_a Hash
       end
 
       it 'returns supported OS' do
@@ -639,7 +641,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from the specified default Facter version' do
-        is_expected.to match(
+        expect(subject).to match(
           'centos-9-x86_64' => include(
             facterversion: /\A4\.6\./,
           ),
@@ -662,7 +664,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from a facter version matching version and below' do
-        is_expected.to match(
+        expect(subject).to match(
           'centos-9-x86_64' => include(
             facterversion: /\A4\.[0-7]\./,
           ),
@@ -691,7 +693,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from a facter version matching 4.6' do
-        is_expected.to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
+        expect(subject).to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
       end
     end
 
@@ -706,7 +708,7 @@ describe RspecPuppetFacts do
       end
 
       it 'returns facts from a facter version matching 4.6.1' do
-        is_expected.to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
+        expect(subject).to match('centos-9-x86_64' => include(facterversion: '4.6.1'))
       end
     end
 
@@ -747,11 +749,11 @@ describe RspecPuppetFacts do
       end
 
       it 'returns CentOS facts from a facter version matching 4.5' do
-        is_expected.to include('centos-9-x86_64' => include(facterversion: '4.5.2'))
+        expect(subject).to include('centos-9-x86_64' => include(facterversion: '4.5.2'))
       end
 
       it 'returns Debian facts from a facter version matching 4.6.1' do
-        is_expected.to include('debian-12-x86_64' => include(facterversion: '4.6.1'))
+        expect(subject).to include('debian-12-x86_64' => include(facterversion: '4.6.1'))
       end
     end
   end
