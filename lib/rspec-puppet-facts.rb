@@ -266,6 +266,8 @@ module RspecPuppetFacts
     else
       # from Puppet.initialize_facts
       @common_facts[:puppetversion] = Puppet.version.to_s
+      # from Puppet::Node::Facts#add_local_facts
+      @common_facts[:implementation] = Puppet.implementation if Puppet.respond_to?(:implementation)
     end
 
     @common_facts[:mco_version] = MCollective::VERSION if mcollective?
