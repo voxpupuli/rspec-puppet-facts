@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'puppet'
 require 'facter'
 require 'facterdb'
 require 'json'
@@ -255,10 +254,19 @@ module RspecPuppetFacts
     return @common_facts if @common_facts
 
     @common_facts = {
-      puppetversion: Puppet.version,
+      # from Facter itself
       rubysitedir: RbConfig::CONFIG['sitelibdir'],
       rubyversion: RUBY_VERSION,
     }
+
+    begin
+      require 'puppet'
+    rescue LoadError
+      warning 'Could not load Puppet'
+    else
+      # from Puppet.initialize_facts
+      @common_facts[:puppetversion] = Puppet.version.to_s
+    end
 
     @common_facts[:mco_version] = MCollective::VERSION if mcollective?
 
@@ -418,6 +426,13 @@ module RspecPuppetFacts
 end
 
 RSpec.configure do |c|
-  c.add_setting :default_facter_version, default: RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
+  begin
+    require 'puppet'
+  rescue LoadError
+    puppet_version = nil
+  else
+    puppet_version = Puppet.version
+  end
+  c.add_setting :default_facter_version, default: RspecPuppetFacts.facter_version_for_puppet_version(puppet_version)
   c.add_setting :facterdb_string_keys, default: false
 end

@@ -14,5 +14,6 @@ end
 # openvox on Ruby 3.3 / 3.4 has some missing dependencies
 # Will be fixed in a future openvox release
 gem 'base64', '~> 0.2' if RUBY_VERSION >= '3.4'
+gem 'puppet', '>= 7', '< 9'
 gem 'racc', '~> 1.8' if RUBY_VERSION >= '3.3'
 gem 'syslog', '~> 0.3' if RUBY_VERSION >= '3.4'
