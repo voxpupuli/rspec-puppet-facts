@@ -28,5 +28,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'deep_merge', '~> 1.2'
   s.add_dependency 'facter', '< 5'
   s.add_dependency 'facterdb', '~> 3.1'
-  s.add_dependency 'puppet', '>= 7', '< 9'
 end
