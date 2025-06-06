@@ -419,5 +419,5 @@ end
 
 RSpec.configure do |c|
   c.add_setting :default_facter_version, default: RspecPuppetFacts.facter_version_for_puppet_version(Puppet.version)
-  c.add_setting :facterdb_string_keys, default: false
+  c.add_setting :facterdb_string_keys, default: true
 end
