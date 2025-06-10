@@ -10,10 +10,11 @@ on:
 env:
   BUNDLE_WITHOUT: release
 
+permissions:
+  contents: read # minimal permissions that we have to grant
+
 jobs:
   rubocop_and_matrix:
-    env:
-      BUNDLE_WITHOUT: release
     runs-on: ubuntu-24.04
     outputs:
       ruby: ${{ steps.ruby.outputs.versions }}
