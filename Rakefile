@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 PUPPET_VERSIONS_PATH = File.join(__dir__, 'ext', 'puppet_agent_facter_versions.json')
 
 begin
@@ -19,7 +17,6 @@ task :dump_commit do
 end
 
 namespace :puppet_versions do
-  desc 'updates the vendored list of puppet versions & components'
   task :update do
     require 'net/http'
     require 'net/https'
@@ -44,7 +41,6 @@ namespace :puppet_versions do
     File.write(PUPPET_VERSIONS_PATH, "#{JSON.pretty_generate(data.to_h)}\n")
   end
 
-  desc 'runs all tests and verifies vendored component list'
   task :test do
     Rake::Task['puppet_versions:update'].invoke
 
