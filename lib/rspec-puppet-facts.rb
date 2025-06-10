@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facter'
 require 'facterdb'
 require 'json'
