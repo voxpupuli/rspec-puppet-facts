@@ -6,7 +6,7 @@ gemspec
 
 gem 'facter', ENV.fetch('FACTER_GEM_VERSION', nil), require: false
 
-group :release do
+group :release, optional: true do
   gem 'faraday-retry', '~> 2.1', require: false
   gem 'github_changelog_generator', '~> 1.16.4', require: false
 end
