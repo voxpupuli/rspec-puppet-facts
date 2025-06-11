@@ -1,6 +1,20 @@
 # Changelog
 
-## [5.3.1](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.3.1) (2025-04-28)
+## [5.4.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.4.0) (2025-06-11)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.3.1...5.4.0)
+
+**Implemented enhancements:**
+
+- Support OpenVox [\#217](https://github.com/voxpupuli/rspec-puppet-facts/pull/217) ([bastelfreak](https://github.com/bastelfreak))
+- Make Puppet a soft dependency [\#213](https://github.com/voxpupuli/rspec-puppet-facts/pull/213) ([ekohl](https://github.com/ekohl))
+- Add Ruby 3.4 support / generate CI matrix dynamically [\#211](https://github.com/voxpupuli/rspec-puppet-facts/pull/211) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Drop unused coverage reporting [\#210](https://github.com/voxpupuli/rspec-puppet-facts/pull/210) ([bastelfreak](https://github.com/bastelfreak))
+
+## [5.3.1](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.3.1) (2025-04-29)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.3.0...5.3.1)
 
