@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = 'Contains facts from many Facter version on many Operating Systems'
   s.licenses    = 'Apache-2.0'
 
-  s.required_ruby_version = '>= 2.7.0'
+  s.required_ruby_version = '>= 3.2.0'
 
   s.files       = `git ls-files`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.12'
   s.add_development_dependency 'yard', '~> 0.9.34'
 
-  s.add_development_dependency 'voxpupuli-rubocop', '~> 3.1.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 4.2.0'
 
   s.add_dependency 'deep_merge', '~> 1.2'
   s.add_dependency 'facter', '< 5'

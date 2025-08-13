@@ -14,3 +14,6 @@ Style/IfUnlessModifier:
 Naming/FileName:
   Exclude:
     - 'lib/rspec-puppet-facts.rb'
+
+AllCops:
+  TargetRubyVersion: 3.2
