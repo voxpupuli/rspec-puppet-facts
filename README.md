@@ -44,7 +44,7 @@ include RspecPuppetFacts
 
 ## Specifying the supported operating systems
 
-To determine which facts to run your tests against, `rspec-puppet-facts` checks your module's `metadata.json` to find out what operating systems your module supports. The `metadata.json` file is located in the root of your module. To learn more about this file, see Puppet's [metadata](https://docs.puppet.com/puppet/latest/modules_metadata.html) documentation.
+To determine which facts to run your tests against, `rspec-puppet-facts` checks your module's `metadata.json` to find out what operating systems your module supports. The `metadata.json` file is located in the root of your module. To learn more about this file, see Puppet's [metadata](https://help.puppet.com/core/current/Content/PuppetCore/modules_metadata.htm) documentation.
 
 By default, `rspec-puppet-facts` provides the facts only for `x86_64` architecture. However, you can override this default and the supported operating system list by passing a hash to `on_supported_os` in your tests. This hash must contain either or both of the following keys:
 
