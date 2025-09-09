@@ -21,7 +21,7 @@ describe RspecPuppetFacts do
     end
 
     let(:component_json_path) do
-      File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_facter_versions.json'))
+      File.expand_path(File.join(__dir__, '..', 'ext', 'openvox_agent_facter_versions.json'))
     end
 
     let(:puppet_version) { Puppet.version }
@@ -98,18 +98,21 @@ describe RspecPuppetFacts do
     end
 
     context 'when passed a known Puppet version' do
-      let(:puppet_version) { '5.2.0' }
+      let(:puppet_version) { '8.11.0' }
 
       it 'returns the Facter version for that Puppet version' do
-        expect(facter_version).to eq('3.9.0')
+        expect(facter_version).to eq('4.11.0')
       end
     end
 
     context 'when passed a Puppet version between two known versions' do
-      let(:puppet_version) { '5.2.5' }
+      # openvox 8.19.0 has facter 4.11.0
+      # openvox 8.22.1 has openfact 5.0.0
+      # openvox 9.18.5 doesn't exist
+      let(:puppet_version) { '8.19.5' }
 
       it 'returns the Facter version for the lower Puppet version' do
-        expect(facter_version).to eq('3.9.0')
+        expect(facter_version).to eq('4.11.0')
       end
     end
 

@@ -572,9 +572,15 @@ When no facts are available for the specific facter/operating system combination
 ## Maintenance
 
 This gem uses information about puppet AIO component versions to build/test.
-They are stored at `ext/puppet_agent_facter_versions.json`. If they are outdated,
-the `puppet_versions:test` rake task will fail and they need to be updated.
-This is as easy as running: `bundle exec rake puppet_versions:update`
+They are stored at `ext/puppet_agent_facter_versions.json`.
+
+In the past we used `bundle exec rake puppet_versions:update` to update the file and `puppet_versions:test` to validate it.
+This relied on information from the puppet forge.
+With the 6.0.0 release we're switching to openvox.
+The file is currently maintained by hand, because openvox doesn't offer an API yet to map agent releases to openfact releases.
+It got also renamed from `ext/puppet_agent_facter_versions.json` -> `ext/openvox_agent_facter_versions.json`.
+
+**`ext/openvox_agent_facter_versions.json`now lists a mapping of openvox releases to openfact releases**
 
 ## License
 
