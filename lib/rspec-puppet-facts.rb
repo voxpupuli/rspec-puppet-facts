@@ -403,7 +403,7 @@ module RspecPuppetFacts
   def self.facter_version_for_puppet_version(puppet_version)
     return Facter.version if puppet_version.nil?
 
-    json_path = File.expand_path(File.join(__dir__, '..', 'ext', 'puppet_agent_facter_versions.json'))
+    json_path = File.expand_path(File.join(__dir__, '..', 'ext', 'openvox_agent_facter_versions.json'))
     unless File.file?(json_path) && File.readable?(json_path)
       warning "#{json_path} does not exist or is not readable, defaulting to Facter #{Facter.version}"
       return Facter.version
