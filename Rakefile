@@ -21,39 +21,14 @@ end
 namespace :puppet_versions do
   desc 'updates the vendored list of puppet versions & components'
   task :update do
-    require 'net/http'
-    require 'net/https'
-    require 'uri'
-    require 'json'
-
-    uri = URI.parse('https://forgeapi.puppet.com/private/versions/puppet-agent')
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = uri.scheme == 'https'
-
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-    raise unless response.is_a?(Net::HTTPSuccess)
-
-    data = JSON.parse(response.body).filter_map do |_, versions|
-      if !versions['puppet'].nil? && !versions['facter'].nil?
-        [versions['puppet'], versions['facter']]
-      end
-    end
-    data.sort_by! { |puppet, _facter| Gem::Version.new(puppet) }.reverse!
-
-    File.write(PUPPET_VERSIONS_PATH, "#{JSON.pretty_generate(data.to_h)}\n")
+    warn 'The rake task is disabled since the 6.0.0 Release. Please see the README.md'
+    exit 1
   end
 
   desc 'runs all tests and verifies vendored component list'
   task :test do
-    Rake::Task['puppet_versions:update'].invoke
-
-    output = `git status --porcelain #{PUPPET_VERSIONS_PATH}`
-    unless output.strip.empty?
-      warn "#{PUPPET_VERSIONS_PATH} is out of date."
-      warn 'Run the puppet_versions:update task to update it and commit the changes.'
-      raise
-    end
+    warn 'The rake task is disabled since the 6.0.0 Release. Please see the README.md'
+    exit 1
   end
 end
 
