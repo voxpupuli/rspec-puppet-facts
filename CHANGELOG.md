@@ -1,5 +1,28 @@
 # Changelog
 
+## [6.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.0.0) (2025-09-27)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.4.0...6.0.0)
+
+**Breaking changes:**
+
+- Require Ruby 3.2 or newer [\#224](https://github.com/voxpupuli/rspec-puppet-facts/pull/224) ([bastelfreak](https://github.com/bastelfreak))
+- CI: Dont validate puppet\_agent\_facter\_versions.json anymore [\#223](https://github.com/voxpupuli/rspec-puppet-facts/pull/223) ([bastelfreak](https://github.com/bastelfreak))
+- Switch from facter to openfact [\#219](https://github.com/voxpupuli/rspec-puppet-facts/pull/219) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- puppet\_agent\_facter\_versions: Add OpenVox/OpenFact versions [\#228](https://github.com/voxpupuli/rspec-puppet-facts/pull/228) ([bastelfreak](https://github.com/bastelfreak))
+- FacterDB: Allow 4.x [\#222](https://github.com/voxpupuli/rspec-puppet-facts/pull/222) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+**Fixed bugs:**
+
+- Fix dependabot configuration [\#226](https://github.com/voxpupuli/rspec-puppet-facts/pull/226) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- README: Fix upstream documentation link to metadata [\#225](https://github.com/voxpupuli/rspec-puppet-facts/pull/225) ([giacomd](https://github.com/giacomd))
+
 ## [5.4.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/5.4.0) (2025-06-11)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.3.1...5.4.0)
