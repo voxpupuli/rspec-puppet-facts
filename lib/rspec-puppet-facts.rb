@@ -425,7 +425,25 @@ module RspecPuppetFacts
     warning "#{json_path} contains invalid JSON, defaulting to Facter #{Facter.version}"
     Facter.version
   end
+
+  module DSL
+    def describe_on_supported_os(*args, &block)
+      describe(*args) do
+        # TODO: assumes RspecPuppetFacts was included
+        on_supported_os.each do |os, os_facts|
+          context("on #{os}") do
+            let(:facts) { os_facts }
+
+            class_exec(&block)
+          end
+        end
+      end
+    end
+  end
 end
+
+RSpec::Core::ExampleGroup.extend(RspecPuppetFacts::DSL)
+RSpec::Core::DSL.expose_example_group_alias(:describe_on_supported_os)
 
 RSpec.configure do |c|
   begin
