@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.1.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.1.0) (2026-02-19)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Add Ruby 4.0 support [\#237](https://github.com/voxpupuli/rspec-puppet-facts/pull/237) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [6.0.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.0.0) (2025-09-27)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/5.4.0...6.0.0)
