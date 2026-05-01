@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.2.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.2.0) (2026-05-01)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.1.0...6.2.0)
+
+**Implemented enhancements:**
+
+- Add newer openvox\<\>openfact mappings [\#247](https://github.com/voxpupuli/rspec-puppet-facts/pull/247) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [6.1.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.1.0) (2026-02-19)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.0.0...6.1.0)
