@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: write # clone repo and create release
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
