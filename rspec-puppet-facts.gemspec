@@ -28,5 +28,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'deep_merge', '~> 1.2'
 
   s.add_dependency 'facterdb', '>= 3.1', '< 5.0'
-  s.add_dependency 'openfact', '~> 5.0'
+  s.add_dependency 'openfact', '>= 5', '< 7'
 end
