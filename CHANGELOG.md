@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.3.1](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.3.1) (2026-09-28)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.3.0...6.3.1)
+
+**Merged pull requests:**
+
+- Map OpenVox 9.0.0-rc2 to OpenFact 6.2.0 [\#254](https://github.com/voxpupuli/rspec-puppet-facts/pull/254) ([silug](https://github.com/silug))
+
 ## [6.3.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.3.0) (2026-09-28)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.2.0...6.3.0)
