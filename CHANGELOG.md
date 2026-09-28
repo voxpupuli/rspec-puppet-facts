@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.3.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.3.0) (2026-09-28)
+
+[Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.2.0...6.3.0)
+
+**Merged pull requests:**
+
+- Map OpenVox 8.27–8.29 and 9.0.0-rc1 to OpenFact [\#252](https://github.com/voxpupuli/rspec-puppet-facts/pull/252) ([silug](https://github.com/silug))
+- Update openfact requirement from ~\> 5.0 to \>= 5, \< 7 [\#251](https://github.com/voxpupuli/rspec-puppet-facts/pull/251) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [6.2.0](https://github.com/voxpupuli/rspec-puppet-facts/tree/6.2.0) (2026-05-01)
 
 [Full Changelog](https://github.com/voxpupuli/rspec-puppet-facts/compare/6.1.0...6.2.0)
